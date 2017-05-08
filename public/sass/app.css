@@ -7,7 +7,11 @@ html, body {
 }
 .navbar {border-radius: 0}
 .panel {padding:0;}
-
+.rd-navbar-default-with-top-panel.rd-navbar-fullwidth .rd-navbar-top-panel, .rd-navbar-default-with-top-panel.rd-navbar-static .rd-navbar-top-panel {
+	background-color: #efefef;
+}
+.rd-navbar-inner{ background-color: #ccc; max-width:1500px !important; margin-bottom: 15px !important; padding-left: 50px !important; padding-right: 50px;}
+header {background-color: #000;}
 footer {padding-top:30px;}
 
 .latest-posts .panel {margin-right:10px; margin-left:10px;}

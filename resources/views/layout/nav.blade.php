@@ -1,90 +1,96 @@
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Brand</a>
-    </div>
+<header class="page-header">
+	<!-- RD Navbar-->
+	<div class="rd-navbar-wrap" style="height: 156px;">
+		<nav class="rd-navbar rd-navbar-default rd-navbar-default-with-top-panel rd-navbar-original rd-navbar-static" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fullwidth" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-static" data-md-stick-up-offset="90px" data-lg-stick-up-offset="150px">
+			<div class="rd-navbar-top-panel rd-navbar-collapse-items toggle-original-elements">
+					<div class="rd-navbar-top-panel-inner">
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="search" class="btn btn-default">Search</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+						<div class="left-side">
+								<!-- Contact Info-->
+								<address class="contact-info">
+									<div class="reveal-inline-block">
+											<div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+												<div class="unit-left"><span class="icon icon-sm text-middle fa-map-marker"></span></div>
+												<div class="unit-body"><a class="text-middle link link-gray-base" href="contacts.html">3111 Farmannsveien 15, Tønsberg, NORWAY</a></div>
+											</div>
+									</div>
+								</address>
+						</div>
 
+						<div class="right-side">
+								<ul class="list-inline list-inline-md">
+									<li>
+											<div class="reveal-inline-block">
+												<div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+														<div class="unit-left"><span class="icon icon-sm text-middle fa-phone"></span></div>
+														<div class="unit-body"><a class="text-middle link link-gray-base" href="callto:#">0047-456 45 456</a></div>
+												</div>
+											</div>
+									</li>
+									<li>
+											<div class="reveal-inline-block">
+												<div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+														<div class="unit-left"><span class="icon icon-sm text-middle fa-shopping-cart"></span></div>
+														<div class="unit-body"><a class="text-middle link link-gray-base" href="#">0 ITEM(S) - $0.00</a></div>
+												</div>
+											</div>
+									</li>
+								</ul>
+						</div>
+					</div>
+			</div>
 
-@if($flash = session('message'))
+			<div class="rd-navbar-inner">
+					<!-- RD Navbar Panel-->
+					<div class="rd-navbar-panel toggle-original-elements">
+						<!-- RD Navbar Toggle-->
+						<button class="rd-navbar-toggle toggle-original" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+						<!-- RD Navbar collapse toggle-->
+						<button class="rd-navbar-collapse-toggle toggle-original" data-rd-navbar-toggle=".rd-navbar-collapse-items"><span></span></button>
+						<!-- RD Navbar Brand-->
+						<div class="rd-navbar-brand"><a class="brand-name" href="index.html"><img src="images/brand.png" width="180" height="33" alt=""></a></div>
+					</div>
+					
+					<div class="rd-navbar-aside-right">
+						<div class="rd-navbar-nav-wrap toggle-original-elements">
+								<div class="rd-navbar-nav-scroll-holder">
+									<!-- RD Navbar Brand-->
+									<div class="rd-navbar-mobile-brand"><a class="brand-name" href="index.html"><img src="images/brand.png" width="180" height="33" alt=""></a></div>
+									<!-- RD Navbar Nav-->
+									<ul class="rd-navbar-nav">
+											<li class="rd-navbar--has-dropdown rd-navbar-submenu"><a href="services.html">Services</a><span class="rd-navbar-submenu-toggle"></span>
+												<!-- RD Navbar Dropdown-->
+												<ul class="rd-navbar-dropdown">
+														<li><a href="#">Air Filtration</a></li>
+														<li><a href="#">Batteries</a></li>
+														<li><a href="#">Oil Change</a></li>
+														<li><a href="#">Tires</a></li>
+														<li><a href="#">Maintenance</a></li>
+														<li><a href="#">Tow Truck</a></li>
+														<li><a href="404.html">404 Page</a></li>
+												</ul>
+											</li>
+											<li><a href="testimonials.html">Testimonials</a></li>
+											<li><a href="about-us.html">About Us</a></li>
+											<li><a href="gallery.html">gallery</a></li>
+											<li><a href="contacts.html">Contacts</a></li>
+									</ul>
+								</div>
+						</div>
 
-  <div id="flash-message" class="alert alert-success">
-    {{ $flash }}
-  </div>
-
-@endif
-
-
-<div class="header well">
-  <div class="container text-centerX">
-
-    <div class="col-md-6 col-md-offset3-3">
-      <h1 class="title">Welcome to Globil!</h1>
-      <p class="lead description">The future is here, let's find something magic!</p>
-
-      <div class="input-group form-group">
-        <input type="search" placeholder="Search the website.." class="form-control">
-        <span class="input-group-btn">
-          <button class="btn btn-success" type="button">Search</button>
-        </span>
-      </div>
-
-    </div>
-
-    <div class="col-md-6">
-      <ul>
-        <li> <a href="#">Sedan</a></li>
-        <li> <a href="#">SUV</a></li>
-        <li> <a href="#">Pickup</a></li>
-        <li> <a href="#">Sport</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
+						<!--RD Navbar Search-->
+						<div class="rd-navbar-search toggle-original-elements"><a class="rd-navbar-search-toggle toggle-original" data-rd-navbar-toggle=".rd-navbar-search, .rd-navbar-panel" href="#"><span></span></a>
+								<form class="rd-search" action="search-results.html" data-search-live="rd-search-results-live" method="GET">
+									<div class="form-wrap">
+											<label class="form-label form-label rd-input-label" for="rd-navbar-search-form-input">Search...</label>
+											<input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
+											<div class="rd-search-results-live" id="rd-search-results-live"></div>
+									</div>
+									<button class="rd-navbar-search-button" type="submit"></button>
+								</form>
+						</div>
+					</div>
+			</div>
+		</nav>
+	</div>
+</header>

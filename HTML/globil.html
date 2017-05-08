@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Gl0b!l @yield('title')</title>
+
+	<!-- Stylesheets-->
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700,800">
+
+<!-- <script type="text/javascript" charset="UTF-8" src="https://maps.google.com/maps-api-v3/api/js/26/17/common.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://maps.google.com/maps-api-v3/api/js/26/17/util.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://maps.google.com/maps-api-v3/api/js/26/17/stats.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://maps.google.com/maps-api-v3/api/js/26/17/map.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://maps.google.com/maps-api-v3/api/js/26/17/marker.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://maps.google.com/maps-api-v3/api/js/26/17/infowindow.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://maps.google.com/maps-api-v3/api/js/26/17/onion.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://maps.google.com/maps-api-v3/api/js/26/17/controls.js"></script>
+ -->
+
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="bootstrap.css">
+  <link rel="stylesheet" href="font-awesome.min.css">
+  <link rel="stylesheet" href="style.css">
+  <!-- ///////////////////////////////////////////////////////////////////////////// -->
+</head>
+
+<body>
+
+<div class="page text-center">
+   <!-- Page Header-->
+   <header class="page-header">
+     <!-- RD Navbar-->
+     <div class="rd-navbar-wrap" style="height: 156px;">
+       <nav class="rd-navbar rd-navbar-default rd-navbar-default-with-top-panel rd-navbar-original rd-navbar-static" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fullwidth" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-static" data-md-stick-up-offset="90px" data-lg-stick-up-offset="150px">
+         <div class="rd-navbar-top-panel rd-navbar-collapse-items toggle-original-elements">
+           <div class="rd-navbar-top-panel-inner">
+             <div class="left-side">
+               <!-- Contact Info-->
+               <address class="contact-info">
+                 <div class="reveal-inline-block">
+                   <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+                     <div class="unit-left"><span class="icon icon-sm text-middle fa-map-marker"></span></div>
+                     <div class="unit-body"><a class="text-middle link link-gray-base" href="contacts.html">2130 Fulton Street San Diego, CA 94117-1080 USA</a></div>
+                   </div>
+                 </div>
+               </address>
+             </div>
+             <div class="right-side">
+               <ul class="list-inline list-inline-md">
+                 <li>
+                   <div class="reveal-inline-block">
+                     <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+                       <div class="unit-left"><span class="icon icon-sm text-middle fa-phone"></span></div>
+                       <div class="unit-body"><a class="text-middle link link-gray-base" href="callto:#">1-800-1234-567</a></div>
+                     </div>
+                   </div>
+                 </li>
+                 <li>
+                   <div class="reveal-inline-block">
+                     <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+                       <div class="unit-left"><span class="icon icon-sm text-middle fa-shopping-cart"></span></div>
+                       <div class="unit-body"><a class="text-middle link link-gray-base" href="#">0 ITEM(S) - $0.00</a></div>
+                     </div>
+                   </div>
+                 </li>
+               </ul>
+             </div>
+           </div>
+         </div>
+         <div class="rd-navbar-inner">
+           <!-- RD Navbar Panel-->
+           <div class="rd-navbar-panel toggle-original-elements">
+             <!-- RD Navbar Toggle-->
+             <button class="rd-navbar-toggle toggle-original" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+             <!-- RD Navbar collapse toggle-->
+             <button class="rd-navbar-collapse-toggle toggle-original" data-rd-navbar-toggle=".rd-navbar-collapse-items"><span></span></button>
+             <!-- RD Navbar Brand-->
+             <div class="rd-navbar-brand"><a class="brand-name" href="index.html"><img src="images/brand.png" width="180" height="33" alt=""></a></div>
+           </div>
+           <div class="rd-navbar-aside-right">
+             <div class="rd-navbar-nav-wrap toggle-original-elements">
+               <div class="rd-navbar-nav-scroll-holder">
+                 <!-- RD Navbar Brand-->
+                 <div class="rd-navbar-mobile-brand"><a class="brand-name" href="index.html"><img src="images/brand.png" width="180" height="33" alt=""></a></div>
+                 <!-- RD Navbar Nav-->
+                 <ul class="rd-navbar-nav">
+                   <li class="rd-navbar--has-dropdown rd-navbar-submenu"><a href="services.html">Services</a><span class="rd-navbar-submenu-toggle"></span>
+                     <!-- RD Navbar Dropdown-->
+                     <ul class="rd-navbar-dropdown">
+                       <li><a href="#">Air Filtration</a></li>
+                       <li><a href="#">Batteries</a></li>
+                       <li><a href="#">Oil Change</a></li>
+                       <li><a href="#">Tires</a></li>
+                       <li><a href="#">Maintenance</a></li>
+                       <li><a href="#">Tow Truck</a></li>
+                       <li><a href="404.html">404 Page</a></li>
+                     </ul>
+                   </li>
+                   <li><a href="testimonials.html">Testimonials</a></li>
+                   <li><a href="about-us.html">About Us</a></li>
+                   <li><a href="gallery.html">gallery</a></li>
+                   <li><a href="contacts.html">Contacts</a></li>
+                 </ul>
+               </div>
+             </div>
+             <!--RD Navbar Search-->
+             <div class="rd-navbar-search toggle-original-elements"><a class="rd-navbar-search-toggle toggle-original" data-rd-navbar-toggle=".rd-navbar-search, .rd-navbar-panel" href="#"><span></span></a>
+               <form class="rd-search" action="search-results.html" data-search-live="rd-search-results-live" method="GET">
+                 <div class="form-wrap">
+                   <label class="form-label form-label rd-input-label" for="rd-navbar-search-form-input">Search...</label>
+                   <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
+                   <div class="rd-search-results-live" id="rd-search-results-live"></div>
+                 </div>
+                 <button class="rd-navbar-search-button" type="submit"></button>
+               </form>
+             </div>
+           </div>
+         </div>
+       </nav>
+     </div>
+   </header>
+   <section class="banner bg-image-1 text-sm-left section-banner">
+     <div class="shell">
+       <div class="range range-xs-center range-md-right">
+         <div class="cell-md-6 cell-lg-4">
+           <h3>Your Family</h3>
+           <h1>Auto doctor</h1>
+           <p class="banner-subtitle">Free oil change, April 15. Only if you have a "5" on your license plate.</p><a class="button button-sm button-default-outline" href="#">MAKE AN APPOINTMENT</a>
+         </div>
+       </div>
+     </div>
+   </section>
+   <section class="text-sm-left contact-info">
+     <div class="shell">
+       <div class="range range-xs-center border-left-cell">
+         <div class="cell-xs-8 cell-sm-4">
+           <div class="contact-info-item">
+             <h6>Our Advantages</h6>
+             <hr class="divider divider-xs">
+             <ul class="list list-marked">
+               <li>Free Diagnostics &amp; Brake Check</li>
+               <li>Certified repair services</li>
+               <li>Fair price repair estimates</li>
+             </ul>
+           </div>
+         </div>
+         <div class="cell-xs-8 cell-sm-4">
+           <div class="contact-info-item">
+             <h6>opening hours</h6>
+             <hr class="divider divider-xs">
+             <ul class="list list-2-col">
+               <li>Weekdays:</li>
+               <li>Saturday:</li>
+               <li>Sunday:</li>
+               <li>05:00 – 22:00</li>
+               <li>10:00 – 06:00</li>
+               <li>10:00 – 03:00</li>
+             </ul>
+           </div>
+         </div>
+         <div class="cell-sm-4">
+           <div class="contact-info-item">
+             <h6>Get in touch</h6>
+             <hr class="divider divider-xs"><a class="link link-sm link-primary" href="callto:#">(415) 347-3160</a>
+             <div class="unit unit-horizontal unit-spacing-xxs unit-align-center unit-sm-align-left">
+               <div class="unit-left"><span>Mobile:</span></div>
+               <div class="unit-body"><a class="link link-gray-lightest" href="callto:#">02 562-958</a></div>
+             </div>
+             <div class="unit unit-horizontal unit-spacing-xxs unit-align-center unit-sm-align-left">
+               <div class="unit-left"><span>Fax:</span></div>
+               <div class="unit-body"><a class="link link-gray-lightest" href="callto:#">02 562-95</a></div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </section>
+   <section class="section-md">
+     <div class="shell">
+       <h3>Vehicle repair Services</h3>
+       <p class="subtitle">We are one of the leading auto repair shops serving customers around the area. <br class="visible-lg-inline-block"> All repair services are performed by highly qualified mechanics.</p>
+       <div class="range range-xs-center">
+         <div class="cell-md-6">
+           <div class="range range-55">
+             <div class="cell-sm-6 cell-md-4">
+               <div class="thumbnail-variant-1"><span class="icon icon-circle icon-lg icon-primary car-repire-icon-46"></span>
+                 <div class="caption"><a class="link link-default title-thumbnail" href="#">Air Filtration</a></div>
+               </div>
+             </div>
+             <div class="cell-sm-6 cell-md-4">
+               <div class="thumbnail-variant-1"><span class="icon icon-circle icon-lg icon-primary car-repire-icon-22"></span>
+                 <div class="caption"><a class="link link-default title-thumbnail" href="#">Oil Change</a></div>
+               </div>
+             </div>
+             <div class="cell-sm-6 cell-md-4">
+               <div class="thumbnail-variant-1"><span class="icon icon-circle icon-lg icon-primary car-repire-icon-31"></span>
+                 <div class="caption"><a class="link link-default title-thumbnail" href="#">Tires</a></div>
+               </div>
+             </div>
+             <div class="cell-sm-6 cell-md-4">
+               <div class="thumbnail-variant-1"><span class="icon icon-circle icon-lg icon-primary car-repire-icon-38"></span>
+                 <div class="caption"><a class="link link-default title-thumbnail" href="#">Maintenance</a></div>
+               </div>
+             </div>
+             <div class="cell-sm-6 cell-md-4">
+               <div class="thumbnail-variant-1"><span class="icon icon-circle icon-lg icon-primary car-repire-icon-06"></span>
+                 <div class="caption"><a class="link link-default title-thumbnail" href="#">Tow Truck</a></div>
+               </div>
+             </div>
+             <div class="cell-sm-6 cell-md-4">
+               <div class="thumbnail-variant-1"><span class="icon icon-circle icon-lg icon-primary car-repire-icon-23"></span>
+                 <div class="caption"><a class="link link-default title-thumbnail" href="#">Batteries</a></div>
+               </div>
+             </div>
+           </div><a class="button button-sm button-default-outline" href="services.html">view all services</a>
+         </div>
+         <div class="cell-md-6"><img src="images/index-1-588x448.jpg" alt="" width="588" height="448">
+         </div>
+       </div>
+     </div>
+   </section>
+   <section class="bg-primary section-md">
+     <div class="shell">
+       <h3>About us</h3>
+       <div class="range range-md-justify text-sm-left">
+         <div class="cell-md-5">
+           <h6>We are working since 2002</h6>
+           <p>We offer a full range of garage services to vehicle owners in the area. Our professionals know how to handle a wide range of car services. Whether you drive a passenger car or medium sized truck or SUV, our mechanics strive for ensuring that your vehicle will be performing at its best before leaving our repair shop. We know how to take care of your vehicle.</p><a class="button button-sm button-default-outline" href="services.html">read more</a>
+         </div>
+         <div class="cell-md-6">
+           <!-- Owl Carousel-->
+           <div class="owl-carousel owl-theme owl-loaded owl-text-select-on" data-items="1" data-stage-padding="0" data-loop="false" data-margin="0" data-mouse-drag="false" data-nav="true">
+             
+             
+             
+           <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: 0s; width: 1710px;"><div class="owl-item active" style="width: 570px; margin-right: 0px;"><div class="owl-item">
+               <blockquote class="quote-variant-1">
+                 <div class="unit unit-horizontal unit-spacing-md unit-xs-middle">
+                   <div class="unit-left"><img class="img-circle" src="images/blockquote-1-108x108.jpg" alt="" width="108" height="108">
+                   </div>
+                   <div class="unit-body">
+                     <cite>michael Emberly</cite>
+                     <p>San Francisco, CA</p>
+                     <hr class="divider divider-xs">
+                   </div>
+                 </div>
+                 <div class="quote-body">
+                   <p>
+                     <q>I have been using CarRepair for two years. They keep my vehicle in top condition and it has over 105 thousand miles on it.And the best thing for me as a driver is being able to trust them.</q>
+                   </p>
+                 </div>
+               </blockquote>
+             </div></div><div class="owl-item" style="width: 570px; margin-right: 0px;"><div class="owl-item">
+               <blockquote class="quote-variant-1">
+                 <div class="unit unit-horizontal unit-spacing-md unit-xs-middle">
+                   <div class="unit-left"><img class="img-circle" src="images/blockquote-2-108x108.jpg" alt="" width="108" height="108">
+                   </div>
+                   <div class="unit-body">
+                     <cite>Kathryn Clark</cite>
+                     <p>Detroit, MI</p>
+                     <hr class="divider divider-xs">
+                   </div>
+                 </div>
+                 <div class="quote-body">
+                   <p>
+                     <q>I will never take my car anywhere else for repair service! I am so grateful to have found CarRepair; friendly staff that really cares and has honesty beyond compare! Thanks again, you are the best!</q>
+                   </p>
+                 </div>
+               </blockquote>
+             </div></div><div class="owl-item" style="width: 570px; margin-right: 0px;"><div class="owl-item">
+               <blockquote class="quote-variant-1">
+                 <div class="unit unit-horizontal unit-spacing-md unit-xs-middle">
+                   <div class="unit-left"><img class="img-circle" src="images/blockquote-3-108x108.jpg" alt="" width="108" height="108">
+                   </div>
+                   <div class="unit-body">
+                     <cite>Winnie Thomas</cite>
+                     <p>Los Angeles, CA</p>
+                     <hr class="divider divider-xs">
+                   </div>
+                 </div>
+                 <div class="quote-body">
+                   <p>
+                     <q>They always answer any questions I have. The service is professional and always friendly. My mother and I have been going to CarRepair for years and we are ecstatic with the service. Thanks, guys!</q>
+                   </p>
+                 </div>
+               </blockquote>
+             </div></div></div></div><div class="owl-controls"><div class="owl-nav"><div class="owl-prev" style=""></div><div class="owl-next" style=""></div></div><div class="owl-dots" style="display: none;"></div></div></div>
+         </div>
+       </div>
+     </div>
+   </section>
+   <section class="section-md bg-white">
+     <div class="shell">
+       <h3>Our team</h3>
+       <div class="range range-xs-center range-45">
+         <div class="cell-sm-6 cell-md-3">
+           <div class="thumbnail-variant-2"><img src="images/team-1-270x187.jpg" alt="" width="270" height="187">
+             <div class="caption">
+               <h6><a class="link link-black" href="#">Robert Muller</a></h6><span class="subtitle-thumnbail">Main Mechanic</span><a class="link link-black" href="callto:#">Tel: 800-700-6200</a>
+             </div>
+           </div>
+         </div>
+         <div class="cell-sm-6 cell-md-3">
+           <div class="thumbnail-variant-2"><img src="images/team-2-270x187.jpg" alt="" width="270" height="187">
+             <div class="caption">
+               <h6><a class="link link-black" href="#">Rodney Stratton</a></h6><span class="subtitle-thumnbail">Engineer</span><a class="link link-black" href="callto:#">Tel: 800-700-6200</a>
+             </div>
+           </div>
+         </div>
+         <div class="cell-sm-6 cell-md-3">
+           <div class="thumbnail-variant-2"><img src="images/team-3-270x187.jpg" alt="" width="270" height="187">
+             <div class="caption">
+               <h6><a class="link link-black" href="#">Roi Stratton</a></h6><span class="subtitle-thumnbail">Mechanic</span><a class="link link-black" href="callto:#">Tel: 800-700-6200</a>
+             </div>
+           </div>
+         </div>
+         <div class="cell-sm-6 cell-md-3">
+           <div class="thumbnail-variant-2"><img src="images/team-4-270x187.jpg" alt="" width="270" height="187">
+             <div class="caption">
+               <h6><a class="link link-black" href="#">Ashley Fletcher</a></h6><span class="subtitle-thumnbail">Assistant Mechanic</span><a class="link link-black" href="callto:#">Tel: 800-700-6200</a>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </section>
+   <section class="section-md bg-white">
+     <div class="shell">
+       <h3>Popular Products</h3>
+       <div class="range range-xs-center range-45">
+         <div class="cell-sm-6 cell-md-3">
+           <div class="thumbnail-variant-3">
+             <div class="img-wrap"><img src="images/product-1-119x139.png" alt="" width="119" height="139">
+             </div>
+             <div class="caption">
+               <h6><a class="link link-black" href="#">Universal Video Camera</a></h6><span class="price-thumbnail">$75,99</span><a class="button button-sm button-default-outline" href="services.html">add to cart</a>
+             </div>
+           </div>
+         </div>
+         <div class="cell-sm-6 cell-md-3">
+           <div class="thumbnail-variant-3">
+             <div class="img-wrap"><img src="images/product-2-161x102.png" alt="" width="161" height="102">
+             </div>
+             <div class="caption">
+               <h6><a class="link link-black" href="#">AC Front Speaker</a></h6><span class="price-thumbnail">$30,99</span><a class="button button-sm button-default-outline" href="services.html">add to cart</a>
+             </div>
+           </div>
+         </div>
+         <div class="cell-sm-6 cell-md-3">
+           <div class="thumbnail-variant-3">
+             <div class="img-wrap"><img src="images/product-3-96x139.png" alt="" width="96" height="139">
+             </div>
+             <div class="caption">
+               <h6><a class="link link-black" href="#">Silver Steel Wheel</a></h6><span class="price-thumbnail">$250,99</span><a class="button button-sm button-default-outline" href="services.html">add to cart</a>
+             </div>
+           </div>
+         </div>
+         <div class="cell-sm-6 cell-md-3">
+           <div class="thumbnail-variant-3">
+             <div class="img-wrap"><img src="images/product-4-134x136.png" alt="" width="134" height="136">
+             </div>
+             <div class="caption">
+               <h6><a class="link link-black" href="#">K&amp;N Air Filter</a></h6><span class="price-thumbnail">$40,99</span><a class="button button-sm button-default-outline" href="services.html">add to cart</a>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </section>
+   <section class="bg-white">
+     <div class="shell">
+       <h3>FAQ</h3>
+       <div class="range range-xs-center range-md-bottom">
+         <div class="cell-md-6 veil reveal-md-block"><img src="images/index-2-433x570.png" alt="" width="433" height="570">
+         </div>
+         <div class="cell-md-6 section-bottom-50">
+           <!-- Accordion-->
+           <div class="panel-group accordion-custom" id="accordion" role="tablist" aria-multiselectable="true">
+             <div class="panel panel-default">
+               <div class="panel-heading" id="headingOne" role="tab">
+                 <h4 class="panel-title"><a class="two-column-arrow" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">What parts should be replaced at what intervals?</a></h4>
+               </div>
+               <div class="panel-collapse collapse in" id="collapseOne" role="tabpanel" aria-labelledby="headingOne">
+                 <div class="panel-body">Your owner’s manual provides all necessary information regarding what parts to replace and when to do it. Read it thoroughly and note any exceptions or severe service notations. Warranties are there to protect the consumer, but you must follow the requirements. If you have questions about warranties, please contact us.</div>
+               </div>
+             </div>
+             <div class="panel panel-default">
+               <div class="panel-heading" id="headingTwo" role="tab">
+                 <h4 class="panel-title"><a class="collapsed two-column-arrow" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Should I consider using synthetic motor oil?</a></h4>
+               </div>
+               <div class="panel-collapse collapse" id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo">
+                 <div class="panel-body">Synthetic engine oils are produced through a synthesis process that takes very small molecules and assembles them into larger designer molecules with premium lubricating properties.</div>
+               </div>
+             </div>
+             <div class="panel panel-default">
+               <div class="panel-heading" id="headingThree" role="tab">
+                 <h4 class="panel-title"><a class="collapsed two-column-arrow" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">How do I keep track of routine maintenance?</a></h4>
+               </div>
+               <div class="panel-collapse collapse" id="collapseThree" role="tabpanel" aria-labelledby="headingThree">
+                 <div class="panel-body">Keep a maintenance schedule. Doing so helps you plan for services that prolong the life of your vehicle, reduce vehicle failures, and gain you peace of mind. If you'd prefer, we can maintain the schedule for you.</div>
+               </div>
+             </div>
+             <div class="panel panel-default">
+               <div class="panel-heading" id="headingFour" role="tab">
+                 <h4 class="panel-title"><a class="collapsed two-column-arrow" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">When do I need to replace my belts and hoses?</a></h4>
+               </div>
+               <div class="panel-collapse collapse" id="collapseFour" role="tabpanel" aria-labelledby="headingThree">
+                 <div class="panel-body">If you can see cracks in your belts, it is time to have them replaced. We recommend replacing your belts and hoses at least every three to four years. If your hoses look swollen or soft that could be an indicator that they need to be replaced. However, hoses can deteriorate on the inside and if this happens there is no visual evidence that the hose needs to be changed.</div>
+               </div>
+             </div>
+             <div class="panel panel-default">
+               <div class="panel-heading" id="headingFive" role="tab">
+                 <h4 class="panel-title"><a class="collapsed two-column-arrow" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">How often should I consider maintenance checkup?</a></h4>
+               </div>
+               <div class="panel-collapse collapse" id="collapseFive" role="tabpanel" aria-labelledby="headingThree">
+                 <div class="panel-body">This depends on the type of spark plugs that are in your car. Older cars (15-20 years old) are more likely to have standard plugs and they last 12,000-15,000 miles, newer models up to the year 2000 are platinum tipped and will last 30,000 miles. Some 2000 and newer have iridium tipped plugs and will go 90,000 to 100,000 miles.</div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </section>
+   <section class="offset-lg-top--360">
+     <!-- RD Google Map-->
+     <div class="rd-google-map rd-google-map__model" data-zoom="15" data-y="40.643180" data-x="-73.9874068" data-styles="[{&quot;featureType&quot;:&quot;landscape&quot;,&quot;stylers&quot;:[{&quot;hue&quot;:&quot;#FFBB00&quot;},{&quot;saturation&quot;:43.400000000000006},{&quot;lightness&quot;:37.599999999999994},{&quot;gamma&quot;:1}]},{&quot;featureType&quot;:&quot;road.highway&quot;,&quot;stylers&quot;:[{&quot;hue&quot;:&quot;#FFC200&quot;},{&quot;saturation&quot;:-61.8},{&quot;lightness&quot;:45.599999999999994},{&quot;gamma&quot;:1}]},{&quot;featureType&quot;:&quot;road.arterial&quot;,&quot;stylers&quot;:[{&quot;hue&quot;:&quot;#FF0300&quot;},{&quot;saturation&quot;:-100},{&quot;lightness&quot;:51.19999999999999},{&quot;gamma&quot;:1}]},{&quot;featureType&quot;:&quot;road.local&quot;,&quot;stylers&quot;:[{&quot;hue&quot;:&quot;#FF0300&quot;},{&quot;saturation&quot;:-100},{&quot;lightness&quot;:52},{&quot;gamma&quot;:1}]},{&quot;featureType&quot;:&quot;water&quot;,&quot;stylers&quot;:[{&quot;hue&quot;:&quot;#0078FF&quot;},{&quot;saturation&quot;:-13.200000000000003},{&quot;lightness&quot;:2.4000000000000057},{&quot;gamma&quot;:1}]},{&quot;featureType&quot;:&quot;poi&quot;,&quot;stylers&quot;:[{&quot;hue&quot;:&quot;#00FF6A&quot;},{&quot;saturation&quot;:-1.0989010989011234},{&quot;lightness&quot;:11.200000000000017},{&quot;gamma&quot;:1}]}]">
+       <ul class="map_locations">
+         <li data-y="40.643180" data-x="-73.9874068">
+           <h2>Find the Nearest Auto Service</h2>
+           <p>818 Noe Street San Francisco, CA 94114</p>
+         </li>
+         <li data-y="40.64319" data-x="-73.9994068">
+           <h2>Find the Nearest Auto Service</h2>
+           <p>818 Noe Street San Francisco, CA 94114</p>
+         </li>
+         <li data-y="40.647180" data-x="-73.9774068">
+           <h2>Find the Nearest Auto Service</h2>
+           <p>818 Noe Street San Francisco, CA 94114</p>
+         </li>
+       </ul>
+     </div>
+   </section>
+   <!-- Page Footer -->
+   <footer class="page-footer text-center text-sm-left">
+		<div class="shell section-xs">
+			<div class="range range-xs-center range-45">
+			<div class="cell-sm-6 cell-lg-3">
+			  <h6>ABOUT US</h6>
+			  <hr class="divider divider-xs">
+			  <div class="p">CarRepair has been providing reliable maintenance services for vehicles of all sizes and manufacturers since 2002.</div>
+			        <ul class="list-inline">
+			          <li><a class="icon fa fa-facebook icon-circle icon-xs icon-white" href="#"></a></li>
+			          <li><a class="icon fa fa-twitter icon-circle icon-xs icon-white" href="#"></a></li>
+			          <li><a class="icon fa fa-google-plus icon-circle icon-xs icon-white" href="#"></a></li>
+			          <li><a class="icon fa fa-instagram icon-circle icon-xs icon-white" href="#"></a></li>
+			        </ul>
+			</div>
+		   <div class="cell-sm-6 cell-lg-3">
+		     <h6>Quick Links</h6>
+		     <hr class="divider divider-xs">
+		     <ul class="list list-unstyled list-2-col">
+		       <li><a class="link link-footer" href="#">About Us</a></li>
+		       <li><a class="link link-footer" href="#">FAQ</a></li>
+		       <li><a class="link link-footer" href="#">Contacts</a></li>
+		       <li><a class="link link-footer" href="#">Pricing</a></li>
+		       <li><a class="link link-footer" href="#">Blog</a></li>
+		       <li><a class="link link-footer" href="#">Privacy</a></li>
+		       <li><a class="link link-footer" href="#">Resources</a></li>
+		       <li><a class="link link-footer" href="#">Site map</a></li>
+		     </ul>
+		   </div>
+		   <div class="cell-sm-6 cell-lg-3">
+		     <h6>contact us</h6>
+		     <hr class="divider divider-xs">
+		     <div class="unit unit-horizontal unit-middle unit-align-center unit-sm-align-left unit-spacing-xs">
+		       <div class="unit-left"><span class="icon icon-footer fa-envelope"></span></div>
+		       <div class="unit-body"><a class="link link-white" href="mailto:#"> info@demolink.org</a></div>
+		     </div>
+		     <div class="unit unit-horizontal unit-top unit-align-center unit-sm-align-left unit-spacing-xs">
+		       <div class="unit-left"><span class="icon icon-footer fa-phone"></span></div>
+		       <div class="unit-body"><a class="link link-white" href="callto:#">(415) 347-3160</a></div>
+		     </div>
+		     <div class="unit unit-horizontal unit-middle unit-align-center unit-sm-align-left unit-spacing-xs">
+		       <div class="unit-left"><span class="icon icon-footer fa-map-marker"></span></div>
+		       <div class="unit-body"><a class="link link-white" href="#">818 Noe Street San <br> Francisco, CA 94114</a></div>
+		     </div>
+		   </div>
+		   <div class="cell-sm-6 cell-lg-3">
+		     <h6>newsletter</h6>
+		     <hr class="divider divider-xs">
+		     <div class="p small"> subscribe to our mailing list</div>
+		           <form class="rd-mailform form-subscribe" data-form-output="form-output-global" data-form-type="subscribe" method="post" action="bat/rd-mailform.php" novalidate="novalidate">
+		             <div class="form-group">
+		               <input class="form-input form-control-has-validation form-control-last-child" placeholder="E-mail" type="email" name="email" data-constraints="@Required @Email" id="regula-generated-181106"><span class="form-validation"></span>
+		             </div>
+		             <button class="button button-coral-red" type="submit">Send</button>
+		           </form>
+		   </div>
+		 </div>
+		</div>
+		<section class="text-center copyright">
+		 <p>© <span id="copyright-year">2017</span> CarRepair. <a class="link link-white" href="privacy-policy.html">Privacy Policy</a>
+		   <!-- {%FOOTER_LINK}-->
+		 </p>
+		</section>
+   </footer>
+ </div>
+
+ <a href="#" id="ui-to-top" class="ui-to-top fa fa-angle-up"></a>
+
+   <!-- <script src="core.min.js"></script> -->
+   <!-- <script src="script.js"></script> -->
+   <script src="app.js"></script>
+</body>
+</html>

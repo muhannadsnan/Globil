@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-  @include('layout.head')
+	
+	@include('layout.head')
 
-  <body>
+<body>
+	<div class="page text-center">
+			
+		@include('layout.nav')
 
-    @include('layout.nav')
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 content ">
+				
+					@yield('content')
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 content">
-        
-          @yield('content')
+				</div><!-- /.blog-main -->
+				<div class="col-md-3 sidebar">
 
-        </div><!-- /.blog-main -->
-        <div class="col-md-3 sidebar">
+					@include('layout.sidebar')
 
-          @include('layout.sidebar')
+				</div><!-- /.blog-sidebar -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
 
-        </div><!-- /.blog-sidebar -->
-      </div><!-- /.row -->
-    </div><!-- /.container -->
-    
-    @include('layout.footer')
-    
-  </body>
+		@include('layout.footer')
+
+	</div>
+	
+	
+</body>
 </html>
