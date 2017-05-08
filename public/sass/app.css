@@ -1,0 +1,22 @@
+html, body {
+	background-color: #fff;
+	color: #636b6f;
+	//font-family: 'Raleway', sans-serif;
+	font-weight: 500;
+	margin: 0; 
+}
+.navbar {border-radius: 0}
+.panel {padding:0;}
+
+footer {padding-top:30px;}
+
+.latest-posts .panel {margin-right:10px; margin-left:10px;}
+.latest-posts a:hover{border: 1px solid #000;}
+
+.hd-default {
+	color: #fff; background-color: #ccc; font-size: ; margin: 0; margin-bottom: 10px;
+	padding: 10px 20px; text-align: center;}
+
+.hd-primary {
+	color: #fff; background-color: #337ab7; font-size: 16pt; margin: 0; margin-bottom: 10px;
+	padding: 10px 20px; border: 1px solid #14538a; border-radius: 5px; text-align: center;}
