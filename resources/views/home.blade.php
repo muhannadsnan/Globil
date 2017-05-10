@@ -1,14 +1,17 @@
 @extends('master')
 
 @section('content')
+
 <div class="container">
 	<div class=" row">
+
+
 		<div class="latest-posts col-md-8">
 			
 			<h3 class="hd-primary">Latest Posts</h3>
 
 			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail">
+				<div class="thumbnail panel-info">
 					<img src="https://cdn.gearpatrol.com/wp-content/uploads/2016/12/German-Car-Guide-Gear-Patrol-LEad-Featured.jpg" alt="...">
 					<div class="caption">
 						<h3>Post #1</h3>
@@ -21,7 +24,7 @@
 			</div>
 
             <div class="col-sm-6 col-md-4">
-				<div class="thumbnail">
+				<div class="thumbnail panel-info">
 					<img src="https://cdn.gearpatrol.com/wp-content/uploads/2016/12/German-Car-Guide-Gear-Patrol-LEad-Featured.jpg" alt="...">
 					<div class="caption">
 						<h3>Post #1</h3>
@@ -34,7 +37,7 @@
 			</div>
 
 			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail">
+				<div class="thumbnail panel-info">
 					<img src="https://cdn.gearpatrol.com/wp-content/uploads/2016/12/German-Car-Guide-Gear-Patrol-LEad-Featured.jpg" alt="...">
 					<div class="caption">
 						<h3>Post #1</h3>
@@ -47,7 +50,7 @@
 			</div>
 
 			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail">
+				<div class="thumbnail panel-default">
 					<img src="https://cdn.gearpatrol.com/wp-content/uploads/2016/12/German-Car-Guide-Gear-Patrol-LEad-Featured.jpg" alt="...">
 					<div class="caption">
 						<h3>Post #1</h3>
@@ -60,7 +63,7 @@
 			</div>
 
 			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail">
+				<div class="thumbnail panel-default">
 					<img src="https://cdn.gearpatrol.com/wp-content/uploads/2016/12/German-Car-Guide-Gear-Patrol-LEad-Featured.jpg" alt="...">
 					<div class="caption">
 						<h3>Post #1</h3>
@@ -73,7 +76,7 @@
 			</div>
 
 			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail">
+				<div class="thumbnail panel-default">
 					<img src="https://cdn.gearpatrol.com/wp-content/uploads/2016/12/German-Car-Guide-Gear-Patrol-LEad-Featured.jpg" alt="...">
 					<div class="caption">
 						<h3>Post #1</h3>
@@ -84,8 +87,15 @@
 					</div>
 				</div>
 			</div>
+
+
+			<button class="btn btn-info btn-lg">Load more</button>
 
 		</div>
+
+
+
 	</div>
+
 </div>
 @endsection

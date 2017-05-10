@@ -1,3 +1,4 @@
+
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		 Sidebar
@@ -12,21 +13,21 @@
 </div>
 
 
-<div class="ads panel panel-primary">
+<div class="ads panel panel-warning">
 	<div class="panel-heading">
 		Advertisements
 	</div>
 
 	<div class="panel-body">
-		<a href="#" class="">
+		<a href="#" class="thumbnail">
 			<img src="http://www.takepart.com/sites/default/files/styles/tp_gallery_slide/public/slogan-itok=C7mRvp9G.jpg"/>
 		</a>
 
-		<a href="#" class="">
+		<a href="#" class="thumbnail">
 			<img src="http://www.toxel.com/wp-content/uploads/2008/07/ua2.jpg"/>
 		</a>
 
-		<a href="#" class="">
+		<a href="#" class="thumbnail">
 			<img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/07d/138/3b48a74.jpg"/>
 		</a>
 
