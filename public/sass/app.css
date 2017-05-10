@@ -6,8 +6,15 @@ html, body {
 	margin: 0; 
 	padding: 0;
 }
+
+nav i {font-size: 22pt !important;  vertical-align: middle;}
+.navbar-brand {padding: 14px 15px;}
+.navbar-brand h2{margin:0px ; padding: 0px;}
 /*.navbar {border-radius: 0}*/
 .well h1{color: #;;}
+.well .panel {float:none;}
+.well .panel-header {margin: 0px; border-width: 0px;}
+.well .panel-body {margin: 0px; border:0px solid #ccc;}
 .panel {padding:0;}
 .panel-me { background-color: ; border: 1px solid #1c8cad;}
 
