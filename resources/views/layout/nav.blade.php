@@ -33,18 +33,33 @@
       </ul> -->
       
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/posts/create"><i class="fa fa-sticky-note" aria-hidden="true"></i> Create a post</a></li>
-        <li><a href="/messages"><i class="fa fa-envelope" aria-hidden="true"></i> <span>My messages</span></a></li>
-        <li><a href="/account"><i class="fa fa-user-circle" aria-hidden="true"></i> My account</a></li>
-        <li><a href="/wish-list"><i class="fa fa-heart" aria-hidden="true"></i> Wish list </a></li>
+        <li><a href="/messages"><i class="fa fa-envelope" aria-hidden="true"></i> My messages</a></li>
+        @if(!auth()->id() || auth()->user()->type == "B")
+          <li><a href="/posts/create"><i class="fa fa-sticky-note" aria-hidden="true"></i> Post a car</a></li>
+          <li><a href="/profile"><i class="fa fa-user-circle" aria-hidden="true"></i> My profile</a></li>
+          <li><a href="/wish-list"><i class="fa fa-heart" aria-hidden="true"></i> Wish list </a></li>
+        @endif
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> @if(auth()->check())  {{auth()->user()->name}} @else  Menu @endif <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/login">Log in</a></li>
-            <li><a href="/signup">Sign up</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/logout">Log out</a></li>
+
+            @if(auth()->check())
+
+              @if(auth()->user()->type == "A")
+                <li><a href="/control-panel">Control Panel</a></li>
+              @else
+                <li><a href="/profile">Profile</a></li>                
+              @endif
+
+              <li role="separator" class="divider"></li>
+              <li><a href="/logout">Log out</a></li>
+            
+            @else  <!-- GUEST -->
+            
+              <li><a href="/login">Log in</a></li>
+              <li><a href="/signup">Sign up</a></li>
+            
+            @endif
           </ul>
         </li>
       </ul>
