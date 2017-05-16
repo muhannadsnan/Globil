@@ -34,8 +34,8 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/messages"><i class="fa fa-envelope" aria-hidden="true"></i> My messages</a></li>
-        @if(!auth()->id() || auth()->user()->type == "B")
-          <li><a href="/posts/create"><i class="fa fa-sticky-note" aria-hidden="true"></i> Post a car</a></li>
+        @if(auth()->guest() || auth()->user()->type == "B")
+          <li><a href="/car/create"><i class="fa fa-plus" aria-hidden="true"></i> Post a car</a></li>
           <li><a href="/profile"><i class="fa fa-user-circle" aria-hidden="true"></i> My profile</a></li>
           <li><a href="/wish-list"><i class="fa fa-heart" aria-hidden="true"></i> Wish list </a></li>
         @endif
@@ -57,7 +57,7 @@
             @else  <!-- GUEST -->
             
               <li><a href="/login">Log in</a></li>
-              <li><a href="/signup">Sign up</a></li>
+              <li><a href="/register">Sign up</a></li>
             
             @endif
           </ul>
@@ -66,32 +66,3 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
-<!-- .well -->
-<div class="well">
-  <h1 class="text-info">Welcome to Globil!</h1> 
-  <h3>Let's find something great.</h3>
-  <h4>Search in oursite. You can find thousands of results.</h4>
-  
-  <div class="panel panel-default col-md-6 col-md-offset-3">
-    <form action="/search" method="POST">
-      <div class="input-group form-group  panel-header">
-
-        <span class="input-group-btn">
-          <a href="#" class="expand-advanced-search btn btn-default">More filters</a>
-        </span>
-        <input type="text" class="form-control" placeholder="Search">
-        <span class="input-group-btn">
-          <button type="submit" class="btn btn-success">Find</button>
-        </span>
-      </div>
-
-      <div class="advanced-filtering panel-body " style="display:none;">
-        <h1>Here goes advanced filtering..</h1>
-      </div>
-
-    </form>
-  </div>
-      
-    
-</div>

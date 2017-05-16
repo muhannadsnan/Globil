@@ -10,11 +10,16 @@ class CarsController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('auth')->except();	
+		$this->middleware('auth')->except([]);	
 	}
 
 	public function latestPosts()
 	{
 		
+	}
+
+	public function create()
+	{
+		return view('cars.create', compact(''));
 	}
 }

@@ -1,6 +1,34 @@
 @extends('master')
 
 @section('content')
+<!-- .well -->
+<div class="well">
+  <h1 class="text-info">Welcome to Globil!</h1> 
+  <h3>Let's find something great.</h3>
+  <h4>Search in oursite. You can find thousands of results.</h4>
+  
+  <div class="panel panel-default col-md-6 col-md-offset-3">
+    <form action="/search" method="POST">
+      <div class="input-group form-group  panel-header">
+
+        <span class="input-group-btn">
+          <a href="#" class="expand-advanced-search btn btn-default">More filters</a>
+        </span>
+        <input type="text" class="form-control" placeholder="Search">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-success">Find</button>
+        </span>
+      </div>
+
+      <div class="advanced-filtering panel-body " style="display:none;">
+        <h1>Here goes advanced filtering..</h1>
+      </div>
+
+    </form>
+  </div>
+      
+</div><!-- END.well -->
+
 
 <div class="container">
 	<div class=" row">
@@ -16,7 +44,7 @@
 				<div class="thumbnail panel-info">
 					<img src="https://cdn.gearpatrol.com/wp-content/uploads/2016/12/German-Car-Guide-Gear-Patrol-LEad-Featured.jpg" alt="...">
 					<div class="caption">
-						<h4>{{$car->brand}} - ( {{$car->model}} ) <small>year: {{$car->year}}</small></h4>
+						<h4>{{$car->brand}}, <strong>{{$car->model}}</strong> <br/><small>year: {{$car->year}}</small></h4>
 						
 						<p class="desc">Description goes here.. Description goes here..Description goes here..</p>
 						<a href="#" class="btn btn-default" role="button">See more</a>
