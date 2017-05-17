@@ -12,4 +12,4 @@ Route::get('/profile', 'Auth\LoginController@profile');
 Route::get('/wish-list', 'WishListsController@wishList');
 // Route::get('/messages', 'MessagesController@index');
 
-Route::resource('car', 'CarsController');
+Route::resource('cars', 'CarsController');

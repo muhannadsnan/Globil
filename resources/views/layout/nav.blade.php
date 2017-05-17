@@ -35,7 +35,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/messages"><i class="fa fa-envelope" aria-hidden="true"></i> My messages</a></li>
         @if(auth()->guest() || auth()->user()->type == "B")
-          <li><a href="/car/create"><i class="fa fa-plus" aria-hidden="true"></i> Post a car</a></li>
+          <li><a href="/cars/create"><i class="fa fa-plus" aria-hidden="true"></i> Post a car</a></li>
           <li><a href="/profile"><i class="fa fa-user-circle" aria-hidden="true"></i> My profile</a></li>
           <li><a href="/wish-list"><i class="fa fa-heart" aria-hidden="true"></i> Wish list </a></li>
         @endif
@@ -66,3 +66,12 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+
+@if($flash = session('message'))
+
+  <div id="flash-message" class="alert alert-success">
+    {{ $flash }}
+  </div>
+
+@endif

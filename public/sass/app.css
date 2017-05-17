@@ -6,6 +6,8 @@ html, body {
 	margin: 0; 
 	padding: 0;
 }
+.NO-float {float: none;}
+.alert {font-size: 14pt}
 
 nav i {font-size: 22pt !important;  vertical-align: middle;}
 .navbar-brand {padding: 14px 15px;}

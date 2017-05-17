@@ -13,7 +13,7 @@
 		<div class="container">
 			
 			<div class="row">
-				<div class="col-md-8 content ">
+				<div class="col-md-9 content ">
 				
 					@yield('content')
 
