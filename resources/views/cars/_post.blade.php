@@ -107,3 +107,9 @@
 	<input name="yearly_fee" type="text" class="form-control" value="{{ old('yearly_fee') }}" placeholder="Yearly fee" requiredX autofocus>
 </div>
 
+
+<div class="col-md-6 form-group {{ $errors->has('images') ? 'has-error' : '' }}">
+	<input name="images[]" type="file" class="form-control" value="{{ old('images[]') }}" multiple >
+</div>
+
+

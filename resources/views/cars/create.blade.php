@@ -3,9 +3,11 @@
 
 @section("content")
 
-@if($flash = session('message'))
+@if($flash = session('message') || false)
 
-<a href="/cars/create" class="btn btn-success"> Create another post !</a>
+<div class="form-group">
+	<a href="/cars/create" class="btn btn-success"> Create another post !</a>
+</div>
 
 @else
 
@@ -15,7 +17,7 @@
 	</div>
 
 	<div class="panel-body">
-		<form method="POST" action="/cars">
+		<form method="POST" action="/cars" enctype="multipart/form-data">
 
 			{{ csrf_field() }}
 			

@@ -9,11 +9,15 @@ use Illuminate\Support\Facades\Auth;
 class Car extends Model
 {
 
-	// protected $fillable = ['...'];
+	// protected $fillable = [
+	// 	'brand', 'model', 'country', 'price', 'year', 'kilometer', 'color', 'desc',
+	// 	'fuel_type_bensin', 'fuel_type_diesel', 'fuel_type_gas', 'fuel_type_electric', 
+	// 	'gear', 'weight', 'cylinder', 'co2', 'car_type', ....];
 
 	public static function createCar($request)
 	{
-		Car::create([
+		//Car::create($request->all());
+		return Car::create([
 			"brand" => $request['brand'],
 			"model" => $request['model'],
 			"country" => $request['country'],
@@ -68,6 +72,13 @@ class Car extends Model
 			"reg_nr" => 'required|max:255',
 			"reg_fee" => 'required|numeric',
 			"yearly_fee" => 'required|numeric',
+			//"images" => 'max:2000000|mimes:jpeg,jpg,bmp,png',
+			"images" => 'max:2000000',
 		];
+	}
+
+	public function pictures()
+	{
+		return $this->hasMany('\App\Picture');
 	}
 }

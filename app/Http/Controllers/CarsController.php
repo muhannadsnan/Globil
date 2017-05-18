@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Car;
+use App\Picture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -19,11 +20,18 @@ class CarsController extends Controller
 		//dd($request->all());
 		$this->validate($request, Car::rules());
  		
- 		Car::createCar($request);
+ 		$car = Car::createCar($request);
+
+ 		if(count($request->images) > 0){ //dd($request->images);
+ 			$pic_names = [];
+ 			if(($pic_names = Picture::createPicsForCar($request->images, $car->id)) != [] ){ //// insert OK? then upload pics
+ 				Picture::storePics($request->images, $pic_names);
+ 			}
+ 		}
 
  		Session::flash('message', 'Car was posted successfully!');
 
- 		return back();
+ 		return redirect('/cars/create');
 	}
 
 	public function create()

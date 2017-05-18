@@ -42,7 +42,7 @@
 			
 			<div class="col-sm-6 col-md-4 car">
 				<div class="thumbnail panel-info">
-					<img src="https://cdn.gearpatrol.com/wp-content/uploads/2016/12/German-Car-Guide-Gear-Patrol-LEad-Featured.jpg" alt="...">
+					<img src="{{ asset('storage/images') . '/' . $car->pictures[0]->id . '.' . $car->pictures[0]->ext }}" alt="...">
 					<div class="caption">
 						<h4>{{$car->brand}}, <strong>{{$car->model}}</strong> <br/><small>year: {{$car->year}}</small></h4>
 						

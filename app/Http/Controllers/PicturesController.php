@@ -6,5 +6,8 @@ use Illuminate\Http\Request;
 
 class PictureController extends Controller
 {
-    //
+	public function store()
+	{
+		
+	}
 }
