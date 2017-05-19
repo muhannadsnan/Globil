@@ -38,23 +38,12 @@
 			
 			<h3 class="hd-primary">Latest Posts</h3>
 
-			@foreach($latestCars as $car)
-			
-			<div class="col-sm-6 col-md-4 car">
-				<div class="thumbnail panel-info">
-					<img src="{{ asset('storage/images') . '/' . $car->pictures[0]->id . '.' . $car->pictures[0]->ext }}" alt="...">
-					<div class="caption">
-						<h4>{{$car->brand}}, <strong>{{$car->model}}</strong> <br/><small>year: {{$car->year}}</small></h4>
-						
-						<p class="desc">Description goes here.. Description goes here..Description goes here..</p>
-						<a href="#" class="btn btn-default" role="button">See more</a>
-					</div>
-				</div>
-			</div>
-			
-			@endforeach
+				@foreach($latestCars as $car)
 				
-
+					@include('cars.latestPosts')
+				
+				@endforeach
+				
 			<div class="col-xs-12 form-group">
 				<button class="btn btn-info btn-lg">Load more</button>
 			</div>

@@ -12,7 +12,7 @@ class CarsController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('auth')->except([]);	
+		$this->middleware('auth')->except(['show']);	
 	}
 
 	public function store(Request $request)
@@ -39,6 +39,9 @@ class CarsController extends Controller
 		return view('cars.create', compact(''));
 	}
 
-	
+	public function show(Car $car)
+	{
+		return view('cars.show', compact('car'));
+	}
 
 }

@@ -77,8 +77,14 @@ class Car extends Model
 		];
 	}
 
+// ============= RELATIONSHIPs =============
+
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
 	public function pictures()
 	{
-		return $this->hasMany('\App\Picture');
+		return $this->hasMany(Picture::class);
 	}
 }
