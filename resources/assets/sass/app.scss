@@ -5,5 +5,17 @@
 // Variables
 @import "variables";
 
+
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+//font-awesome
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+
+
+
+@import "toastr.min";
+
+@import "bulma";
+
+@import "main";

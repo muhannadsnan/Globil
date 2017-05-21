@@ -19,7 +19,8 @@
   @yield('css')
 
   <!-- App CSS -->
-  <link rel="stylesheet" href="{{ asset('sass/app.css') }}">
+  <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
+  <link rel="stylesheet" href="{{ asset('sass/main.css') }}">
 
 
 

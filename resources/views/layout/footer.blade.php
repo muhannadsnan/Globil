@@ -31,4 +31,4 @@
 	</div>
 </footer>
 
-@include('layout.scripts');
+@include('layout.scripts')

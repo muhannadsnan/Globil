@@ -24,14 +24,14 @@
 			@include('layout.errors')
 			@include('cars._post')
 
+			<input type="submit" value="Publish" class="col-sm-6 col-sm-offset-3 btn btn-primary">
+			</form>
 	</div>
 
-	<div class="panel-footer">
+	<!-- <div class="panel-footer">
 		<div class="col-md-6 col-md-offset-3 NO-float">
-			<input type="submit" value="Publish" class="col-md-12 btn btn-primary NO-float">
-			</form>
 		</div>
-	</div>
+	</div> -->
 </div>
 
 @endif

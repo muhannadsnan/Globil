@@ -4,7 +4,7 @@
 	@include('layout.head')
 
 <body>
-	<div class="page text-center">
+	<div class="page text-center" id="app">
 			
 
 		@include('layout.nav')
@@ -27,10 +27,9 @@
 			</div><!-- .row -->
 		</div><!-- .container -->
 
-
-		@include('layout.footer')
-
 	</div>
 	
+		@include('layout.footer')
+
 </body>
 </html>

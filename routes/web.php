@@ -9,7 +9,9 @@ Route::get('/control-panel', 'Auth\LoginController@controlPanel');
 Route::get('/profile', 'Auth\LoginController@profile');
 
 
-Route::get('/wish-list', 'WishListsController@wishList');
+Route::get('/wish-list', 'WishListsController@index');
+Route::post('/wish-list', 'WishListsController@store');
+Route::delete('/wish-list/{wish}', 'WishListsController@destroy');
 // Route::get('/messages', 'MessagesController@index');
 
 Route::resource('cars', 'CarsController');

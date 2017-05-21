@@ -1,0 +1,47 @@
+html, body {
+	background-color: #fff;
+	color: #636b6f;
+	//font-family: 'Raleway', sans-serif;
+	font-weight: 500;
+	margin: 0; 
+	padding: 0;
+}
+.NO-float {float: none;}
+.alert {font-size: 14pt}
+
+nav i {font-size: 22pt !important;  vertical-align: middle;}
+.navbar-brand {padding: 14px 15px;}
+.navbar-brand h2{margin:0px ; padding: 0px;}
+/*.navbar {border-radius: 0}*/
+.well h1{}
+.well .panel {float:none;}
+.well .panel-header {margin: 0px; border-width: 0px;}
+.well .panel-body {margin: 0px; border:0px solid #ccc;}
+.panel {padding:0;}
+.panel h1, .panel h2, .panel h3, .panel h4 {margin:0;}
+.panel-me { /*background-color: ;*/ border: 1px solid #1c8cad;}
+
+
+.latest-posts .panel {margin-right:10px; margin-left:10px;}
+.latest-posts .car {}
+.latest-posts .car .desc{ overflow:hidden; height: 62px; border: 0px solid #000;}
+.latest-posts a:hover{border: 1px solid #000;}
+
+footer { padding:5px 40px; background-color: #1c8cad; border-top: 1px solid #555; margin: 20px 0px 0px 0px;
+	color: #2d3092; line-height: 17px; font-weight: 600;}
+footer a, footer a:active, footer a:visited {color:#2d3092;}
+footer a:hover {text-decoration: none; color: #ddd;}
+footer ul {text-align: center}
+footer .sub2 {border-left: 0px solid #2d3092; color: #ddd;}
+footer h2 {border-bottom: 1px solid #999; width: 150px; padding:5px; margin: 0px auto 10px auto}
+footer .logo-div {height: 105px; }
+footer .logo-div img{height: 90px; margin: auto; /*width: ;*/ vertical-align: middle; line-height: 90px}
+footer hr {border-color: #999;}
+
+.hd-default {
+	color: #fff; background-color: #ccc; /*font-size: ;*/ margin: 0; margin-bottom: 10px;
+	padding: 10px 20px; text-align: center;}
+
+.hd-primary {
+	color: #fff; background-color: #5bc0de; font-size: 16pt; margin: 0; margin-bottom: 10px;
+	padding: 10px 20px; border: 1px solid #1c8cad; border-radius: 5px; text-align: center;}
