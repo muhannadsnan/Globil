@@ -8,7 +8,6 @@
 <!-- BootstrapFormHelpers -->
 	<script src="{{ asset('BootstrapFormHelpers/dist/js/bootstrap-formhelpers.min.js') }}"></script>
     
-<script src="js/app.js"></script>
-
+<!-- <script src="js/app.js"></script> -->
 
 @yield('scripts')

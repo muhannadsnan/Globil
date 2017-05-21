@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="{{ asset('BootstrapFormHelpers/dist/css/bootstrap-formhelpers.min.css') }}">
   <!-- Font Awesome -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  
+  @yield('css')
+
   <!-- App CSS -->
   <link rel="stylesheet" href="{{ asset('sass/app.css') }}">
 
@@ -23,4 +26,6 @@
   <script>
     window.Laravel = <?php echo json_encode([ 'csrfToken' => csrf_token(), ]) ?>
   </script>
+
+
 </head>
