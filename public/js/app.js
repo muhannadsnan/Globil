@@ -12104,7 +12104,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			url: '/wish-list',
-			wish_id: 0
+			wish_id: 0,
+			wish: {}
 		};
 	},
 
@@ -12119,6 +12120,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		act: {},
 		data1: {},
 		data2: {},
+		data3: {},
 		css: { default: 'nocss' }
 	},
 
@@ -12149,9 +12151,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.post(this.url, { car_id: this.data1, user_id: this.data2 }).then(function (response) {
 				toastr.success(response.data.message);
 				_this.act = 'remove';
-				_this.wish_id = response.data.wish_id;
+				_this.wish = response.data.wish;
+				_this.wish_id = response.data.wish.id;
 			}).catch(function (err) {
-				toastr.error('Error was occured!', err.message);
+				toastr.error(err.message, 'Error occured!');
 			});
 		},
 		deleteRequest: function deleteRequest() {
@@ -12161,7 +12164,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				toastr.success(response.data.message);
 				_this2.act = 'add';
 			}).catch(function (err) {
-				toastr.error('Error was occured!', err.message);
+				toastr.error(err.message, 'Error occured!');
 			});
 		}
 	},

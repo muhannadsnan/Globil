@@ -14,6 +14,7 @@
 			return {
 				url: '/wish-list',
 				wish_id: 0,
+				wish: {}
 			}
 		},
 
@@ -30,6 +31,7 @@
 			act: {},
 			data1: {},
 			data2: {},
+			data3: {},
 			css: {default: 'nocss'}
 		},  
 
@@ -64,10 +66,11 @@
 					.then(response => {
 						toastr.success(response.data.message);
 						this.act = 'remove';
-						this.wish_id = response.data.wish_id;
+						this.wish = response.data.wish;
+						this.wish_id = response.data.wish.id;
 					})
 					.catch(err => {
-						toastr.error('Error was occured!', err.message);
+						toastr.error(err.message, 'Error occured!' );
 					})
 			},
 
@@ -78,7 +81,7 @@
 						this.act = 'add';
 					})
 					.catch(err => {
-						toastr.error('Error was occured!', err.message);
+						toastr.error(err.message, 'Error occured!' );
 					})
 			}
 		},

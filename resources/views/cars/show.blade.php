@@ -51,7 +51,35 @@
 			</div>
 
 			<div class="details col-md-6">
-				<h3 class="product-title">men's shoes fashion</h3>
+				<h3 class="product-title"> 
+				<div class="action">
+					<!-- <button class="add-to-cart btn btn-default" type="button">add to cart</button> -->
+					@if( auth()->check() && auth()->id() != $car->user_id)
+
+						@if( auth()->user()->wishList->contains('car_id', $car->id) )
+							@foreach(auth()->user()->wishList as $wish)
+
+								@if($wish->car_id == $car->id)
+								
+								<wishlistbutton act="remove" data1="{{$car->id}}" data2="{{auth()->id()}}" data3="{{$wish->id}}"></wishlistbutton>
+
+								@endif
+							
+							@endforeach
+
+						@else 
+								<wishlistbutton act="add" data1="{{$car->id}}" data2="{{auth()->id()}}"></wishlistbutton>			
+						@endif
+
+					@elseif( auth()->guest() )
+					
+					<a href="/login" class="like btn btn-default wish-list"><span class="fa fa-heart"></span> Add to wish list</a>
+
+					@endif
+					
+				</div>
+				men's shoes fashion</h3>
+
 				<div class="rating">
 					<div class="stars">
 						<span class="fa fa-star checked"></span>
@@ -76,32 +104,7 @@
 					<span class="color green"></span>
 					<span class="color blue"></span>
 				</h5>
-				<div class="action">
-					<!-- <button class="add-to-cart btn btn-default" type="button">add to cart</button> -->
-					@if( auth()->check() && auth()->id() != $car->user_id)
-
-						@if( count($wish = App\WishList::userHasCarInWashList( ['car_id' => $car->id, 'user_id' => $car->user_id])) > 0 )
-						
-						<ajax method="delete" url="/wish-list" css="btn btn-danger btn-lg wish-list" data1="{{ $wish[0]->id }}" >
-							Remove from wish list
-						</ajax>
-						
-						@else				
-
-						<ajax url="/wish-list" css="like btn btn-default wish-list" data1="{{ $car->id }}" data2="{{ $car->user_id }}">
-							Add to wish list
-						</ajax>						
-
-						@endif
-
-
-					@elseif( auth()->guest() )
-					
-					<a href="/login" class="like btn btn-default wish-list"><span class="fa fa-heart"></span> Add to wish list</a>
-
-					@endif
-					
-				</div>
+				
 			</div>
 		</div>
 	</div>

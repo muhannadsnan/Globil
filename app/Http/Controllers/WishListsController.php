@@ -25,7 +25,7 @@ class WishListsController extends Controller
 		if( ! $wish = WishList::addToWishList($request->all()) )
 			return ['ok'=>0, 'message'=>'Error while adding the car to wash list! Try again later.'];
 
-		return ['ok'=>1, 'message'=>'Car is added to wish list!', 'wish_id' => $wish->id];
+		return ['ok'=>1, 'message'=>'Car is added to wish list!', 'wish' => $wish];
 	}
 
 	public function destroy(WishList $wish)

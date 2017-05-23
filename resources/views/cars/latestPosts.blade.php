@@ -4,19 +4,32 @@
 		<img src="{{ asset('storage/images') .'/'. $car->pictures[0]->id .'.'. $car->pictures[0]->ext }}" alt="...">
 		<div class="caption">
 
-			@if( auth()->user()->wishList->contains('car_id', $car->id) )
-				@foreach(auth()->user()->wishList as $wish)
+			@if(auth()->check())
+			
+				@if( auth()->user()->wishList->contains('car_id', $car->id) )
+					@foreach(auth()->user()->wishList as $wish)
 
-					@if($wish->car_id == $car->id)
+						@if($wish->car_id == $car->id)
+						
+						<wishlistbutton act="remove" data1="{{$car->id}}" data2="{{auth()->id()}}" data3="{{$wish->id}}"></wishlistbutton>
+
+						@endif
 					
-					<wishlistbutton act="remove" data3="{{$wish->id}}"></wishlistbutton>
+					@endforeach
 
-					@endif
-				
-				@endforeach
+				@else
+						<wishlistbutton act="add" data1="{{$car->id}}" data2="{{auth()->id()}}"></wishlistbutton>			
+				@endif
 
 			@else
-					<wishlistbutton act="add" data1="{{$car->id}}" data2="{{auth()->id()}}"></wishlistbutton>			
+
+			<a href="/login" class="">
+				<span class="fa" data-toggle="tooltip" data-placement="top"
+						data-original-title="title">
+					<i class="fa fa-heart-o"></i>
+				</span>
+			</a>
+			
 			@endif
 
 			<span class="hd">{{$car->brand}}, 
