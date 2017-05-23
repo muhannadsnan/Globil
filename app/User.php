@@ -23,4 +23,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Car::class);
     }
+
+    public function wishList()
+    {
+        return $this->hasMany(WishList::class);
+    }
 }

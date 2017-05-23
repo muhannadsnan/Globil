@@ -5,6 +5,7 @@ $(document).ready(function(){
   // clickImageToShowSlider();
   // closeImageOnClickOutside();
   toggleDropdown();
+  $('[data-toggle="tooltip"]').tooltip()
 });
 // ================================================
 function changeNavbarOnScroll(){ 

@@ -11,18 +11,30 @@ class WishList extends Model
 	protected $fillable = ['car_id', 'user_id'];
 
 	public static function addToWishList($data)
-	{ //dd($data);
-		WishList::create(['car_id' => $data['car_id'], 'user_id' => $data['user_id'] ]);
-		return true;
+	{
+		if ( ! $wish = WishList::create(['car_id' => $data['car_id'], 'user_id' => $data['user_id'] ]) )
+			return false;
+		return $wish;
 	}
 
 	public static function userHasCarInWashList($data)
-	{ //dd($data);
+	{ 
 		$res = WishList::where('car_id', '=', $data['car_id'])
 			       ->where('user_id', '=', $data['user_id'])
 		          ->get();
 
-		//dd($res);
 		return $res;
+	}
+
+	// ============ RELATIONS
+
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
+
+	public function car()
+	{
+		return $this->belongsTo(Car::class);
 	}
 }

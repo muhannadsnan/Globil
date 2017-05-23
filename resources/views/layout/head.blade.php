@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="{{ asset('BootstrapFormHelpers/dist/css/bootstrap-formhelpers.min.css') }}">
   <!-- Font Awesome -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <!-- TOASTR -->
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
   
   @yield('css')
 
@@ -27,6 +29,9 @@
   <script>
     window.Laravel = <?php echo json_encode([ 'csrfToken' => csrf_token(), ]) ?>
   </script>
+
+<!-- TOASTR -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
 
 
 </head>

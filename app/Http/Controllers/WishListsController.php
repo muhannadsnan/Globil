@@ -16,14 +16,16 @@ class WishListsController extends Controller
 
 	public function index()
 	{
-		return view('wishlists.show', compact(''));
+		$wishlists = WishList::latest()->get();
+		return view('wishlists.show', compact('wishlists'));
 	}
 
 	public function store(Request $request)
-	{ //dd($request->all());
-		if( ! WishList::addToWishList($request->all()) )
+	{ 
+		if( ! $wish = WishList::addToWishList($request->all()) )
 			return ['ok'=>0, 'message'=>'Error while adding the car to wash list! Try again later.'];
-		return ['ok'=>1, 'message'=>'Car is added to wish list!'];
+
+		return ['ok'=>1, 'message'=>'Car is added to wish list!', 'wish_id' => $wish->id];
 	}
 
 	public function destroy(WishList $wish)

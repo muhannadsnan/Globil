@@ -25,7 +25,7 @@
 			@include('cars._post')
 
 			<input type="submit" value="Publish" class="col-sm-6 col-sm-offset-3 btn btn-primary">
-			</form>
+		</form>
 	</div>
 
 	<!-- <div class="panel-footer">

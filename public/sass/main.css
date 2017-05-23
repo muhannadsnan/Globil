@@ -6,6 +6,9 @@ html, body {
 	margin: 0; 
 	padding: 0;
 }
+a, a:active, a:visited{color: #337ab7;}
+a:hover{color: #68a9e1; text-decoration: none}
+
 .NO-float {float: none;}
 .alert {font-size: 14pt}
 
@@ -22,9 +25,13 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 .panel-me { background-color: ; border: 1px solid #1c8cad;}
 
 
-.latest-posts .panel {margin-right:10px; margin-left:10px;}
+.latest-posts .panel {margin-right:10px; margin-left:10px; }
+.latest-posts .caption {text-align: left }
+.latest-posts .hd {font-size: 14pt; }
 .latest-posts .car {}
 .latest-posts .car .desc{ overflow:hidden; height: 62px; border: 0px solid #000;}
+.latest-posts .fa {margin:0px 5px 0px 0px; font-size: 18pt;}
+.latest-posts .fa:hover {cursor: pointer}
 .latest-posts a:hover{border: 1px solid #000;}
 
 footer { padding:5px 40px; background-color: #1c8cad; border-top: 1px solid #555; margin: 20px 0px 0px 0px;
@@ -45,3 +52,19 @@ footer hr {border-color: #999;}
 .hd-primary {
 	color: #fff; background-color: #5bc0de; font-size: 16pt; margin: 0; margin-bottom: 10px;
 	padding: 10px 20px; border: 1px solid #1c8cad; border-radius: 5px; text-align: center;}
+
+
+//=============================== WISHLIST
+
+.wish-list-post a, .wish-list-post a:visited, .wish-list-post a:active{
+	border: 1px solid #3097D1;
+	text-align: left;
+			
+}
+.wish-list-post a:hover{
+	
+}
+
+.wish-list-post .hd{
+	font-size: 16pt; 
+}

@@ -1,23 +1,62 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Example Component</div>
-
-                    <div class="panel-body">
-                        I'm an example component!
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="WishListButton">
+        <span class="fa" data-toggle="tooltip" data-placement="top" title="Add to wish list"><i class="fa fa-heart-o"></i></span>
     </div>
 </template>
 
 <script>
     export default {
+        data(){
+            return {
+                
+            }
+        },
+
+        computed: {
+        },
+
+        props: {
+            act: {}
+        },  
+
+        methods: {
+
+            clk(){
+                
+            },
+
+            postRequest(){
+                axios.post(this.url, {car_id: this.data1 , user_id: this.data2 } )
+                    .then(response => {
+                        toastr.success(response.data.message);
+                        console.log(response.data.message);
+                        //alert(response.data.message);
+                        this.hasClicked = true;
+                    })
+                    .catch(err => {
+                        toastr.error('Error was occured!', err.message);
+                        console.log(err.message);
+                    })
+            },
+
+            deleteRequest(){
+                axios.delete(this.url +'/'+ this.data1 )
+                    .then(response => {
+                        toastr.success(response.data.message);
+                        console.log(response.data.message);
+                        //alert(response.data.message);
+                        this.hasClicked = true;
+                    })
+                    .catch(err => {
+                        toastr.error('Error was occured!', err.message);
+                        console.log(err.message);
+                    })
+            }
+        },
+
         mounted() {
-            console.log('Component mounted.')
+            console.log('WishListButton Component mounted.')
+            //console.log(this.user)
         }
     }
 </script>
