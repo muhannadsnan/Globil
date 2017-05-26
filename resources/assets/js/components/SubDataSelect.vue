@@ -3,14 +3,15 @@
         <span class="input-group-addon" v-if="!loading">{{ placeholder }}</span>
 
         <select :class="css" class=" form-control"  v-model="newBrand"
-                @change="selectedChanged" v-if="!loading" :name="data1"> 
+                @change="selectedChanged" v-if="!loading" 
+                :name="name == '' ? data1 : name" autofocus requiredX> 
 
             <option selected disabled> --- Select a {{ placeholder }} ---</option>
             <option v-for="sub in subData" :value="sub.id" >{{sub.title}}</option> 
 
         </select>
         <!-- selected id : {{newBrand}} -->
-        <p v-else>{{ loadingmsg }}</p> 
+        <span v-else>{{ loadingmsg }}</span> 
     </div>
 </template>
 
@@ -21,12 +22,15 @@
                 loading: true,
                 subData: [],
                 newBrand: 0,
+                color: '',
+                autoload: 1
             }
         },
 
         props: {
             placeholder: {},
             css: {default: 'nocss'},
+            name: { default: ''},
             data1: {},
             data2: {},
             loadedmodels: '',
@@ -68,10 +72,8 @@
         mounted() {
             console.log('SubDataSelect Component mounted.');
 
-            if(this.data1)
+            if(this.autoload)
                 this.getRequest();
-
-            this.selectedThing = '1';
 
             this.$on('models-loaded', this.modelsLoaded);
         },

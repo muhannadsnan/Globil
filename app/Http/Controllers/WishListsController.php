@@ -16,7 +16,7 @@ class WishListsController extends Controller
 
 	public function index()
 	{
-		$wishlists = WishList::latest()->get();
+		$wishlists = '';//WishList::latest()->get();
 		return view('wishlists.show', compact('wishlists'));
 	}
 

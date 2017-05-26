@@ -42320,13 +42320,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             loading: true,
             subData: [],
-            newBrand: 0
+            newBrand: 0,
+            color: '',
+            autoload: 1
         };
     },
 
@@ -42334,6 +42337,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: {
         placeholder: {},
         css: { default: 'nocss' },
+        name: { default: '' },
         data1: {},
         data2: {},
         loadedmodels: '',
@@ -42371,9 +42375,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         console.log('SubDataSelect Component mounted.');
 
-        if (this.data1) this.getRequest();
-
-        this.selectedThing = '1';
+        if (this.autoload) this.getRequest();
 
         this.$on('models-loaded', this.modelsLoaded);
     },
@@ -42440,7 +42442,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: " form-control",
     class: _vm.css,
     attrs: {
-      "name": _vm.data1
+      "name": _vm.name == '' ? _vm.data1 : _vm.name,
+      "autofocus": "",
+      "requiredX": ""
     },
     on: {
       "change": [function($event) {
@@ -42464,7 +42468,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": sub.id
       }
     }, [_vm._v(_vm._s(sub.title))])
-  })], 2) : _c('p', [_vm._v(_vm._s(_vm.loadingmsg))])])
+  })], 2) : _c('span', [_vm._v(_vm._s(_vm.loadingmsg))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
