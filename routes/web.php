@@ -15,3 +15,7 @@ Route::delete('/wish-list/{wish}', 'WishListsController@destroy');
 // Route::get('/messages', 'MessagesController@index');
 
 Route::resource('cars', 'CarsController');
+
+
+// ============== Sub Data
+Route::get('/readSubData/{data1}/{data2}', 'SubDataController@readSubData'); // readSubData/model/Mercedes

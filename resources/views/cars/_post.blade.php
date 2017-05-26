@@ -1,12 +1,19 @@
-
+	
 <div class="col-md-6 form-group {{ $errors->has('brand') ? 'has-error' : '' }}">
-	<input name="brand" type="text" class="form-control" value="{{ old('brand') }}" placeholder="Brand" requiredX autofocus>
+
+	<subdata-select data1="brand" placeholder="Brand" @brand-changed="loadModelsByBrand" old="{{ old('brand') }}"></subdata-select>
+
 </div>
 
 
 <div class="col-md-6 form-group {{ $errors->has('model') ? 'has-error' : '' }}">
-	<input name="model" type="text" class="form-control" value="{{ old('model') }}" placeholder="Model" requiredX autofocus>
+
+	<subdata-select :loadedmodels="models" placeholder="Model" loadingMSG="Select a brand to show models..."></subdata-select>
+	
 </div>
+
+
+
 
 
 <div class="col-md-6 form-group {{ $errors->has('country') ? 'has-error' : '' }}">

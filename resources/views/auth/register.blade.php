@@ -117,8 +117,8 @@
 									<div class="bfh-selectbox-options">
 										<input type="text" class="bfh-selectbox-filter">
 										<div role="listbox">
-										<ul role="option">
-										</ul>
+											<ul role="option">
+											</ul>
 										</div>
 									</div>
 							

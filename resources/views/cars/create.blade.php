@@ -37,3 +37,23 @@
 @endif
 	
 @endsection
+
+@section ("scripts")
+
+	<!-- <script src="{{ asset('select2.full.min.js') }}"></script> -->
+	<script type="text/javascript">
+	$(document).ready(function(){
+		
+	});
+
+
+	</script>
+
+@endsection
+
+@section ("css")
+
+	<link rel="stylesheet" type="text/css" href="{{ asset('select2.min.css') }}">
+
+@endsection
+	

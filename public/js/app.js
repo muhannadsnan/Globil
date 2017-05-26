@@ -11093,10 +11093,39 @@ window.Vue = __webpack_require__(44);
 Vue.component('example', __webpack_require__(39));
 Vue.component('ajax', __webpack_require__(38));
 Vue.component('wishlistbutton', __webpack_require__(40));
+Vue.component('subdata-select', __webpack_require__(57));
 
 var app = new Vue({
 	el: '#app',
-	methods: {}
+
+	data: {
+		// create post
+		brand: '',
+		models: '',
+		loadingModel: false
+	},
+
+	methods: {
+		loadModelsByBrand: function loadModelsByBrand(selectedBrand) {
+			var _this = this;
+
+			//console.log(selectedBrand);
+			loadingModel = true;
+
+			axios.get('/readSubData/' + 'model' + '/' + selectedBrand).then(function (response) {
+				//toastr.success(response.data.message);
+				_this.loadingModel = false;
+				//console.log(response.data.data);
+				_this.models = response.data.data;
+			}).catch(function (err) {
+				toastr.error('Error was occured!', err.message);
+			});
+		}
+	},
+
+	mounted: function mounted() {
+		// this.$on('brandChanged')
+	}
 });
 
 /***/ }),
@@ -42260,6 +42289,190 @@ module.exports = function(module) {
 __webpack_require__(10);
 module.exports = __webpack_require__(11);
 
+
+/***/ }),
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            loading: true,
+            subData: [],
+            newBrand: 0
+        };
+    },
+
+
+    props: {
+        placeholder: {},
+        css: { default: 'nocss' },
+        data1: {},
+        data2: {},
+        loadedmodels: '',
+        loadingmsg: { default: 'LOADING DATA ...' },
+        old: { default: 0 }
+    },
+
+    methods: {
+        selectedChanged: function selectedChanged(par) {
+            var t = this;
+            var selectedOBJ = this.subData.filter(function (sub) {
+                if (sub.id == t.newBrand) return sub;
+            });
+            //console.log(selectedOBJ[0].title);
+            this.$emit('brand-changed', selectedOBJ[0].title);
+        },
+        getRequest: function getRequest() {
+            var _this = this;
+
+            axios.get('/readSubData/' + this.data1 + '/' + this.data2).then(function (response) {
+                _this.loading = false;
+                //toastr.success(response.data.message);
+                _this.subData = response.data.data;
+            }).catch(function (err) {
+                toastr.error('Error was occured!', err.message);
+            });
+        },
+        modelsLoaded: function modelsLoaded(arr) {
+            console.log('Models Loaded');
+            console.log(arr);
+            this.subData = arr;
+        }
+    },
+
+    mounted: function mounted() {
+        console.log('SubDataSelect Component mounted.');
+
+        if (this.data1) this.getRequest();
+
+        this.selectedThing = '1';
+
+        this.$on('models-loaded', this.modelsLoaded);
+    },
+
+
+    watch: {
+        loadedmodels: function loadedmodels() {
+            this.subData = this.loadedmodels;
+            this.loading = false;
+        }
+    }
+});
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(56),
+  /* template */
+  __webpack_require__(58),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "E:\\Document\\Docs\\www\\Globil\\resources\\assets\\js\\components\\SubDataSelect.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] SubDataSelect.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-11b0c627", Component.options)
+  } else {
+    hotAPI.reload("data-v-11b0c627", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "SubDataSelect input-group"
+  }, [(!_vm.loading) ? _c('span', {
+    staticClass: "input-group-addon"
+  }, [_vm._v(_vm._s(_vm.placeholder))]) : _vm._e(), _vm._v(" "), (!_vm.loading) ? _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newBrand),
+      expression: "newBrand"
+    }],
+    staticClass: " form-control",
+    class: _vm.css,
+    attrs: {
+      "name": _vm.data1
+    },
+    on: {
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.newBrand = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.selectedChanged]
+    }
+  }, [_c('option', {
+    attrs: {
+      "selected": "",
+      "disabled": ""
+    }
+  }, [_vm._v(" --- Select a " + _vm._s(_vm.placeholder) + " ---")]), _vm._v(" "), _vm._l((_vm.subData), function(sub) {
+    return _c('option', {
+      domProps: {
+        "value": sub.id
+      }
+    }, [_vm._v(_vm._s(sub.title))])
+  })], 2) : _c('p', [_vm._v(_vm._s(_vm.loadingmsg))])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-11b0c627", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

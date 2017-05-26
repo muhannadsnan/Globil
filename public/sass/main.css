@@ -9,6 +9,8 @@ html, body {
 a, a:active, a:visited{color: #337ab7;}
 a:hover{color: #68a9e1; text-decoration: none}
 
+.slct {}
+
 .NO-float {float: none;}
 .alert {font-size: 14pt}
 
