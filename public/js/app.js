@@ -11113,10 +11113,21 @@ var app = new Vue({
 			loadingModel = true;
 
 			axios.get('/readSubData/' + 'model' + '/' + selectedBrand).then(function (response) {
-				//toastr.success(response.data.message);
 				_this.loadingModel = false;
-				//console.log(response.data.data);
-				_this.models = response.data.data;
+				_this.models = response.data.data;console.log(response.data.data);
+			}).catch(function (err) {
+				toastr.error('Error was occured!', err.message);
+			});
+		},
+		loadModelsBySubID: function loadModelsBySubID(subID) {
+			var _this2 = this;
+
+			console.log('subID' + subID);
+			loadingModel = true;
+
+			axios.get('/readSubData/' + subID).then(function (response) {
+				_this2.loadingModel = false;
+				_this2.models = response.data;console.log(response.data);
 			}).catch(function (err) {
 				toastr.error('Error was occured!', err.message);
 			});
@@ -42327,9 +42338,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             loading: true,
             subData: [],
-            newBrand: 0,
-            color: '',
-            autoload: 1
+            selectedOPT: 0,
+            color: ''
         };
     },
 
@@ -42342,24 +42352,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         data2: {},
         loadedmodels: '',
         loadingmsg: { default: 'LOADING DATA ...' },
-        old: { default: 0 }
+        old: { default: 0 },
+        showanyway: 0
     },
 
     methods: {
         selectedChanged: function selectedChanged(par) {
             var t = this;
             var selectedOBJ = this.subData.filter(function (sub) {
-                if (sub.id == t.newBrand) return sub;
+                if (sub.id == t.selectedOPT) return sub;
             });
-            //console.log(selectedOBJ[0].title);
-            this.$emit('brand-changed', selectedOBJ[0].title);
+            var selectedOBJECT;
+            try {
+                selectedOBJECT = selectedOBJ[0].title;
+            } catch (err) {
+                selectedOBJECT = this.old;
+                //console.log('selectedOBJECT was reset!!!!');
+            }
+            console.log('selectedOBJECT: ' + selectedOBJECT);
+            this.$emit('brand-changed', selectedOBJECT);
         },
         getRequest: function getRequest() {
             var _this = this;
 
             axios.get('/readSubData/' + this.data1 + '/' + this.data2).then(function (response) {
                 _this.loading = false;
-                //toastr.success(response.data.message);
                 _this.subData = response.data.data;
             }).catch(function (err) {
                 toastr.error('Error was occured!', err.message);
@@ -42373,11 +42390,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     mounted: function mounted() {
-        console.log('SubDataSelect Component mounted.');
+        console.log('SubDataSelect Component mounted: ' + this.data1);
 
-        if (this.autoload) this.getRequest();
+        if (this.old != 0) {
+            this.selectedOPT = this.old; //console.log('selectedOPT init: '+this.selectedOPT );
+            this.$emit('brand-loaded', this.old);
+        }
 
-        this.$on('models-loaded', this.modelsLoaded);
+        if (this.data1) this.getRequest();
     },
 
 
@@ -42385,6 +42405,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         loadedmodels: function loadedmodels() {
             this.subData = this.loadedmodels;
             this.loading = false;
+            this.selectedOPT = this.old;
         }
     }
 });
@@ -42430,18 +42451,19 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "SubDataSelect input-group"
-  }, [(!_vm.loading) ? _c('span', {
+  }, [(!_vm.loading || _vm.showanyway) ? _c('span', {
     staticClass: "input-group-addon"
-  }, [_vm._v(_vm._s(_vm.placeholder))]) : _vm._e(), _vm._v(" "), (!_vm.loading) ? _c('select', {
+  }, [_vm._v(_vm._s(_vm.placeholder))]) : _vm._e(), _vm._v(" "), (!_vm.loading || _vm.showanyway) ? _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.newBrand),
-      expression: "newBrand"
+      value: (_vm.selectedOPT),
+      expression: "selectedOPT"
     }],
     staticClass: " form-control",
     class: _vm.css,
     attrs: {
+      "data-old": _vm.old,
       "name": _vm.name == '' ? _vm.data1 : _vm.name,
       "autofocus": "",
       "requiredX": ""
@@ -42454,7 +42476,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.newBrand = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.selectedOPT = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }, _vm.selectedChanged]
     }
   }, [_c('option', {
@@ -42462,7 +42484,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "selected": "",
       "disabled": ""
     }
-  }, [_vm._v(" --- Select a " + _vm._s(_vm.placeholder) + " ---")]), _vm._v(" "), _vm._l((_vm.subData), function(sub) {
+  }, [_vm._v(" --- Select " + _vm._s(_vm.placeholder) + " --- ")]), _vm._v(" "), _vm._l((_vm.subData), function(sub) {
     return _c('option', {
       domProps: {
         "value": sub.id

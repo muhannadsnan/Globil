@@ -3,7 +3,7 @@
 
 @section("content")
 
-@if($flash = session('message') || false)
+@if($flash = session('message'))
 
 <div class="form-group">
 	<a href="/cars/create" class="btn btn-success"> Create another post !</a>
@@ -22,7 +22,7 @@
 			{{ csrf_field() }}
 			
 			@include('layout.errors')
-			@include('cars._post')
+			@include('cars._form')
 
 			<input type="submit" value="Publish" class="col-sm-6 col-sm-offset-3 btn btn-primary">
 		</form>
@@ -40,13 +40,12 @@
 
 @section ("scripts")
 
-	<!-- <script src="{{ asset('select2.full.min.js') }}"></script> -->
 	<script type="text/javascript">
-	$(document).ready(function(){
-		
-	});
-
-
+		$(document).ready(function(){
+			// $('select').val(function(){
+			// 	return $(this).data('old')
+			// });
+		});
 	</script>
 
 @endsection

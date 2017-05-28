@@ -49,7 +49,7 @@ class Car extends Model
 	protected static function rules()
 	{
 		return [
-			"brand" => 'requiRed|max:255',
+			"brand" => 'required|max:255',
 			"model" => 'required|max:255',
 			"country" => 'required|max:255',
 			"year" => 'required|max:255',
@@ -75,6 +75,11 @@ class Car extends Model
 			//"images" => 'max:2000000|mimes:jpeg,jpg,bmp,png',
 			"images" => 'max:2000000',
 		];
+	}
+
+	public function sub($id)
+	{
+		return SubData::find($id)['title'];
 	}
 
 // ============= RELATIONSHIPs =============

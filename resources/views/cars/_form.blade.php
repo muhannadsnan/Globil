@@ -1,19 +1,29 @@
 	
 <div class="col-md-6 form-group {{ $errors->has('brand') ? 'has-error' : '' }}">
 
-	<subdata-select data1="brand" placeholder="Brand" @brand-changed="loadModelsByBrand" old="{{ old('brand') }}"></subdata-select>
+	<subdata-select 
+		data1="brand" 
+		placeholder="Brand"
+	 	@brand-changed="loadModelsByBrand" 
+	 	@brand-loaded="loadModelsBySubID"
+	 	old="{{ old('brand') }}"></subdata-select>
 
 </div>
 
 
 <div class="col-md-6 form-group {{ $errors->has('model') ? 'has-error' : '' }}">
 
-	<subdata-select :loadedmodels="models" placeholder="Model" loadingMSG="Select a brand to show models..." name="model"></subdata-select>
+	<subdata-select 
+		:loadedmodels="models" 
+		placeholder="Model" 
+		showanyway="true" 
+		loadingMSG="Select a brand to show models..." 
+		name="model" old="{{ old('model') }}"></subdata-select>
 	
 </div>
 
 
-<div class="col-md-6 form-group {{ $errors->has('brand') ? 'has-error' : '' }}">
+<div class="col-md-6 form-group {{ $errors->has('country') ? 'has-error' : '' }}">
 
 	<subdata-select data1="country" placeholder="Country" old="{{ old('country') }}"></subdata-select>
 
@@ -65,7 +75,7 @@
 
 <!-- ------------ FUEL -------------- -->
 
-<div class="col-md-6 text-left form-group {{ $errors->has('fuel') ? 'has-error' : '' }} ">
+<div class="col-md-6 text-left form-group {{ $errors->has('fuel_type_bensin') ? 'has-error' : '' }} ">
 
 	<p><strong>Fuel Type:</strong></p>
 
@@ -144,3 +154,4 @@
 <div class="col-md-6 form-group {{ $errors->has('images') ? 'has-error' : '' }}">
 	<input name="images[]" type="file" class="form-control" value="{{ old('images[]') }}" multiple >
 </div>
+

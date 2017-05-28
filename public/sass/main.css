@@ -6,12 +6,15 @@ html, body {
 	margin: 0; 
 	padding: 0;
 }
-a, a:active, a:visited{color: #337ab7;}
+a, a:active, a:visited{/*color: #337ab7;*/}
 a:hover{color: #68a9e1; text-decoration: none}
+.btn{color: #fff;}
 
 .slct {}
 
 .NO-float {float: none;}
+.margin-0 {margin:0;}
+.padding-0 {padding:0;}
 .alert {font-size: 14pt}
 
 nav i {font-size: 22pt !important;  vertical-align: middle;}
@@ -30,11 +33,12 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 .latest-posts .panel {margin-right:10px; margin-left:10px; }
 .latest-posts .caption {text-align: left }
 .latest-posts .hd {font-size: 14pt; }
-.latest-posts .car {}
-.latest-posts .car .desc{ overflow:hidden; height: 62px; border: 0px solid #000;}
-.latest-posts .fa {margin:0px 5px 0px 0px; font-size: 18pt;}
-.latest-posts .fa:hover {cursor: pointer}
 .latest-posts a:hover{border: 1px solid #000;}
+.car-card {}
+.car-card .desc{ overflow:hidden; height: 62px; border: 0px solid #000;}
+.car-card .fa {margin:0px 5px 0px 0px; font-size: 24pt; line-height: 30px; vertical-align: middle;}
+.car-card .fa:hover {cursor: pointer}
+.car-card .edit-btn {color: #007d05;}
 
 footer { padding:5px 40px; background-color: #1c8cad; border-top: 1px solid #555; margin: 20px 0px 0px 0px;
 	color: #2d3092; line-height: 17px; font-weight: 600;}

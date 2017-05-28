@@ -27,15 +27,26 @@ const app = new Vue({
 
 			axios.get('/readSubData/'+'model'+'/'+ selectedBrand )
               .then(response => {
-                  //toastr.success(response.data.message);
                   this.loadingModel = false;
-						//console.log(response.data.data);
-                  this.models = response.data.data;
+                  this.models = response.data.data;  console.log(response.data.data);
               })
               .catch(err => {
                   toastr.error('Error was occured!', err.message);
               })
-		 }
+		},
+
+		loadModelsBySubID(subID){ console.log('subID'+subID);
+			loadingModel = true;
+
+			axios.get('/readSubData/'+ subID )
+              .then(response => {
+                  this.loadingModel = false;
+                  this.models = response.data;  console.log(response.data);
+              })
+              .catch(err => {
+                  toastr.error('Error was occured!', err.message);
+              })
+		}
 	},
 
 	mounted(){

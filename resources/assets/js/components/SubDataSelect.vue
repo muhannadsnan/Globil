@@ -1,16 +1,16 @@
 <template>
     <div class="SubDataSelect input-group">
-        <span class="input-group-addon" v-if="!loading">{{ placeholder }}</span>
+        <span class="input-group-addon" v-if="!loading || showanyway">{{ placeholder }}</span>
 
-        <select :class="css" class=" form-control"  v-model="newBrand"
-                @change="selectedChanged" v-if="!loading" 
+        <select :class="css" class=" form-control" v-model="selectedOPT" 
+                @change="selectedChanged" v-if="!loading || showanyway" :data-old="old"
                 :name="name == '' ? data1 : name" autofocus requiredX> 
 
-            <option selected disabled> --- Select a {{ placeholder }} ---</option>
+            <option selected disabled> --- Select {{ placeholder }} --- </option>
             <option v-for="sub in subData" :value="sub.id" >{{sub.title}}</option> 
 
         </select>
-        <!-- selected id : {{newBrand}} -->
+        <!-- selected id : {{selectedOPT}} -->
         <span v-else>{{ loadingmsg }}</span> 
     </div>
 </template>
@@ -21,9 +21,8 @@
             return {
                 loading: true,
                 subData: [],
-                newBrand: 0,
+                selectedOPT: 0,
                 color: '',
-                autoload: 1
             }
         },
 
@@ -35,26 +34,35 @@
             data2: {},
             loadedmodels: '',
             loadingmsg: { default: 'LOADING DATA ...'},
-            old: {default: 0}
-        },  
+            old: {default: 0},
+            showanyway: 0 
+        }, 
+
 
         methods: {
 
-            selectedChanged(par){
+            selectedChanged(par){ 
                 var t = this;
                 var selectedOBJ = this.subData.filter(function(sub){
-                    if(sub.id == t.newBrand)
+                    if(sub.id == t.selectedOPT)
                         return sub
-                });
-                //console.log(selectedOBJ[0].title);
-                this.$emit('brand-changed', selectedOBJ[0].title);
+                })
+                var selectedOBJECT ;
+                try {
+                   selectedOBJECT = selectedOBJ[0].title;
+                }
+                catch(err) {
+                    selectedOBJECT = this.old;
+                    //console.log('selectedOBJECT was reset!!!!');
+                }
+                console.log('selectedOBJECT: '+selectedOBJECT);
+                this.$emit('brand-changed', selectedOBJECT);
             },
 
             getRequest(){
                 axios.get('/readSubData/'+this.data1+'/'+this.data2  )
                     .then(response => {
                         this.loading = false;
-                        //toastr.success(response.data.message);
                         this.subData = response.data.data;
                     })
                     .catch(err => {
@@ -70,18 +78,22 @@
         },
 
         mounted() {
-            console.log('SubDataSelect Component mounted.');
+            console.log('SubDataSelect Component mounted: ' + this.data1);
 
-            if(this.autoload)
+            if(this.old != 0){
+                this.selectedOPT = this.old; //console.log('selectedOPT init: '+this.selectedOPT );
+                this.$emit('brand-loaded', this.old);
+            }
+
+            if(this.data1)
                 this.getRequest();
-
-            this.$on('models-loaded', this.modelsLoaded);
         },
 
         watch: {
             loadedmodels(){
                 this.subData = this.loadedmodels;
                 this.loading = false;
+                this.selectedOPT = this.old;
             }
         }
     }

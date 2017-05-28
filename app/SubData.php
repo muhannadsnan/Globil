@@ -11,7 +11,9 @@ class SubData extends Model
 
 // ============= SCOPEs ============= 
 
-	public function scopeSubData($query, $ntype, $ntype2 = null, $ntype3 = null) // Dynamic scope
+	
+
+	public function scopeSubData($query, $ntype, $ntype2 = null, $ntype3 = null, $subID = null) // Dynamic scope
 	{
 		$res = $query->where('ntype', 'like', $ntype); // $brands = SubData::subData('brand')->get();
 
@@ -20,9 +22,9 @@ class SubData extends Model
 
 			if( ! is_null($ntype3)){
 				$res->where('ntype3', 'like', $ntype3); //SubData::subData('year', 'M3', 'BMW')->get();
-			}
+			}			
 		}
-		
+
 		return $res;
 	}
 

@@ -39,9 +39,20 @@ class CarsController extends Controller
 		return view('cars.create', compact(''));
 	}
 
+	public function edit()
+	{
+		return view('cars.edit', compact(''));
+	}
+
 	public function show(Car $car)
 	{
 		return view('cars.show', compact('car'));
+	}
+
+	public function myCars()
+	{
+		$update = true;
+		return view('cars.myCars', compact('update'));
 	}
 
 }

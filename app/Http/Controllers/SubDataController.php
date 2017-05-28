@@ -16,4 +16,10 @@ class SubDataController extends Controller
 			return ['ok' => 0, 'message' => 'Error while loading "$data1"'];
 		return ['ok' => 1, 'message' => "$data1 is loaded successfully!", 'data' => $res];
 	}
+
+	public function readModelsBySubID($subID)
+	{ //dd($subID);
+		$brand = SubData::find($subID)->title; //dd($brand);
+		return SubData::subData('model', $brand )->get();
+	}
 }
