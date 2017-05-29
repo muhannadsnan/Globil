@@ -3,21 +3,6 @@
 
 @section('content')
 
-	<!-- {{$car->brand}}
-
-	{{$car->model}}
-
-	{{$car->year}}
-
-	{{$car->country}}
-
-	${{$car->price}} 
-
-	{{$car->user->name}}
-
-
-	 -->
-
 <div class="card">
 	<div class="container-fliud">
 		<div class="wrapper row">

@@ -5,16 +5,25 @@
 
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<h3>Publish a post:</h3>
+			<h3>Edit Car:</h3>
 		</div>
 
 		<div class="panel-body">
-			<form method="PATCH" action="/cars" enctype="multipart/form-data">
+			<form method="POST" action="/cars/{{$car->id}}" enctype="multipart/form-data">
 
 				{{ csrf_field() }}
+				{{ method_field('PATCH') }}
 				
 				@include('layout.errors')
 				@include('cars._form')
+
+				@if(@$update)
+
+					<div class="row">
+						<edit-images carid="{{$car->id}}" path="{{asset('storage/images')}}"></edit-images>
+					</div>
+
+				@endif
 
 				<input type="submit" value="Update" class="col-sm-6 col-sm-offset-3 btn btn-primary">
 			</form>
@@ -30,7 +39,9 @@
 			$('select').val(function(){
 				return $(this).data('old')
 			});
-		});
+
+			//updateRangeLabel();
+		});	
 	</script>
 
 @endsection

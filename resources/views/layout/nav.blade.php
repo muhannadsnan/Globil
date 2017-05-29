@@ -63,10 +63,10 @@
 </nav>
 
 
-@if($flash = session('message'))
+<!-- @if($flash = session('message'))
 
   <div id="flash-message" class="alert alert-success">
     {{ $flash }}
   </div>
 
-@endif
+@endif -->

@@ -5,7 +5,7 @@ $(document).ready(function(){
   // clickImageToShowSlider();
   // closeImageOnClickOutside();
   toggleDropdown();
-  $('[data-toggle="tooltip"]').tooltip()
+  tooltip();
 });
 // ================================================
 function changeNavbarOnScroll(){ 
@@ -61,4 +61,12 @@ function toggleDropdown(){
   $('.dropdown-toggle').on('click', function(){
     $('.dropdown-menu').toggle(); 
   });
+}
+
+function updateRangeLabel(val){
+  $('#range_year').text = val; 
+}
+
+function tooltip(){
+  $('[data-toggle="tooltip"]').tooltip();
 }

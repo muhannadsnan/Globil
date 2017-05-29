@@ -11094,6 +11094,7 @@ Vue.component('example', __webpack_require__(39));
 Vue.component('ajax', __webpack_require__(38));
 Vue.component('wishlistbutton', __webpack_require__(40));
 Vue.component('subdata-select', __webpack_require__(57));
+Vue.component('edit-images', __webpack_require__(60));
 
 var app = new Vue({
 	el: '#app',
@@ -11114,7 +11115,7 @@ var app = new Vue({
 
 			axios.get('/readSubData/' + 'model' + '/' + selectedBrand).then(function (response) {
 				_this.loadingModel = false;
-				_this.models = response.data.data;console.log(response.data.data);
+				_this.models = response.data.data; //console.log(response.data.data);
 			}).catch(function (err) {
 				toastr.error('Error was occured!', err.message);
 			});
@@ -11122,12 +11123,12 @@ var app = new Vue({
 		loadModelsBySubID: function loadModelsBySubID(subID) {
 			var _this2 = this;
 
-			console.log('subID' + subID);
+			//console.log('subID'+subID);
 			loadingModel = true;
 
 			axios.get('/readSubData/' + subID).then(function (response) {
 				_this2.loadingModel = false;
-				_this2.models = response.data;console.log(response.data);
+				_this2.models = response.data.data; //console.log(response.data.data);
 			}).catch(function (err) {
 				toastr.error('Error was occured!', err.message);
 			});
@@ -42369,7 +42370,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 selectedOBJECT = this.old;
                 //console.log('selectedOBJECT was reset!!!!');
             }
-            console.log('selectedOBJECT: ' + selectedOBJECT);
+            //console.log('selectedOBJECT: '+selectedOBJECT);
             this.$emit('brand-changed', selectedOBJECT);
         },
         getRequest: function getRequest() {
@@ -42384,7 +42385,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         modelsLoaded: function modelsLoaded(arr) {
             console.log('Models Loaded');
-            console.log(arr);
+            //console.log(arr);
             this.subData = arr;
         }
     },
@@ -42497,6 +42498,163 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-11b0c627", module.exports)
+  }
+}
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            images: [],
+            url: '/images-for-car',
+            loading: 1
+        };
+    },
+
+
+    computed: {
+        src: function src(i) {
+            console.log(i);
+            return '../storage/images' + i.id + '.' + i.ext;
+        }
+    },
+
+    props: {
+        css: {},
+        carid: {},
+        path: {}
+    },
+
+    methods: {
+        loadImagesForCar: function loadImagesForCar() {
+            var _this = this;
+
+            axios.get(this.url + '/' + this.carid).then(function (response) {
+                //toastr.success(response.data.message);
+                //console.log(response.data.message);
+                //alert(response.data.message);
+                _this.images = response.data.data;
+                _this.loading = 0;
+            }).catch(function (err) {
+                toastr.error('Error was occured!', err.message);
+                //console.log(err.message);
+            });
+        },
+        deleteRequest: function deleteRequest(img, i) {
+            var _this2 = this;
+
+            axios.delete(this.url + '/' + img.id).then(function (response) {
+                toastr.success(response.data.message);
+                Vue.delete(_this2.images, i);
+            }).catch(function (err) {
+                toastr.error('Error was occured!', err.message);
+                //console.log(err.message);
+            });
+        }
+    },
+
+    mounted: function mounted() {
+        console.log('EditImages Component mounted.');
+        this.loadImagesForCar();
+        console.log('Images for the CAR were loaded. ');
+    }
+});
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(59),
+  /* template */
+  __webpack_require__(61),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "E:\\Document\\Docs\\www\\Globil\\resources\\assets\\js\\components\\EditImages.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] EditImages.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5b48a71e", Component.options)
+  } else {
+    hotAPI.reload("data-v-5b48a71e", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "EditImagesComponent"
+  }, _vm._l((_vm.images), function(img, index) {
+    return (!_vm.loading) ? _c('div', {
+      staticClass: " col-md-3 col-xs-6"
+    }, [_c('img', {
+      staticClass: "thumbnail col-xs-12",
+      class: _vm.css,
+      attrs: {
+        "src": _vm.path + '/' + img.id + '.' + img.ext,
+        "alt": ""
+      }
+    }), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger button-div",
+      attrs: {
+        "data-toggle": "tooltip",
+        "data-placement": "bottom",
+        "title": "Remove Image"
+      },
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.deleteRequest(img, index)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-trash font-22pt",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    })])]) : _c('span', [_vm._v("LOADING IMAGE..")])
+  }))
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5b48a71e", module.exports)
   }
 }
 

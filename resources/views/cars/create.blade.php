@@ -42,9 +42,7 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(){
-			// $('select').val(function(){
-			// 	return $(this).data('old')
-			// });
+			updateRangeLabel();
 		});
 	</script>
 

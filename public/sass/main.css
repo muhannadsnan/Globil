@@ -16,6 +16,8 @@ a:hover{color: #68a9e1; text-decoration: none}
 .margin-0 {margin:0;}
 .padding-0 {padding:0;}
 .alert {font-size: 14pt}
+.display-inline{ display: inline; }
+.font-22pt{font-size:22pt;}
 
 nav i {font-size: 22pt !important;  vertical-align: middle;}
 .navbar-brand {padding: 14px 15px;}
@@ -74,3 +76,8 @@ footer hr {border-color: #999;}
 .wish-list-post .hd{
 	font-size: 16pt; 
 }
+
+.EditImagesComponent{}
+.EditImagesComponent img{padding:0; margin-bottom: 6px}
+.EditImagesComponent .button-div{clear:both;}
+.EditImagesComponent button{margin-bottom: 20px}

@@ -11,4 +11,12 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 
+
+
+<script>
+<?php if(session('message')){ ?>
+	toastr.success("<?php echo session('message'); ?>"); 
+<?php } ?>
+</script>
+
 @yield('scripts')

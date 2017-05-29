@@ -55,7 +55,7 @@
                     selectedOBJECT = this.old;
                     //console.log('selectedOBJECT was reset!!!!');
                 }
-                console.log('selectedOBJECT: '+selectedOBJECT);
+                //console.log('selectedOBJECT: '+selectedOBJECT);
                 this.$emit('brand-changed', selectedOBJECT);
             },
 
@@ -72,7 +72,7 @@
 
             modelsLoaded(arr){
                 console.log('Models Loaded');
-                console.log(arr);
+                //console.log(arr);
                 this.subData = arr;
             }
         },

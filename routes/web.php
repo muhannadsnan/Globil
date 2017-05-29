@@ -21,3 +21,7 @@ Route::get('/my-cars', 'CarsController@myCars');
 // ============== Sub Data
 Route::get('/readSubData/{data1}/{data2}', 'SubDataController@readSubData'); // readSubData/model/Mercedes
 Route::get('/readSubData/{subID}', 'SubDataController@readModelsBySubID'); // readSubData/model/Mercedes
+
+// ==============  Pics
+Route::get('/images-for-car/{car}', 'PicturesController@readPicsByCar');
+Route::delete('/images-for-car/{pic}', 'PicturesController@destroyPicByCar');

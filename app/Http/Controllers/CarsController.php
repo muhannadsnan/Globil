@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Car;
 use App\Picture;
 use Illuminate\Http\Request;
+use File;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class CarsController extends Controller
 {
@@ -39,9 +41,31 @@ class CarsController extends Controller
 		return view('cars.create', compact(''));
 	}
 
-	public function edit()
+	public function edit(Car $car)
 	{
-		return view('cars.edit', compact(''));
+		$update = true;
+		
+		return view('cars.edit', compact('car', 'update'));
+	}
+
+	//  === === UPDATE CAR
+
+	public function update(Request $request, Car $car)
+	{
+		$this->validate($request, Car::rules());
+ 		
+ 		if(! Car::updateCar($request, $car))
+
+ 		if(count($request->images) > 0){ //dd($request->images);
+ 			$pic_names = [];
+ 			if(($pic_names = Picture::createPicsForCar($request->images, $car->id)) != [] ){ // insert OK? then upload pics
+ 				Picture::storePics($request->images, $pic_names);
+ 			}
+ 		}
+
+ 		Session::flash('message', 'Car was updated successfully!');
+
+ 		return redirect("/cars/{$car->id}/edit");
 	}
 
 	public function show(Car $car)
