@@ -12,7 +12,7 @@ class SubDataController extends Controller
 		if($data2=="undefined") $data2 = null;
 
 		if( !$res = SubData::subData($data1, $data2)->get())
-			return ['ok' => 0, 'message' => 'Error while loading "$data1"'];
+			return ['ok' => 0, 'message' => "Error while loading {$data1}"];
 		return ['ok' => 1, 'message' => "$data1 is loaded successfully!", 'data' => $res];
 	}
 
@@ -22,5 +22,16 @@ class SubDataController extends Controller
 		if( !$res = SubData::subData('model', $brand )->get())
 			return ['ok' => 0, 'message' => 'Error while loading "models"'];
 		return ['ok' => 1, 'message' => "Models are loaded successfully!", 'data' => $res];
+	}
+
+	public function readBrandsWithModels()
+	{
+		if( !$brands = SubData::subData('brand')->get())
+			return ['ok' => 0, 'message' => 'Error while loading brands'];
+
+		if( !$models = SubData::subData('model')->get())
+			return ['ok' => 0, 'message' => 'Error while loading models'];
+
+		return ['ok' => 1, 'message' => "data is loaded successfully!", 'brands' => $brands, 'models' => $models];
 	}
 }

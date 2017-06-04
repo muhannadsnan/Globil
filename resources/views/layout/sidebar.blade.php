@@ -1,16 +1,4 @@
 
-<div class="panel panel-primary">
-	<div class="panel-heading">
-		 Sidebar
-	</div>
-
-	<div class="list-group">
-	   <a href="#" class="list-group-item list-group-item-success">Dapibus ac facilisis in</a>
-	   <a href="#" class="list-group-item list-group-item-info">Cras sit amet nibh libero</a>
-	   <a href="#" class="list-group-item list-group-item-warning">Porta ac consectetur ac</a>
-	   <a href="#" class="list-group-item list-group-item-danger">Vestibulum at eros</a>
-	</div>
-</div>
 
 
 <div class="ads panel panel-warning">

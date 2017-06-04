@@ -10,7 +10,6 @@ class SubData extends Model
 	protected $fillable = ['ntypex', 'title'];
 
 // ============= SCOPEs ============= 
-
 	
 
 	public function scopeSubData($query, $ntype, $ntype2 = null, $ntype3 = null, $subID = null) // Dynamic scope
@@ -28,11 +27,4 @@ class SubData extends Model
 		return $res;
 	}
 
-
-	// SEARCH FILTERS SCOPE
-
-	public function scopeSearchFilters($query, $filters = [])
-	{
-		return $query->where($filters); // SubData::SearchFilters(['brand'=>'BMW', 'model'=>'M3', 'roofType'=>3, 'ABS'=>1])->get();
-	}
 }

@@ -8,11 +8,34 @@ use Illuminate\Support\Facades\Auth;
 
 class Car extends Model
 {
-
 	// protected $fillable = [
 	// 	'brand', 'model', 'country', 'price', 'year', 'kilometer', 'color', 'desc',
 	// 	'fuel_type_bensin', 'fuel_type_diesel', 'fuel_type_gas', 'fuel_type_electric', 
 	// 	'gear', 'weight', 'cylinder', 'co2', 'car_type', ....];
+
+	
+	
+// ============= SEARCH FILTERS SCOPE =============
+
+	public function scopeSearchFilters($query, $filters = [])
+	{ //dd($filters);
+	// Search::SearchFilters(['brand'=>'BMW', 'model'=>'M3', 'roofType'=>3, 'ABS'=>1])->get();
+		$res = $query->where($filters)->get(); // dd($res);
+		return $res;
+	}
+
+// ============= RELATIONSHIPs =============
+
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
+	public function pictures()
+	{
+		return $this->hasMany(Picture::class);
+	}
+
+// ============= CREATE, UPDATE, RULES =============
 
 	public static function createCar($request)
 	{
@@ -107,21 +130,9 @@ class Car extends Model
 		]);
 	}
 
-	public function sub($id)
+	public static function sub($id)
 	{
 		return SubData::find($id)['title'];
 	}
-
-// ============= RELATIONSHIPs =============
-
-	public function user()
-	{
-		return $this->belongsTo(User::class);
-	}
-	public function pictures()
-	{
-		return $this->hasMany(Picture::class);
-	}
-
 
 }

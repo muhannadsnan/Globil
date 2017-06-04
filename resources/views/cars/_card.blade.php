@@ -2,7 +2,7 @@
 
 	<div class="thumbnail panel-info">
 
-		<img src="{{ asset('storage/images') .'/'. $car->pictures[0]->id .'.'. $car->pictures[0]->ext }}" alt="...">
+		<img src="{{ asset('storage/images') .'/'. @$car->pictures[0]->id .'.'. @$car->pictures[0]->ext }}" alt="...">
 
 		<div class="caption">
 

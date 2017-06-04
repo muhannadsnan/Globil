@@ -13,13 +13,21 @@
 		<div class="container">
 			
 			<div class="row">
-				<div class="col-md-9 content ">
+				<div class="col-md-2" id="searchbar">
+
+					@include('layout.searchbar')
+
+				</div><!-- .searchbar -->
+
+
+				<div class="col-md-8" id="content">
 				
 					@yield('content')
 
-				</div><!-- .blog-main -->
+				</div><!-- .content -->
 
-				<div class="col-md-3 sidebar">
+
+				<div class="col-md-2" id="sidebar">
 
 					@include('layout.sidebar')
 
