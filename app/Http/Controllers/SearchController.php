@@ -26,7 +26,7 @@ class SearchController extends Controller
 		return ['ok' => 1, 'message' => "Cars that match your search..", 'data' => $car_subdata];
 	}
 
-	public function fillCardData($res)
+	public function fillCardData($res) // returns array contains cards data
 	{
 		$car_subdata = [];
 		foreach ($res as $key => $val) {
@@ -42,11 +42,38 @@ class SearchController extends Controller
 
 
 
-	public function readCarsByBrandId($brandId)
+	// public function readCarsByBrandId($brandId)
+	// {
+	// 	if( !$res = Car::searchFilters(['brand' => $brandId], 'model'))
+	// 		return ['ok' => 0, 'message' => "Error while loading search data!"];
+
+	// 	$data = $this->fillCardData($res);
+	// 	return ['ok' => 1, 'message' => "Search data is loaded successfully!", 'data' => $data];
+	// }
+
+	// public function readCarsByModelIds(Request $request) // array of IDs
+	// { //dd($request->all());
+	// 	if( !$res = Car::whereIn('model', $request->all())->orderBy('brand')->orderBy('model')->get() ) // and order by model
+	// 		return ['ok' => 0, 'message' => "Error while loading search data!"];
+
+	// 	$data = $this->fillCardData($res);
+	// 	return ['ok' => 1, 'message' => "Search data is loaded successfully!", 'data' => $data];
+	// }
+
+	public function readCheckedBrands(Request $request)
 	{
-		if( !$res = Car::searchFilters(['brand' => $brandId]))
+		if( !$res = Car::whereIn('brand', $request->all())->orderBy('brand')->orderBy('model')->get() )
 			return ['ok' => 0, 'message' => "Error while loading search data!"];
 
+		$data = $this->fillCardData($res);
+		return ['ok' => 1, 'message' => "Search data is loaded successfully!", 'data' => $data];
+	}
+
+	public function readCheckedModels(Request $request)
+	{
+		if( !$res = Car::whereIn('model', $request->all())->orderBy('brand')->get() )
+			return ['ok' => 0, 'message' => "Error while loading search data!"];
+		
 		$data = $this->fillCardData($res);
 		return ['ok' => 1, 'message' => "Search data is loaded successfully!", 'data' => $data];
 	}

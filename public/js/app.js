@@ -11117,77 +11117,81 @@ var app = new Vue({
 		loadModelsByBrand: function loadModelsByBrand(selectedBrand) {
 			var _this = this;
 
-			//console.log(selectedBrand);
-			loadingModel = true;
+			this.loadingModel = true;
 
 			axios.get('/readSubData/' + 'model' + '/' + selectedBrand).then(function (response) {
-				_this.loadingModel = false;
 				_this.models = response.data.data; //console.log(response.data.data);
 			}).catch(function (err) {
 				toastr.error('Error occured!', err.message);
 			});
+			this.loadingModel = false;
 		},
 		loadModelsBySubID: function loadModelsBySubID(subID) {
 			var _this2 = this;
 
-			//console.log('subID'+subID);
-			loadingModel = true;
+			this.loadingModel = true;
 
 			axios.get('/readSubData/' + subID).then(function (response) {
-				_this2.loadingModel = false;
-				_this2.models = response.data.data; //console.log(response.data.data);
+				_this2.models = response.data.data;
 			}).catch(function (err) {
 				toastr.error('Error occured!', err.message);
 			});
+			this.loadingModel = false;
 		},
 		searchRequest: function searchRequest() {
 			var _this3 = this;
 
 			axios.get('/search/general/' + this.searchKeyword).then(function (response) {
-				_this3.loadingPage = false;
-				_this3.searchTyping = false;
-				_this3.searchResult = response.data.data; //console.log(response.data.data);
+				_this3.searchResult = response.data.data;
 			}).catch(function (err) {
-				_this3.loadingPage = false;
-				_this3.searchTyping = false;
 				toastr.error(err.message, 'Error occured!');
 			});
+			this.loadingPage = false;
+			this.searchTyping = false;
 		},
-		filterCars: function filterCars(brandId) {
+		refreshResults: function refreshResults(allChecked) {
+			this.loadingPage = true;
+			this.searchTyping = true;
+
+			this.searchResult = [];
+
+			if (allChecked.length != 0) {
+				// FILL CHECKED DATA INTO ARRAY TO SEND TO BACK-END
+
+				var brands = [];
+				allChecked.filter(function (car) {
+					if (car[1].length == 0) brands.push(car[0]);
+				});console.log(brands);
+
+				var models = [];
+				allChecked.filter(function (car) {
+					car[1].filter(function (model) {
+						models.push(model);
+					});
+				});console.log(models);
+
+				this.readCheckedCars('checkedModels', models);
+				this.readCheckedCars('checkedBrands', brands);
+			} else {
+				this.searchResult[0] = 'init'; // show latest posts instead of saerch filtering results
+			}
+			this.loadingPage = false;
+			this.searchTyping = false;
+		},
+		readCheckedCars: function readCheckedCars(url, checkedCars) {
 			var _this4 = this;
 
-			if (this.searchResult[0] == 'init') this.searchResult = [];
-
-			if (brandId > 0) {
-				this.loadingPage = true;
-				this.searchTyping = true;
-
-				axios.get('/search/filter/brand/' + brandId).then(function (response) {
-					_this4.loadingPage = false;
-					_this4.searchTyping = false;
-
-					if (response.data.data.length > 0) {
-						response.data.data.filter(function (car) {
-							_this4.searchResult.push(car);
-						});
-					}
-				}).catch(function (err) {
-					toastr.error('Error was occured!', err.message);
-				});
-			}
-		},
-		removeCars: function removeCars(brandTitle) {
-			this.searchResult = this.searchResult.filter(function (car) {
-				console.log(car.brand != brandTitle);
-				if (car.brand != brandTitle) {
-					console.log(car.brand);
-					return { title: 'koko' };
+			axios.post('/search/filter/' + url, checkedCars).then(function (response) {
+				if (response.data.data.length > 0) {
+					response.data.data.filter(function (car) {
+						_this4.searchResult.push(car);
+					});
 				}
+			}).catch(function (err) {
+				toastr.error('Error was occured!', err.message);
 			});
-			if (this.searchResult.length == 0) this.searchResult[0] = 'init';
 		},
 		searchKeyEnter: function searchKeyEnter() {
-
 			if (this.searchKeyword != '') {
 				this.loadingPage = true;
 				this.searchRequest();
@@ -12304,7 +12308,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			loading: true,
 			brands: [],
 			models: [],
-			brandCheckboxes: []
+			brandCheckboxes: [],
+			// CheckedModels: [], 
+			allChecked: []
 		};
 	},
 
@@ -12322,7 +12328,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 		},
 		brandChanged: function brandChanged(val, brandId, brandTitle) {
-			if (val == 1) this.$emit('brand-checked', brandId);else this.$emit('brand-unchecked', brandTitle);
+			if (val == 1) {
+				// add brand to all-data
+				this.allChecked.push([brandId, []]);
+				this.$emit('new-item-checked', this.allChecked);
+			} else {
+				// remove brand and it's models
+				this.allChecked = this.allChecked.filter(function (car) {
+					if (car[0] != brandId) return car;
+				});
+				this.$emit('item-un-checked', this.allChecked);
+			}
+		},
+		modelChanged: function modelChanged(val, modelId, modelTitle, brandId) {
+			if (val == 1) {
+				// add model to array in brand item in all-data
+				this.allChecked = this.allChecked.filter(function (car) {
+					if (car[0] == brandId) {
+						car[1].push(modelId);
+					}
+					return car;
+				});
+
+				this.$emit('new-item-checked', this.allChecked);
+			} else {
+				this.allChecked = this.allChecked.filter(function (car) {
+					// car[brandId] = [array of models]
+					console.log(car[1]);
+					if (car[1].includes(modelId)) {
+						car[1] = car[1].filter(function (model) {
+							if (model != modelId) return model;
+						});
+					}
+					return car;
+				});
+
+				this.$emit('item-un-checked', this.allChecked);
+			}
 		}
 	},
 
@@ -32902,7 +32944,7 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "SearchBrandModel text-left"
-  }, [(_vm.loading) ? _c('span', [_vm._v("Loading data..")]) : _vm._l((_vm.brands), function(brand, i) {
+  }, _vm._l((_vm.brands), function(brand, i) {
     return _c('div', [_c('input', {
       directives: [{
         name: "model",
@@ -32957,13 +32999,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           value: (_vm.brandCheckboxes[i]),
           expression: "brandCheckboxes[i]"
         }]
-      }, [(model.ntype2 == brand.title) ? [_vm._v("\n\t\t\t\t   \n\t\t\t\t"), _c('input', {
+      }, [(model.ntype2 == brand.title) ? [_vm._v("\n\t\t\t\t    \n\t\t\t\t"), _c('input', {
         attrs: {
           "type": "checkbox",
           "name": "model"
         },
         domProps: {
           "value": model.id
+        },
+        on: {
+          "change": function($event) {
+            _vm.modelChanged($event.target.checked, model.id, model.title, brand.id)
+          }
         }
       }), _vm._v(" "), _c('label', {
         attrs: {
@@ -32971,7 +33018,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }, [_vm._v(_vm._s(model.title))])] : _vm._e()], 2)
     })], 2)
-  })], 2)
+  }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

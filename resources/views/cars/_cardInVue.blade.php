@@ -1,8 +1,6 @@
 
 
-
-
-<div class="col-sm-6 col-md-4 car-card"  v-else v-for="car in searchResult">
+<div class="col-sm-6 col-md-4 car-card"  v-for="car in searchResult">
 	<div class="thumbnail panel-info">
 
 		<img :src="car.pic_file_name" alt="...">

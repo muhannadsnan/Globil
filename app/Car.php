@@ -17,11 +17,15 @@ class Car extends Model
 	
 // ============= SEARCH FILTERS SCOPE =============
 
-	public function scopeSearchFilters($query, $filters = [])
+	public function scopeSearchFilters($query, $filters = [], $orderBy = '')
 	{ //dd($filters);
 	// Search::SearchFilters(['brand'=>'BMW', 'model'=>'M3', 'roofType'=>3, 'ABS'=>1])->get();
-		$res = $query->where($filters)->get(); // dd($res);
-		return $res;
+		$query->where($filters);
+		if($orderBy){
+			$query->orderBy($orderBy);	
+		}
+
+		return $query->get(); // dd($res);	 
 	}
 
 // ============= RELATIONSHIPs =============

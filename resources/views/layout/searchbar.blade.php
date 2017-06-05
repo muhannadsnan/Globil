@@ -15,20 +15,10 @@
 				<h3>Filters</h3>			
 			</div>
 
-			<!-- <div class="panel-body">
-				@foreach(App\SubData::where('ntype', 'brand')->get() as $sub)
-				
-					<div class="text-left  ">
-						<input type="checkbox" name="brand" value="{{$sub->title}}">
-						<label for="brand">{{$sub->title}}</label>
-					</div>
-				
-				@endforeach
-			</div> -->
-
+			
 			<search-brand-model 
-				@brand-checked="filterCars"
-				@brand-unchecked="removeCars"></search-brand-model>
+				@new-item-checked="refreshResults"
+				@item-un-checked="refreshResults"></search-brand-model>
 			
 		</div>
 		

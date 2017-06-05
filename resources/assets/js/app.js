@@ -23,65 +23,83 @@ const app = new Vue({
 		// CREATE POST
 		brand: '',
 		models: '',
-		loadingModel: false
+		loadingModel: false,
 	},
 
 	methods: {
 
 		loadModelsByBrand(selectedBrand){
-			//console.log(selectedBrand);
-			loadingModel = true;
+			this.loadingModel = true;
 
 			axios.get('/readSubData/'+'model'+'/'+ selectedBrand )
               .then(response => {
-                  this.loadingModel = false;
                   this.models = response.data.data;  //console.log(response.data.data);
               })
               .catch(err => {
                   toastr.error('Error occured!', err.message);
               })
+        this.loadingModel = false;
 		},
 
-		loadModelsBySubID(subID){ //console.log('subID'+subID);
-			loadingModel = true;
+		loadModelsBySubID(subID){ 
+			this.loadingModel = true;
 
 			axios.get('/readSubData/'+ subID )
               .then(response => {
-                  this.loadingModel = false;
-                  this.models = response.data.data;  //console.log(response.data.data);
+                  this.models = response.data.data;  
               })
               .catch(err => {
                   toastr.error('Error occured!', err.message);
               })
+        	this.loadingModel = false;
 		},
 
 		searchRequest(){
 			axios.get('/search/general/'+ this.searchKeyword )
               .then(response => {
-                  this.loadingPage = false;
-                  this.searchTyping = false;
-                  this.searchResult = response.data.data;  //console.log(response.data.data);
+                  this.searchResult = response.data.data;  
               })
               .catch(err => {
-                  this.loadingPage = false;
-                  this.searchTyping = false;
                   toastr.error(err.message, 'Error occured!');
               })
+        	this.loadingPage = false;
+         this.searchTyping = false;
 		},
 
-		filterCars(brandId){
-			if(this.searchResult[0] == 'init')
-				this.searchResult = [];
+		refreshResults(allChecked){
+			this.loadingPage = true;
+			this.searchTyping = true;
 
-			if(brandId > 0){
-				this.loadingPage = true;
-	         this.searchTyping = true;
+			this.searchResult = [];
 
-				axios.get('/search/filter/brand/'+brandId)
+			if(allChecked.length != 0){// FILL CHECKED DATA INTO ARRAY TO SEND TO BACK-END
+
+	         var brands = [];
+	         allChecked.filter(car => {
+	         	if(car[1].length == 0)
+	         		brands.push(car[0]);
+	         });  console.log(brands);
+
+	         var models = [];
+	         allChecked.filter(car => {
+	         	car[1].filter(model => {
+	         		models.push(model);	
+	         	});
+	         });  console.log(models);
+
+				this.readCheckedCars('checkedModels', models);
+				this.readCheckedCars('checkedBrands', brands);				
+			}
+			else{
+				this.searchResult[0] = 'init'; // show latest posts instead of saerch filtering results
+			}
+			this.loadingPage = false;
+			this.searchTyping = false;	
+		},
+
+		readCheckedCars(url, checkedCars){
+			axios.post('/search/filter/'+url, checkedCars)
 					.then(response => {
-						this.loadingPage = false;
-         			this.searchTyping = false;
-
 	         		if(response.data.data.length > 0){
 	         			response.data.data.filter(car => {
 		         			this.searchResult.push(car);
@@ -90,22 +108,10 @@ const app = new Vue({
 					})
 					.catch(err => {
 						toastr.error('Error was occured!', err.message);
-					})
-			}
-		},
-
-		removeCars(brandTitle){
-			this.searchResult = this.searchResult.filter(car => { console.log(car.brand != brandTitle);
-				if(car.brand != brandTitle){ console.log(car.brand);
-					return {title: 'koko'};
-				}
-			});
-			if(this.searchResult.length == 0)
-					this.searchResult[0] = 'init';
+					})			
 		},
 
 		searchKeyEnter(){
-			
 			if(this.searchKeyword != ''){
 				this.loadingPage = true;
 				this.searchRequest();
