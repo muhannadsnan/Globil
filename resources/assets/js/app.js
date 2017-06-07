@@ -9,16 +9,17 @@ Vue.component('wishlistbutton', require('./components/WishListButton.vue'));
 Vue.component('subdata-select', require('./components/SubDataSelect.vue'));
 Vue.component('edit-images', require('./components/EditImages.vue'));
 Vue.component('search-brand-model', require('./components/SearchBrandModel.vue'));
+Vue.component('saved-search', require('./components/SavedSearch.vue'));
 
 const app = new Vue({
 	el: '#app',
 
 	data: {
+		searchResult: ['init'],
 		// HOME PAGE SEARCH
 		searchKeyword: '',
 		searchTyping: false,
 		loadingPage: false,
-		searchResult: ['init'],
 
 		// CREATE POST
 		brand: '',
@@ -39,7 +40,7 @@ const app = new Vue({
                   toastr.error('Error occured!', err.message);
               })
         this.loadingModel = false;
-		},
+		}, //<<
 
 		loadModelsBySubID(subID){ 
 			this.loadingModel = true;
@@ -52,7 +53,7 @@ const app = new Vue({
                   toastr.error('Error occured!', err.message);
               })
         	this.loadingModel = false;
-		},
+		}, //<<
 
 		searchRequest(){
 			axios.get('/search/general/'+ this.searchKeyword )
@@ -64,51 +65,10 @@ const app = new Vue({
               })
         	this.loadingPage = false;
          this.searchTyping = false;
-		},
+		}, //<<
 
-		refreshResults(allChecked){
-			this.loadingPage = true;
-			this.searchTyping = true;
-
-			this.searchResult = [];
-
-			if(allChecked.length != 0){// FILL CHECKED DATA INTO ARRAY TO SEND TO BACK-END
-
-	         var brands = [];
-	         allChecked.filter(car => {
-	         	if(car[1].length == 0)
-	         		brands.push(car[0]);
-	         });  console.log(brands);
-
-	         var models = [];
-	         allChecked.filter(car => {
-	         	car[1].filter(model => {
-	         		models.push(model);	
-	         	});
-	         });  console.log(models);
-
-				this.readCheckedCars('checkedModels', models);
-				this.readCheckedCars('checkedBrands', brands);				
-			}
-			else{
-				this.searchResult[0] = 'init'; // show latest posts instead of saerch filtering results
-			}
-			this.loadingPage = false;
-			this.searchTyping = false;	
-		},
-
-		readCheckedCars(url, checkedCars){
-			axios.post('/search/filter/'+url, checkedCars)
-					.then(response => {
-	         		if(response.data.data.length > 0){
-	         			response.data.data.filter(car => {
-		         			this.searchResult.push(car);
-		         		});
-	         		}
-					})
-					.catch(err => {
-						toastr.error('Error was occured!', err.message);
-					})			
+		searchResultsReady(searchResFromSavedSearch){
+			this.searchResult = searchResFromSavedSearch;
 		},
 
 		searchKeyEnter(){
@@ -116,7 +76,7 @@ const app = new Vue({
 				this.loadingPage = true;
 				this.searchRequest();
 			}
-		}
+		} //<<
 	},
 
 	mounted(){
@@ -131,6 +91,6 @@ const app = new Vue({
 			else{
 				this.searchTyping = true;
 			}
-		},
+		}, //<<
 	}
 });

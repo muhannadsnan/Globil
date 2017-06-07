@@ -49,14 +49,14 @@
 			brandChanged(val, brandId, brandTitle){ 
 				if(val == 1){ // add brand to all-data
 					this.allChecked.push([brandId, []]);
-					this.$emit('new-item-checked', this.allChecked);
+					this.$parent.$emit('new-item-checked', this.allChecked);
 				}
 				else{ // remove brand and it's models
 					this.allChecked = this.allChecked.filter(car => { 
 						if(car[0] != brandId)
 							return car;
 					});
-					this.$emit('item-un-checked', this.allChecked);
+					this.$parent.$emit('item-un-checked', this.allChecked);
 				}
 			},
 
@@ -69,7 +69,7 @@
 						return car;
 					});
 
-					this.$emit('new-item-checked', this.allChecked);
+					this.$parent.$emit('new-item-checked', this.allChecked);
 				}
 				else{
 					this.allChecked = this.allChecked.filter(car => { // car[brandId] = [array of models]
@@ -83,7 +83,7 @@
 						return car;
 					});
 
-					this.$emit('item-un-checked', this.allChecked);
+					this.$parent.$emit('item-un-checked', this.allChecked);
 				}
 			},
 		},

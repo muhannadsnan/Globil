@@ -15,10 +15,9 @@
 				<h3>Filters</h3>			
 			</div>
 
-			
-			<search-brand-model 
-				@new-item-checked="refreshResults"
-				@item-un-checked="refreshResults"></search-brand-model>
+			<saved-search @search-results-ready="searchResultsReady">
+				<search-brand-model></search-brand-model>
+			</saved-search>
 			
 		</div>
 		

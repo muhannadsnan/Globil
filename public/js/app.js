@@ -11096,16 +11096,17 @@ Vue.component('wishlistbutton', __webpack_require__(46));
 Vue.component('subdata-select', __webpack_require__(45));
 Vue.component('edit-images', __webpack_require__(42));
 Vue.component('search-brand-model', __webpack_require__(44));
+Vue.component('saved-search', __webpack_require__(66));
 
 var app = new Vue({
 	el: '#app',
 
 	data: {
+		searchResult: ['init'],
 		// HOME PAGE SEARCH
 		searchKeyword: '',
 		searchTyping: false,
 		loadingPage: false,
-		searchResult: ['init'],
 
 		// CREATE POST
 		brand: '',
@@ -11126,6 +11127,8 @@ var app = new Vue({
 			});
 			this.loadingModel = false;
 		},
+		//<<
+
 		loadModelsBySubID: function loadModelsBySubID(subID) {
 			var _this2 = this;
 
@@ -11138,6 +11141,8 @@ var app = new Vue({
 			});
 			this.loadingModel = false;
 		},
+		//<<
+
 		searchRequest: function searchRequest() {
 			var _this3 = this;
 
@@ -11149,54 +11154,18 @@ var app = new Vue({
 			this.loadingPage = false;
 			this.searchTyping = false;
 		},
-		refreshResults: function refreshResults(allChecked) {
-			this.loadingPage = true;
-			this.searchTyping = true;
+		//<<
 
-			this.searchResult = [];
-
-			if (allChecked.length != 0) {
-				// FILL CHECKED DATA INTO ARRAY TO SEND TO BACK-END
-
-				var brands = [];
-				allChecked.filter(function (car) {
-					if (car[1].length == 0) brands.push(car[0]);
-				});console.log(brands);
-
-				var models = [];
-				allChecked.filter(function (car) {
-					car[1].filter(function (model) {
-						models.push(model);
-					});
-				});console.log(models);
-
-				this.readCheckedCars('checkedModels', models);
-				this.readCheckedCars('checkedBrands', brands);
-			} else {
-				this.searchResult[0] = 'init'; // show latest posts instead of saerch filtering results
-			}
-			this.loadingPage = false;
-			this.searchTyping = false;
-		},
-		readCheckedCars: function readCheckedCars(url, checkedCars) {
-			var _this4 = this;
-
-			axios.post('/search/filter/' + url, checkedCars).then(function (response) {
-				if (response.data.data.length > 0) {
-					response.data.data.filter(function (car) {
-						_this4.searchResult.push(car);
-					});
-				}
-			}).catch(function (err) {
-				toastr.error('Error was occured!', err.message);
-			});
+		searchResultsReady: function searchResultsReady(searchResFromSavedSearch) {
+			this.searchResult = searchResFromSavedSearch;
 		},
 		searchKeyEnter: function searchKeyEnter() {
 			if (this.searchKeyword != '') {
 				this.loadingPage = true;
 				this.searchRequest();
 			}
-		}
+		} //<<
+
 	},
 
 	mounted: function mounted() {},
@@ -12331,13 +12300,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			if (val == 1) {
 				// add brand to all-data
 				this.allChecked.push([brandId, []]);
-				this.$emit('new-item-checked', this.allChecked);
+				this.$parent.$emit('new-item-checked', this.allChecked);
 			} else {
 				// remove brand and it's models
 				this.allChecked = this.allChecked.filter(function (car) {
 					if (car[0] != brandId) return car;
 				});
-				this.$emit('item-un-checked', this.allChecked);
+				this.$parent.$emit('item-un-checked', this.allChecked);
 			}
 		},
 		modelChanged: function modelChanged(val, modelId, modelTitle, brandId) {
@@ -12350,7 +12319,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					return car;
 				});
 
-				this.$emit('new-item-checked', this.allChecked);
+				this.$parent.$emit('new-item-checked', this.allChecked);
 			} else {
 				this.allChecked = this.allChecked.filter(function (car) {
 					// car[brandId] = [array of models]
@@ -12363,7 +12332,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					return car;
 				});
 
-				this.$emit('item-un-checked', this.allChecked);
+				this.$parent.$emit('item-un-checked', this.allChecked);
 			}
 		}
 	},
@@ -42958,6 +42927,158 @@ module.exports = function(module) {
 __webpack_require__(10);
 module.exports = __webpack_require__(11);
 
+
+/***/ }),
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	data: function data() {
+		return {
+			searchResult: ['init'],
+			savedSearch: {},
+
+			searchTyping: false,
+			loadingPage: false
+
+		};
+	},
+
+
+	props: {},
+
+	methods: {
+		refreshResults: function refreshResults(allChecked) {
+			this.loadingPage = true;
+			this.searchTyping = true;
+
+			this.searchResult = [];
+
+			if (allChecked.length != 0) {
+				// FILL CHECKED DATA INTO ARRAY TO SEND TO BACK-END
+
+				var brands = [];
+				allChecked.filter(function (car) {
+					if (car[1].length == 0) brands.push(car[0]);
+				});console.log(brands);
+
+				var models = [];
+				allChecked.filter(function (car) {
+					car[1].filter(function (model) {
+						models.push(model);
+					});
+				});console.log(models);
+
+				this.readCheckedCars('checkedModels', models);
+				this.readCheckedCars('checkedBrands', brands);
+			} else {
+				this.searchResult[0] = 'init'; // show latest posts instead of saerch filtering results
+			}
+			this.loadingPage = false;
+			this.searchTyping = false;
+		},
+		//<<
+
+		readCheckedCars: function readCheckedCars(url, checkedCars) {
+			var _this = this;
+
+			axios.post('/search/filter/' + url, checkedCars).then(function (response) {
+				if (response.data.data.length > 0) {
+					response.data.data.filter(function (car) {
+						_this.searchResult.push(car);
+					});
+				}
+			}).catch(function (err) {
+				toastr.error('Error was occured!', err.message);
+			});
+		}
+	},
+
+	mounted: function mounted() {
+		console.log('SavedSearch Component mounted.');
+		//console.log(this.user)
+
+		// @new-item-checked="refreshResults"
+		// @item-un-checked="refreshResults"
+		this.$on('new-item-checked', this.refreshResults);
+		this.$on('item-un-checked', this.refreshResults);
+	},
+
+
+	watch: {
+		searchResult: function searchResult(val) {
+			this.$emit('search-results-ready', this.searchResult);
+		}
+	}
+});
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(65),
+  /* template */
+  __webpack_require__(67),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "E:\\Document\\Docs\\www\\Globil\\resources\\assets\\js\\components\\SavedSearch.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] SavedSearch.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-76b1c960", Component.options)
+  } else {
+    hotAPI.reload("data-v-76b1c960", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "saved-search"
+  }, [_vm._t("default")], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-76b1c960", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
