@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Car;
+use App\SavedSearch;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -15,6 +16,7 @@ class HomeController extends Controller
 		public function index()
 		{
 			$latestCars = Car::latest()->get();
-			return view('home', compact('latestCars'));
+			$savedSearch = SavedSearch::latest()->take(5)->get();
+			return view('home', compact('latestCars', 'savedSearch'));
 		}
 }

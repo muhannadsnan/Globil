@@ -33,3 +33,6 @@ Route::get('/search/general/{keyword}', 'SearchController@searchGeneral');
 // Route::post('/search/filter/model', 'SearchController@readCarsByModelIds'); // array of IDs
 Route::post('/search/filter/checkedBrands/', 'SearchController@readCheckedBrands');
 Route::post('/search/filter/checkedModels/', 'SearchController@readCheckedModels');
+
+
+Route::post('/saved-search', 'SavedSearchController@store');

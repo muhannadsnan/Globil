@@ -15,6 +15,7 @@ class CreateSavedSearchesTable extends Migration
     {
         Schema::create('saved_searches', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title')->nullable();
 
             $table->text('users')->nullable(); // JSON DATA {[1,2,3,4..]},
             $table->text('brand_model')->nullable();

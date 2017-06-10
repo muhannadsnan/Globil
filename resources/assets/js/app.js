@@ -5,6 +5,7 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('ajax', require('./components/Ajax.vue'));
+Vue.component('modal', require('./components/modal.vue'));
 Vue.component('wishlistbutton', require('./components/WishListButton.vue'));
 Vue.component('subdata-select', require('./components/SubDataSelect.vue'));
 Vue.component('edit-images', require('./components/EditImages.vue'));

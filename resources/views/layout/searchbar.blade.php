@@ -17,6 +17,8 @@
 
 			<saved-search @search-results-ready="searchResultsReady">
 				<search-brand-model></search-brand-model>
+
+				
 			</saved-search>
 			
 		</div>
