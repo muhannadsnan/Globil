@@ -1,5 +1,5 @@
 <template>
-	<div class="search-price">
+	<div class="search-car-type">
 		<label>Car type:</label>
 		<div v-for="(carType, i) in carTypes" class=" text-left">
 			<input type="checkbox"
@@ -32,7 +32,7 @@
 			},
 
 			getCarTypes(){
-				axios.get('/read-car-types')
+				axios.get('/readSubData/car_type/undefined')
 					.then(response => {
 						this.carTypes = response.data.data
 					})
@@ -42,12 +42,12 @@
 			},
 
 			sendDataToParent(){ // send your data @on-change or @any-filter-change
-				this.$parent.$emit('car-type-changed', {carTypes: this.checked})
+				this.$parent.$emit('car-type-changed', {CheckedCarTypes: this.checked})
 				this.$emit('any-filter-change')
 			}, 
 
 			sendDataToParentWithoutNotifingAll(){ // send your data @on-change or @any-filter-change
-				this.$parent.$emit('car-type-changed', {carTypes: this.checked})
+				this.$parent.$emit('car-type-changed', {CheckedCarTypes: this.checked})
 			},			
 		},
 

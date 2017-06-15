@@ -20,8 +20,7 @@ Route::get('/my-cars', 'CarsController@myCars');
 // ============== Sub Data
 Route::get('/readSubData/{data1}/{data2}', 'SubDataController@readSubData'); // readSubData/model/Mercedes
 Route::get('/readSubData/{subID}', 'SubDataController@readModelsBySubID'); // readSubData/5
-Route::get('/read-brands-with-models', 'SubDataController@readBrandsWithModels'); // readSubData/5
-Route::get('/read-car-types', 'SubDataController@readCarTypes');
+Route::get('/read-data-with-subdata/{data}/{subdata}', 'SubDataController@readDataWithSubdata'); // readSubData/5
 
 
 // ==============  Pics

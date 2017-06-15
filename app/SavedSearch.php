@@ -26,7 +26,12 @@ class SavedSearch extends Model
 				'max_kilometer' => $request->kmRange[1],
 				'fuel_type' => ! $request->fuel_types ? null : json_encode($request->fuel_types),
 				'gear' => ! $request->gears ? null : json_encode($request->gears),
-				// 'areas' => $request->areas,
+				// 'areas' => $request->areas, 
+				// [
+				// 	[vestfold, [v1,v2,v4] ], 
+				// 	[østfold, [o1,o2,o3] ],
+				// 	[nordland, [n1,n2,n3] ]
+				// ]
 
 				'country' => ! $request->countries ? null : json_encode($request->countries),
 				'color' => ! $request->colors ? null : json_encode($request->colors),

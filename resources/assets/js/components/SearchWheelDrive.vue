@@ -42,12 +42,12 @@
 			},
 
 			sendDataToParent(){ // send your data @on-change or @any-filter-change
-				this.$parent.$emit('wheel-drive-changed', {wheelDrives: this.wheel_drives})
+				this.$parent.$emit('wheel-drive-changed', {CheckedWheelDrives: this.checked})
 				this.$emit('any-filter-change')
 			}, 
 
 			sendDataToParentWithoutNotifingAll(){ // send your data @on-change or @any-filter-change
-				this.$parent.$emit('wheel-drive-changed', {wheelDrives: this.wheel_drives})
+				this.$parent.$emit('wheel-drive-changed', {CheckedWheelDrives: this.checked})
 			},			
 		},
 

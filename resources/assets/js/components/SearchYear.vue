@@ -21,12 +21,12 @@
 		methods: {
 
 			sendDataToParent(){ // send your data @on-change or @on-others-change
-				this.$parent.$emit('year-changed', {years: this.years})
+				this.$parent.$emit('year-changed', {CheckedYears: this.years})
 				this.$emit('any-filter-change')
 			}, 
 
 			sendDataToParentWithoutNotifingAll(){ // send your data @on-change or @any-filter-change
-				this.$parent.$emit('year-changed', {years: this.years})
+				this.$parent.$emit('year-changed', {CheckedYears: this.years})
 			}, 
 		},
 

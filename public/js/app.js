@@ -12555,9 +12555,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		getBrandsAndModels: function getBrandsAndModels() {
 			var _this = this;
 
-			axios.get('/read-brands-with-models').then(function (response) {
-				_this.brands = response.data.brands;
-				_this.models = response.data.models;
+			axios.get('/read-data-with-subdata/brand/model').then(function (response) {
+				_this.brands = response.data.data;
+				_this.models = response.data.subdata;
 				_this.loading = false;
 			}).catch(function (err) {
 				toastr.error('Error was occured!', err.message);
@@ -12599,11 +12599,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			}
 		},
 		sendAllFiltersToParent: function sendAllFiltersToParent() {
-			this.$parent.$emit('brand-model-changed', { checkedCars: this.allChecked });
+			this.$parent.$emit('brand-model-changed', { CheckedCars: this.allChecked });
 			this.$emit('any-filter-change');
 		},
 		sendDataToParentWithoutNotifingAll: function sendDataToParentWithoutNotifingAll() {
-			this.$parent.$emit('brand-model-changed', { checkedCars: this.allChecked });
+			this.$parent.$emit('brand-model-changed', { CheckedCars: this.allChecked });
 		}
 	},
 
@@ -12664,7 +12664,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		getCarTypes: function getCarTypes() {
 			var _this = this;
 
-			axios.get('/read-car-types').then(function (response) {
+			axios.get('/readSubData/car_type/undefined').then(function (response) {
 				_this.carTypes = response.data.data;
 			}).catch(function (err) {
 				toastr.error('Error was occured!', err.message);
@@ -12672,12 +12672,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		sendDataToParent: function sendDataToParent() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+			this.$parent.$emit('car-type-changed', { CheckedCarTypes: this.checked });
 			this.$emit('any-filter-change');
 		},
 		sendDataToParentWithoutNotifingAll: function sendDataToParentWithoutNotifingAll() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+			this.$parent.$emit('car-type-changed', { CheckedCarTypes: this.checked });
 		}
 	},
 
@@ -12813,15 +12813,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		//<<
 
 		FillSearchFilters: function FillSearchFilters(childData) {
-			if (childData.checkedCars) this.searchFilters.brand_model = childData.checkedCars;
+			if (childData.CheckedCars) this.searchFilters.brand_model = childData.CheckedCars;
 			if (childData.priceRange) this.searchFilters.priceRange = childData.priceRange;
-			if (childData.years) this.searchFilters.years = childData.years;
-			if (childData.carTypes) this.searchFilters.car_types = childData.carTypes;
-			if (childData.wheelDrives) this.searchFilters.wheel_drives = childData.wheelDrives;
+			if (childData.CheckedYears) this.searchFilters.years = childData.CheckedYears;
+			if (childData.CheckedCarTypes) this.searchFilters.car_types = childData.CheckedCarTypes;
+			if (childData.CheckedWheelDrives) this.searchFilters.wheel_drives = childData.CheckedWheelDrives;
 			if (childData.kmRange) this.searchFilters.kmRange = childData.kmRange;
-			if (childData.fuelTypes) this.searchFilters.fuel_types = childData.fuelTypes;
-			if (childData.gearTypes) this.searchFilters.gears = childData.gearTypes;
-			if (childData.areas) this.searchFilters.areas = childData.areas;
+			if (childData.CheckedFuelTypes) this.searchFilters.fuel_types = childData.CheckedFuelTypes;
+			if (childData.CheckedGears) this.searchFilters.gears = childData.CheckedGears;
+			if (childData.CheckedAreas) this.searchFilters.areas = childData.CheckedAreas;
 
 			this.showSaveButton = true;
 		}
@@ -12837,7 +12837,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		this.$on('km-range-changed', this.FillSearchFilters);
 		this.$on('fuel-type-changed', this.FillSearchFilters);
 		this.$on('gear-changed', this.FillSearchFilters);
-		this.$on('wheel-drive-changed', this.FillSearchFilters);
+		this.$on('area-changed', this.FillSearchFilters);
 	},
 
 
@@ -12875,56 +12875,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
-			carTypes: [],
-			checked: []
+			minPrice: 0,
+			maxPrice: 0
 		};
 	},
 
 
 	methods: {
-		onCHange: function onCHange(check, i, carType) {
-			//console.log(carType); console.log(check)
-			if (check) this.$set(this.checked, i, carType.id);else this.$set(this.checked, i, false);
-
-			this.sendDataToParent();
-		},
-		getCarTypes: function getCarTypes() {
-			var _this = this;
-
-			axios.get('/read-car-types').then(function (response) {
-				_this.carTypes = response.data.data;
-			}).catch(function (err) {
-				toastr.error('Error was occured!', err.message);
-			});
-		},
 		sendDataToParent: function sendDataToParent() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+			this.$parent.$emit('price-range-changed', { priceRange: [this.minPrice, this.maxPrice] });
 			this.$emit('any-filter-change');
 		},
 		sendDataToParentWithoutNotifingAll: function sendDataToParentWithoutNotifingAll() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+			this.$parent.$emit('price-range-changed', { priceRange: [this.minPrice, this.maxPrice] });
 		}
 	},
 
 	mounted: function mounted() {
 		// console.log('Search Price Component mounted.')
-		this.getCarTypes();
+
 		// send your data @on-change or @any-filter-change
 		this.$on('any-filter-change', this.sendDataToParentWithoutNotifingAll);
 	},
 
 
-	watch: {
-		carTypes: function carTypes(val) {
-			var _this2 = this;
-
-			this.carTypes.filter(function (c) {
-				_this2.checked.push(false);
-			});
-		}
-	}
+	watch: {}
 });
 
 /***/ }),
@@ -12957,12 +12934,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	methods: {
 		sendDataToParent: function sendDataToParent() {
 			// send your data @on-change or @on-others-change
-			this.$parent.$emit('year-changed', { years: this.years });
+			this.$parent.$emit('year-changed', { CheckedYears: this.years });
 			this.$emit('any-filter-change');
 		},
 		sendDataToParentWithoutNotifingAll: function sendDataToParentWithoutNotifingAll() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('year-changed', { years: this.years });
+			this.$parent.$emit('year-changed', { CheckedYears: this.years });
 		}
 	},
 
@@ -15675,7 +15652,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.search-brand-model input[data-v-0a0f7c8e] {\n  margin-left: 20px;\n}\n.models input[data-v-0a0f7c8e] {\n  margin-left: 30px;\n}\n.models label[data-v-0a0f7c8e] {\n  color: #46b8da;\n}\n", ""]);
+exports.push([module.i, "\n.models input[data-v-0a0f7c8e] {\n  margin-left: 30px !important;\n}\n.models label[data-v-0a0f7c8e] {\n  color: #46b8da;\n}\n", ""]);
 
 /***/ }),
 /* 46 */
@@ -15689,7 +15666,7 @@ exports.push([module.i, "", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.search-price input[data-v-749a37c2] {\n  width: 90%;\n  margin: auto;\n}\n", ""]);
 
 /***/ }),
 /* 48 */
@@ -34187,23 +34164,57 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "search-price"
-  }, [_c('label', [_vm._v("Car type:")]), _vm._v(" "), _vm._l((_vm.carTypes), function(carType, i) {
-    return _c('div', {
-      staticClass: " text-left"
-    }, [_c('input', {
-      attrs: {
-        "type": "checkbox"
+  }, [_c('label', [_vm._v("Price:")]), _vm._v(" "), _c('div', {}, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.minPrice),
+      expression: "minPrice"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "step": "5000"
+    },
+    domProps: {
+      "value": (_vm.minPrice)
+    },
+    on: {
+      "change": _vm.sendDataToParent,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.minPrice = $event.target.value
       },
-      domProps: {
-        "value": carType.id
-      },
-      on: {
-        "change": function($event) {
-          _vm.onCHange($event.target.checked, i, carType)
-        }
+      "blur": function($event) {
+        _vm.$forceUpdate()
       }
-    }), _vm._v(" "), _c('span', [_vm._v(_vm._s(carType.title))])])
-  }), _vm._v(" "), _c('hr')], 2)
+    }
+  }), _vm._v(" "), _c('span', [_vm._v("til")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.maxPrice),
+      expression: "maxPrice"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "step": "5000"
+    },
+    domProps: {
+      "value": (_vm.maxPrice)
+    },
+    on: {
+      "change": _vm.sendDataToParent,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.maxPrice = $event.target.value
+      },
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  })]), _vm._v(" "), _c('hr')])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -34263,7 +34274,7 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "search-price"
+    staticClass: "search-car-type"
   }, [_c('label', [_vm._v("Car type:")]), _vm._v(" "), _vm._l((_vm.carTypes), function(carType, i) {
     return _c('div', {
       staticClass: " text-left"
@@ -44287,12 +44298,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		sendDataToParent: function sendDataToParent() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('wheel-drive-changed', { wheelDrives: this.wheel_drives });
+			this.$parent.$emit('wheel-drive-changed', { CheckedWheelDrives: this.checked });
 			this.$emit('any-filter-change');
 		},
 		sendDataToParentWithoutNotifingAll: function sendDataToParentWithoutNotifingAll() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('wheel-drive-changed', { wheelDrives: this.wheel_drives });
+			this.$parent.$emit('wheel-drive-changed', { CheckedWheelDrives: this.checked });
 		}
 	},
 
@@ -44426,7 +44437,6 @@ module.exports = Component.exports
 
 /* styles */
 __webpack_require__(114)
-__webpack_require__(116)
 
 var Component = __webpack_require__(1)(
   /* script */
@@ -44553,57 +44563,97 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
-			carTypes: [],
-			checked: []
+			loading: true,
+			areas: [],
+			cities: [],
+			areaCheckboxes: [],
+			// CheckedModels: [], 
+			allChecked: []
 		};
 	},
 
 
 	methods: {
-		onCHange: function onCHange(check, i, carType) {
-			//console.log(carType); console.log(check)
-			if (check) this.$set(this.checked, i, carType.id);else this.$set(this.checked, i, false);
-
-			this.sendDataToParent();
-		},
-		getCarTypes: function getCarTypes() {
+		getAreasWithCities: function getAreasWithCities() {
 			var _this = this;
 
-			axios.get('/read-car-types').then(function (response) {
-				_this.carTypes = response.data.data;
+			axios.get('/read-data-with-subdata/area/city').then(function (response) {
+				_this.areas = response.data.data;
+				_this.cities = response.data.subdata;
+				_this.loading = false;
 			}).catch(function (err) {
 				toastr.error('Error was occured!', err.message);
 			});
 		},
-		sendDataToParent: function sendDataToParent() {
-			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+		areaChanged: function areaChanged(val, areaId, areaTitle) {
+			if (val == 1) {
+				// add area to all-data
+				this.allChecked.push([areaId, []]);
+			} else {
+				// remove area and it's cities
+				this.allChecked = this.allChecked.filter(function (city) {
+					if (city[0] != areaId) return city;
+				});
+			}
+			this.sendAllFiltersToParent();
+		},
+		cityChanged: function cityChanged(val, cityId, cityTitle, areaId) {
+			if (val == 1) {
+				// add city to array in area item in all-data
+				this.allChecked = this.allChecked.filter(function (area) {
+					if (area[0] == areaId) {
+						area[1].push(cityId);
+					}
+					return area;
+				});
+			} else {
+				this.allChecked = this.allChecked.filter(function (area) {
+					// area[areaId] = [array of cities]
+					console.log(area[1]);
+					if (area[1].includes(cityId)) {
+						area[1] = area[1].filter(function (city) {
+							if (city != cityId) return city;
+						});
+					}
+					return car;
+				});
+				this.sendAllFiltersToParent();
+			}
+		},
+		sendAllFiltersToParent: function sendAllFiltersToParent() {
+			this.$parent.$emit('area-changed', { CheckedAreas: this.allChecked });
 			this.$emit('any-filter-change');
 		},
 		sendDataToParentWithoutNotifingAll: function sendDataToParentWithoutNotifingAll() {
-			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+			this.$parent.$emit('area-changed', { CheckedAreas: this.allChecked });
 		}
 	},
 
 	mounted: function mounted() {
-		// console.log('Search Price Component mounted.')
-		this.getCarTypes();
-		// send your data @on-change or @any-filter-change
+		// console.log('SearchBrandModel Component mounted.')
+		this.getAreasWithCities();
 		this.$on('any-filter-change', this.sendDataToParentWithoutNotifingAll);
 	},
 
 
 	watch: {
-		carTypes: function carTypes(val) {
+		areas: function areas(val) {
 			var _this2 = this;
 
-			this.carTypes.filter(function (c) {
-				_this2.checked.push(false);
+			this.areas.filter(function (b) {
+				_this2.areaCheckboxes.push(false);
 			});
 		}
 	}
@@ -44614,7 +44664,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.cities input[data-v-32ec77b8] {\n  margin-left: 30px !important;\n}\n.cities label[data-v-32ec77b8] {\n  color: #46b8da;\n}\n", ""]);
 
 /***/ }),
 /* 101 */
@@ -44622,23 +44672,84 @@ exports.push([module.i, "", ""]);
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "search-price"
-  }, [_c('label', [_vm._v("Car type:")]), _vm._v(" "), _vm._l((_vm.carTypes), function(carType, i) {
+    staticClass: "search-area text-left"
+  }, [_vm._l((_vm.areas), function(area, i) {
     return _c('div', {
-      staticClass: " text-left"
+      staticClass: "areas"
     }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.areaCheckboxes[i]),
+        expression: "areaCheckboxes[i]"
+      }],
       attrs: {
-        "type": "checkbox"
+        "type": "checkbox",
+        "name": "area"
       },
       domProps: {
-        "value": carType.id
+        "value": area.id,
+        "checked": Array.isArray(_vm.areaCheckboxes[i]) ? _vm._i(_vm.areaCheckboxes[i], area.id) > -1 : (_vm.areaCheckboxes[i])
       },
       on: {
         "change": function($event) {
-          _vm.onCHange($event.target.checked, i, carType)
+          _vm.areaChanged($event.target.checked, area.id, area.title)
+        },
+        "__c": function($event) {
+          var $$a = _vm.areaCheckboxes[i],
+            $$el = $event.target,
+            $$c = $$el.checked ? (true) : (false);
+          if (Array.isArray($$a)) {
+            var $$v = area.id,
+              $$i = _vm._i($$a, $$v);
+            if ($$c) {
+              $$i < 0 && (_vm.areaCheckboxes[i] = $$a.concat($$v))
+            } else {
+              $$i > -1 && (_vm.areaCheckboxes[i] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            }
+          } else {
+            var $$exp = _vm.areaCheckboxes,
+              $$idx = i;
+            if (!Array.isArray($$exp)) {
+              _vm.areaCheckboxes[i] = $$c
+            } else {
+              $$exp.splice($$idx, 1, $$c)
+            }
+          }
         }
       }
-    }), _vm._v(" "), _c('span', [_vm._v(_vm._s(carType.title))])])
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": "area"
+      }
+    }, [_vm._v(_vm._s(area.title))]), _vm._v(" "), _vm._l((_vm.cities), function(city) {
+      return _c('div', {
+        directives: [{
+          name: "show",
+          rawName: "v-show",
+          value: (_vm.areaCheckboxes[i]),
+          expression: "areaCheckboxes[i]"
+        }],
+        staticClass: "cities"
+      }, [(city.ntype2 == area.title) ? [_c('input', {
+        attrs: {
+          "type": "checkbox",
+          "name": "city"
+        },
+        domProps: {
+          "value": city.id
+        },
+        on: {
+          "change": function($event) {
+            _vm.cityChanged($event.target.checked, city.id, city.title, area.id)
+          }
+        }
+      }), _vm._v(" "), _c('label', {
+        attrs: {
+          "for": "city"
+        }
+      }, [_vm._v(_vm._s(city.title))])] : _vm._e()], 2)
+    })], 2)
   }), _vm._v(" "), _c('hr')], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -44698,56 +44809,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
-			carTypes: [],
-			checked: []
+			minKM: 0,
+			maxKM: 0
 		};
 	},
 
 
 	methods: {
-		onCHange: function onCHange(check, i, carType) {
-			//console.log(carType); console.log(check)
-			if (check) this.$set(this.checked, i, carType.id);else this.$set(this.checked, i, false);
-
-			this.sendDataToParent();
-		},
-		getCarTypes: function getCarTypes() {
-			var _this = this;
-
-			axios.get('/read-car-types').then(function (response) {
-				_this.carTypes = response.data.data;
-			}).catch(function (err) {
-				toastr.error('Error was occured!', err.message);
-			});
-		},
 		sendDataToParent: function sendDataToParent() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+			this.$parent.$emit('km-range-changed', { kmRange: [this.minKM, this.maxKM] });
 			this.$emit('any-filter-change');
 		},
 		sendDataToParentWithoutNotifingAll: function sendDataToParentWithoutNotifingAll() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+			this.$parent.$emit('km-range-changed', { kmRange: this.checked });
 		}
 	},
 
 	mounted: function mounted() {
-		// console.log('Search Price Component mounted.')
-		this.getCarTypes();
+		// console.log('Search km Component mounted.')
+
 		// send your data @on-change or @any-filter-change
 		this.$on('any-filter-change', this.sendDataToParentWithoutNotifingAll);
 	},
 
 
-	watch: {
-		carTypes: function carTypes(val) {
-			var _this2 = this;
-
-			this.carTypes.filter(function (c) {
-				_this2.checked.push(false);
-			});
-		}
-	}
+	watch: {}
 });
 
 /***/ }),
@@ -44755,7 +44843,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.search-km input[data-v-27936239] {\n  width: 90%;\n  margin: auto;\n}\n", ""]);
 
 /***/ }),
 /* 105 */
@@ -44763,24 +44851,58 @@ exports.push([module.i, "", ""]);
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "search-price"
-  }, [_c('label', [_vm._v("Car type:")]), _vm._v(" "), _vm._l((_vm.carTypes), function(carType, i) {
-    return _c('div', {
-      staticClass: " text-left"
-    }, [_c('input', {
-      attrs: {
-        "type": "checkbox"
+    staticClass: "search-km"
+  }, [_c('label', [_vm._v("Kilometer driven:")]), _vm._v(" "), _c('div', {}, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.minKM),
+      expression: "minKM"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "step": "1"
+    },
+    domProps: {
+      "value": (_vm.minKM)
+    },
+    on: {
+      "change": _vm.sendDataToParent,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.minKM = $event.target.value
       },
-      domProps: {
-        "value": carType.id
-      },
-      on: {
-        "change": function($event) {
-          _vm.onCHange($event.target.checked, i, carType)
-        }
+      "blur": function($event) {
+        _vm.$forceUpdate()
       }
-    }), _vm._v(" "), _c('span', [_vm._v(_vm._s(carType.title))])])
-  }), _vm._v(" "), _c('hr')], 2)
+    }
+  }), _vm._v(" "), _c('span', [_vm._v("til")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.maxKM),
+      expression: "maxKM"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "step": "1"
+    },
+    domProps: {
+      "value": (_vm.maxKM)
+    },
+    on: {
+      "change": _vm.sendDataToParent,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.maxKM = $event.target.value
+      },
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  })]), _vm._v(" "), _c('hr')])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -44839,52 +44961,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
-			carTypes: [],
+			gears: [],
 			checked: []
 		};
 	},
 
 
 	methods: {
-		onCHange: function onCHange(check, i, carType) {
-			//console.log(carType); console.log(check)
-			if (check) this.$set(this.checked, i, carType.id);else this.$set(this.checked, i, false);
+		onCHange: function onCHange(check, i, wheelDrive) {
+			if (check) this.$set(this.checked, i, wheelDrive.id);else this.$set(this.checked, i, false);
 
 			this.sendDataToParent();
 		},
-		getCarTypes: function getCarTypes() {
+		getGears: function getGears() {
 			var _this = this;
 
-			axios.get('/read-car-types').then(function (response) {
-				_this.carTypes = response.data.data;
+			axios.get('/readSubData/gear/undefined').then(function (response) {
+				_this.gears = response.data.data;
 			}).catch(function (err) {
 				toastr.error('Error was occured!', err.message);
 			});
 		},
 		sendDataToParent: function sendDataToParent() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+			this.$parent.$emit('gear-changed', { CheckedGears: this.checked });
 			this.$emit('any-filter-change');
 		},
 		sendDataToParentWithoutNotifingAll: function sendDataToParentWithoutNotifingAll() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+			this.$parent.$emit('gear-changed', { CheckedGears: this.checked });
 		}
 	},
 
 	mounted: function mounted() {
-		// console.log('Search Price Component mounted.')
-		this.getCarTypes();
+		//console.log('Search Wheel Drive Component mounted.')
+		this.getGears();
 		// send your data @on-change or @any-filter-change
 		this.$on('any-filter-change', this.sendDataToParentWithoutNotifingAll);
 	},
 
 
 	watch: {
-		carTypes: function carTypes(val) {
+		gears: function gears(val) {
 			var _this2 = this;
 
-			this.carTypes.filter(function (c) {
+			this.gears.filter(function (c) {
 				_this2.checked.push(false);
 			});
 		}
@@ -44904,8 +45025,8 @@ exports.push([module.i, "", ""]);
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "search-price"
-  }, [_c('label', [_vm._v("Car type:")]), _vm._v(" "), _vm._l((_vm.carTypes), function(carType, i) {
+    staticClass: "search-gear"
+  }, [_c('label', [_vm._v("Gear:")]), _vm._v(" "), _vm._l((_vm.gears), function(gear, i) {
     return _c('div', {
       staticClass: " text-left"
     }, [_c('input', {
@@ -44913,14 +45034,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "checkbox"
       },
       domProps: {
-        "value": carType.id
+        "value": gear.id
       },
       on: {
         "change": function($event) {
-          _vm.onCHange($event.target.checked, i, carType)
+          _vm.onCHange($event.target.checked, i, gear)
         }
       }
-    }), _vm._v(" "), _c('span', [_vm._v(_vm._s(carType.title))])])
+    }), _vm._v(" "), _c('span', [_vm._v(_vm._s(gear.title))])])
   }), _vm._v(" "), _c('hr')], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -44976,129 +45097,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
-			carTypes: [],
+			fuelTypes: [],
 			checked: []
 		};
 	},
 
 
 	methods: {
-		onCHange: function onCHange(check, i, carType) {
-			//console.log(carType); console.log(check)
-			if (check) this.$set(this.checked, i, carType.id);else this.$set(this.checked, i, false);
+		onCHange: function onCHange(check, i, fType) {
+			if (check) this.$set(this.checked, i, fType.id);else this.$set(this.checked, i, false);
 
 			this.sendDataToParent();
 		},
-		getCarTypes: function getCarTypes() {
+		getFuelTypes: function getFuelTypes() {
 			var _this = this;
 
-			axios.get('/read-car-types').then(function (response) {
-				_this.carTypes = response.data.data;
+			axios.get('/readSubData/fuel_type/undefined').then(function (response) {
+				_this.fuelTypes = response.data.data;
 			}).catch(function (err) {
 				toastr.error('Error was occured!', err.message);
 			});
 		},
 		sendDataToParent: function sendDataToParent() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+			this.$parent.$emit('fuel-type-changed', { CheckedFuelTypes: this.checked });
 			this.$emit('any-filter-change');
 		},
 		sendDataToParentWithoutNotifingAll: function sendDataToParentWithoutNotifingAll() {
 			// send your data @on-change or @any-filter-change
-			this.$parent.$emit('car-type-changed', { carTypes: this.checked });
+			this.$parent.$emit('fuel-type-changed', { CheckedFuelTypes: this.checked });
 		}
 	},
 
 	mounted: function mounted() {
-		// console.log('Search Price Component mounted.')
-		this.getCarTypes();
+		//console.log('Search Wheel Drive Component mounted.')
+		this.getFuelTypes();
 		// send your data @on-change or @any-filter-change
 		this.$on('any-filter-change', this.sendDataToParentWithoutNotifingAll);
 	},
 
 
 	watch: {
-		carTypes: function carTypes(val) {
+		fuelTypes: function fuelTypes(val) {
 			var _this2 = this;
 
-			this.carTypes.filter(function (c) {
+			this.fuelTypes.filter(function (c) {
 				_this2.checked.push(false);
 			});
 		}
@@ -45118,8 +45165,8 @@ exports.push([module.i, "", ""]);
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "search-price"
-  }, [_c('label', [_vm._v("Car type:")]), _vm._v(" "), _vm._l((_vm.carTypes), function(carType, i) {
+    staticClass: "search-fuel-drive"
+  }, [_c('label', [_vm._v("Fuel type:")]), _vm._v(" "), _vm._l((_vm.fuelTypes), function(fuelType, i) {
     return _c('div', {
       staticClass: " text-left"
     }, [_c('input', {
@@ -45127,14 +45174,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "checkbox"
       },
       domProps: {
-        "value": carType.id
+        "value": fuelType.id
       },
       on: {
         "change": function($event) {
-          _vm.onCHange($event.target.checked, i, carType)
+          _vm.onCHange($event.target.checked, i, fuelType)
         }
       }
-    }), _vm._v(" "), _c('span', [_vm._v(_vm._s(carType.title))])])
+    }), _vm._v(" "), _c('span', [_vm._v(_vm._s(fuelType.title))])])
   }), _vm._v(" "), _c('hr')], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -45163,39 +45210,6 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-e87006b2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SearchFuelType.vue", function() {
      var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-e87006b2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SearchFuelType.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 115 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "", ""]);
-
-/***/ }),
-/* 116 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(115);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("39c060c6", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-e87006b2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./SearchFuelType.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-e87006b2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./SearchFuelType.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

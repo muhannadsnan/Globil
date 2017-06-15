@@ -24,22 +24,16 @@ class SubDataController extends Controller
 		return ['ok' => 1, 'message' => "Models are loaded successfully!", 'data' => $res];
 	}
 
-	public function readBrandsWithModels()
+	public function readDataWithSubdata($data, $subdata)
 	{
-		if( !$brands = SubData::subData('brand')->get())
-			return ['ok' => 0, 'message' => 'Error while loading brands'];
+		if( !$dataRes = SubData::subData($data)->get())
+			return ['ok' => 0, 'message' => "Error while loading {$data}"];
 
-		if( !$models = SubData::subData('model')->get())
-			return ['ok' => 0, 'message' => 'Error while loading models'];
+		if( !$subdataRes = SubData::subData($subdata)->get())
+			return ['ok' => 0, 'message' => "Error while loading {$subdata}"];
 
-		return ['ok' => 1, 'message' => "data is loaded successfully!", 'brands' => $brands, 'models' => $models];
+		return ['ok' => 1, 'message' => "Data is loaded successfully!", 'data' => $dataRes, 'subdata' => $subdataRes];
 	}
 	
-	public function readCarTypes()
-	{
-		if( !$res = SubData::subData('car_type')->get())
-			return ['ok' => 0, 'message' => 'Error while loading "carTypes"'];
-		return ['ok' => 1, 'message' => "Car types were loaded successfully!", 'data' => $res];
-	}
 
 }

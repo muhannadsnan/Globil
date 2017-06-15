@@ -104,24 +104,24 @@
 			}, //<<
 
 			FillSearchFilters(childData){
-				if(childData.checkedCars)
-					this.searchFilters.brand_model = childData.checkedCars
+				if(childData.CheckedCars)
+					this.searchFilters.brand_model = childData.CheckedCars
 				if(childData.priceRange)
 					this.searchFilters.priceRange = childData.priceRange
-				if(childData.years)
-					this.searchFilters.years = childData.years
-				if(childData.carTypes)
-					this.searchFilters.car_types = childData.carTypes
-				if(childData.wheelDrives)
-					this.searchFilters.wheel_drives = childData.wheelDrives
+				if(childData.CheckedYears)
+					this.searchFilters.years = childData.CheckedYears
+				if(childData.CheckedCarTypes)
+					this.searchFilters.car_types = childData.CheckedCarTypes
+				if(childData.CheckedWheelDrives)
+					this.searchFilters.wheel_drives = childData.CheckedWheelDrives
 				if(childData.kmRange)
 					this.searchFilters.kmRange = childData.kmRange
-				if(childData.fuelTypes)
-					this.searchFilters.fuel_types = childData.fuelTypes
-				if(childData.gearTypes)
-					this.searchFilters.gears = childData.gearTypes
-				if(childData.areas)
-					this.searchFilters.areas = childData.areas
+				if(childData.CheckedFuelTypes)
+					this.searchFilters.fuel_types = childData.CheckedFuelTypes
+				if(childData.CheckedGears)
+					this.searchFilters.gears = childData.CheckedGears
+				if(childData.CheckedAreas)
+					this.searchFilters.areas = childData.CheckedAreas
 
 				this.showSaveButton = true
 			},
@@ -137,7 +137,7 @@
 			this.$on('km-range-changed', this.FillSearchFilters)
 			this.$on('fuel-type-changed', this.FillSearchFilters)
 			this.$on('gear-changed', this.FillSearchFilters)
-			this.$on('wheel-drive-changed', this.FillSearchFilters)
+			this.$on('area-changed', this.FillSearchFilters)
 		},
 
 		watch:{

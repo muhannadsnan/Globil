@@ -35,10 +35,10 @@
 		methods: {
 
 			getBrandsAndModels(){
-				axios.get('/read-brands-with-models')
+				axios.get('/read-data-with-subdata/brand/model')
 					.then(response => {
-						this.brands = response.data.brands
-						this.models = response.data.models
+						this.brands = response.data.data
+						this.models = response.data.subdata
 						this.loading = false
 					})
 					.catch(err => {
@@ -84,12 +84,12 @@
 			},
 
 			sendAllFiltersToParent(){
-				this.$parent.$emit('brand-model-changed', {checkedCars: this.allChecked})
+				this.$parent.$emit('brand-model-changed', {CheckedCars: this.allChecked})
 				this.$emit('any-filter-change')
 			},
 
 			sendDataToParentWithoutNotifingAll(){
-				this.$parent.$emit('brand-model-changed', {checkedCars: this.allChecked})
+				this.$parent.$emit('brand-model-changed', {CheckedCars: this.allChecked})
 			},
 		},
 
@@ -110,10 +110,8 @@
 </script>
 
 <style lang="sass" scoped>
-.search-brand-model input
-	margin-left: 20px
 .models input	
-	margin-left: 30px
+	margin-left: 30px !important
 .models label
 	color: #46b8da
 </style>
