@@ -33,6 +33,26 @@ toastr.options.hideMethod = 'slideUp';
 toastr.options.closeMethod = 'slideUp';
 toastr.options.timeOut = 2500;
 toastr.options.progressBar = false;
+
+// VUE COMPONENTS
+
+window.Vue = require('vue');
+Vue.component('example', require('./components/Example.vue'));
+Vue.component('ajax', require('./components/Ajax.vue'));
+Vue.component('modal', require('./components/modal.vue'));
+Vue.component('wishlistbutton', require('./components/WishListButton.vue'));
+Vue.component('subdata-select', require('./components/SubDataSelect.vue'));
+Vue.component('edit-images', require('./components/EditImages.vue'));
+Vue.component('search-filters', require('./components/SearchFilters.vue'));
+Vue.component('search-brand-model', require('./components/SearchBrandModel.vue'));
+Vue.component('search-price', require('./components/SearchPrice.vue'));
+Vue.component('search-year', require('./components/SearchYear.vue'));
+Vue.component('search-car-type', require('./components/SearchCarType.vue'));
+Vue.component('search-wheel-drive', require('./components/SearchWheelDrive.vue'));
+Vue.component('search-km', require('./components/SearchKm.vue'));
+Vue.component('search-fuel-type', require('./components/SearchFuelType.vue'));
+Vue.component('search-gear', require('./components/SearchGear.vue'));
+Vue.component('search-areas', require('./components/SearchArea.vue'));
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

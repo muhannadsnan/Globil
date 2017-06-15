@@ -11,15 +11,24 @@
 		</div>
 
 		<div class="panel-info">
-			<div class="panel-heading">
+			<!-- <div class="panel-heading">
 				<h3>Filters</h3>			
-			</div>
+			</div> -->
 
-			<saved-search @search-results-ready="searchResultsReady">
+			<search-filters @search-results-ready="searchResultsReady" v-cloak>
+				<!-- <search-text></search-text> -->
 				<search-brand-model></search-brand-model>
+				<search-price></search-price>
+				<search-year></search-year>
+				<search-car-type></search-car-type>
+				<search-wheel-drive></search-wheel-drive>
+				<search-km></search-km>
+				<search-fuel-type></search-fuel-type>
+				<search-gear></search-gear>
+				<search-areas></search-areas>
 
 				
-			</saved-search>
+			</search-filters>
 			
 		</div>
 		

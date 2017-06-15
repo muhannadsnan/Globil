@@ -23,7 +23,7 @@ class SubData extends Model
 				$res->where('ntype3', 'like', $ntype3); //SubData::subData('year', 'M3', 'BMW')->get();
 			}			
 		}
-
+		
 		return $res;
 	}
 

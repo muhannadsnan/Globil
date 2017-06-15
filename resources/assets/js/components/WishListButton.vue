@@ -87,7 +87,7 @@
 		},
 
 		mounted() {
-			console.log('WishListButton Component mounted.')
+			// console.log('WishListButton Component mounted.')
 			this.wish_id = this.data3;
 			//console.log(this.user)
 		}

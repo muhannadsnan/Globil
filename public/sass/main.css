@@ -10,7 +10,7 @@ html, body {
 a, a:active, a:visited{/*color: #337ab7;*/}
 a:hover{color: #68a9e1; text-decoration: none}
 .btn{color: #fff;}
-
+[v-cloak] {display: none;}
 /**** CUSTOM ****/
 .NO-float {float: none;}
 .margin-0 {margin:0;}
@@ -95,10 +95,12 @@ footer hr {border-color: #999;}
 
 
 /**** SEARCHBAR ****/
-#searchbar{margin:0; }
+#searchbar{margin:0; padding:0;}
 #searchbar .panel{}
-#searchbar{}
-#searchbar{}
+#searchbar hr{margin: 10px 0px;}
+#searchbar select{width: 90%; margin: auto; height: 110px;}
+#searchbar option{text-align: center}
+#searchbar input[type='checkbox']{margin-left: 20px}
 
 /**** BLUR ****/
 .blur {

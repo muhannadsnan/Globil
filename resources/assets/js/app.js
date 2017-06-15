@@ -1,17 +1,6 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
-
-Vue.component('example', require('./components/Example.vue'));
-Vue.component('ajax', require('./components/Ajax.vue'));
-Vue.component('modal', require('./components/modal.vue'));
-Vue.component('wishlistbutton', require('./components/WishListButton.vue'));
-Vue.component('subdata-select', require('./components/SubDataSelect.vue'));
-Vue.component('edit-images', require('./components/EditImages.vue'));
-Vue.component('search-brand-model', require('./components/SearchBrandModel.vue'));
-Vue.component('saved-search', require('./components/SavedSearch.vue'));
-
 const app = new Vue({
 	el: '#app',
 
@@ -33,7 +22,7 @@ const app = new Vue({
 		loadModelsByBrand(selectedBrand){
 			this.loadingModel = true;
 
-			axios.get('/readSubData/'+'model'+'/'+ selectedBrand )
+			axios.get('/readSubData/model/'+ selectedBrand )
               .then(response => {
                   this.models = response.data.data;  //console.log(response.data.data);
               })
@@ -68,8 +57,8 @@ const app = new Vue({
          this.searchTyping = false;
 		}, //<<
 
-		searchResultsReady(searchResFromSavedSearch){
-			this.searchResult = searchResFromSavedSearch;
+		searchResultsReady(ResultsFromSearchFilterComponent){
+			this.searchResult = ResultsFromSearchFilterComponent;
 		},
 
 		searchKeyEnter(){

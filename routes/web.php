@@ -21,6 +21,7 @@ Route::get('/my-cars', 'CarsController@myCars');
 Route::get('/readSubData/{data1}/{data2}', 'SubDataController@readSubData'); // readSubData/model/Mercedes
 Route::get('/readSubData/{subID}', 'SubDataController@readModelsBySubID'); // readSubData/5
 Route::get('/read-brands-with-models', 'SubDataController@readBrandsWithModels'); // readSubData/5
+Route::get('/read-car-types', 'SubDataController@readCarTypes');
 
 
 // ==============  Pics
@@ -33,6 +34,7 @@ Route::get('/search/general/{keyword}', 'SearchController@searchGeneral');
 // Route::post('/search/filter/model', 'SearchController@readCarsByModelIds'); // array of IDs
 Route::post('/search/filter/checkedBrands/', 'SearchController@readCheckedBrands');
 Route::post('/search/filter/checkedModels/', 'SearchController@readCheckedModels');
+Route::post('/search/filter/price-range', 'SearchController@readCarsInPriceRange');
 
 
 Route::post('/saved-search', 'SavedSearchController@store');
