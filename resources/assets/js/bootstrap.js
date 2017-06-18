@@ -53,6 +53,8 @@ Vue.component('search-km', require('./components/SearchKm.vue'));
 Vue.component('search-fuel-type', require('./components/SearchFuelType.vue'));
 Vue.component('search-gear', require('./components/SearchGear.vue'));
 Vue.component('search-areas', require('./components/SearchArea.vue'));
+Vue.component('conversations', require('./components/Conversations.vue'));
+Vue.component('messages', require('./components/Messages.vue'));
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

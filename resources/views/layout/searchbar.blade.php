@@ -27,7 +27,6 @@
 				<search-gear></search-gear>
 				<search-areas></search-areas>
 
-				
 			</search-filters>
 			
 		</div>

@@ -28,28 +28,26 @@
             postRequest(){
                 axios.post(this.url, {car_id: this.data1 , user_id: this.data2 } )
                     .then(response => {
-                        toastr.success(response.data.message);
-                        console.log(response.data.message);
-                        //alert(response.data.message);
-                        this.hasClicked = true;
+                        toastr.success(response.data.message)
+                        console.log(response.data.message)
+                        //alert(response.data.message)
+                        this.hasClicked = true
                     })
                     .catch(err => {
-                        toastr.error('Error was occured!', err.message);
-                        console.log(err.message);
+                        toastr.error(err.message, 'Error occured!')
                     })
             },
 
             deleteRequest(){
                 axios.delete(this.url +'/'+ this.data1 )
                     .then(response => {
-                        toastr.success(response.data.message);
-                        console.log(response.data.message);
-                        //alert(response.data.message);
-                        this.hasClicked = true;
+                        toastr.success(response.data.message)
+                        console.log(response.data.message)
+                        //alert(response.data.message)
+                        this.hasClicked = true
                     })
                     .catch(err => {
-                        toastr.error('Error was occured!', err.message);
-                        console.log(err.message);
+                        toastr.error(err.message, 'Error occured!')
                     })
             }
         },

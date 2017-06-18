@@ -5,17 +5,21 @@
 	</div>
 
 	<div class="panel-body">
-		@foreach($savedSearch as $savedS)
+		@if(isset($savedSearch))
 		
-			<li><a href="/saved-search/{{$savedS->id}}" class="">
-				{{ ! is_null($savedS->title) ? $savedS->title : "Saved Search {$savedS->id}" }}
-			</a></li>		
+			@foreach($savedSearch as $savedS)
 		
-		@endforeach		
+				<li><a href="/saved-search/{{$savedS->id}}" class="">
+					{{ ! is_null($savedS->title) ? $savedS->title : "Saved Search {$savedS->id}" }}
+				</a></li>		
+			
+			@endforeach		
 
-		@if(count($savedSearch) == 0)
-		
-			No Saved Searches yet.
+			@if(count($savedSearch) == 0)
+			
+				No Saved Searches yet.
+			
+			@endif
 		
 		@endif
 	</div>

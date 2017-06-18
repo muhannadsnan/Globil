@@ -13,14 +13,28 @@
 		<div class="container">
 			
 			<div class="row">
-				<div class="col-md-2" id="searchbar">
+				<?php 
+				if(isset($isHomePage) && $isHomePage){
+					$searchbar_col_width = "col-md-2";
+					$content_col_width = "col-md-8";
+				}else{
+					$searchbar_col_width = "";
+					$content_col_width = "col-md-10";
+				}
+				?>
 
-					@include('layout.searchbar')
+				@if(isset($isHomePage) && $isHomePage)
+				
+					<div class="<?=$searchbar_col_width?>" id="searchbar">
 
-				</div><!-- .searchbar -->
+						@include('layout.searchbar')
 
+					</div><!-- .searchbar -->
+				
+				@endif
+				
 
-				<div class="col-md-8" id="content">
+				<div class="<?=$content_col_width?>" id="content">
 				
 					@yield('content')
 

@@ -66,11 +66,19 @@ const app = new Vue({
 				this.loadingPage = true;
 				this.searchRequest();
 			}
-		} //<<
+		}, //<<
+
+		convClicked(messages){
+			this.$emit('conv-clicked', messages)
+		},
+
+		// toSendMessage(e){
+		// 	this.$emit('to-send-message', msg)
+		// },
 	},
 
 	mounted(){
-		
+
 	},
 
 	watch:{

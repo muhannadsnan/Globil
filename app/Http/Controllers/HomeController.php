@@ -17,6 +17,7 @@ class HomeController extends Controller
 		{
 			$latestCars = Car::latest()->get();
 			$savedSearch = SavedSearch::latest()->take(5)->get();
-			return view('home', compact('latestCars', 'savedSearch'));
+			$isHomePage = true;
+			return view('home', compact('latestCars', 'savedSearch', 'isHomePage'));
 		}
 }
