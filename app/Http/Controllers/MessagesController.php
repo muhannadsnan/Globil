@@ -36,8 +36,15 @@ class MessagesController extends Controller
 
 	public function getMessagesByConvId($convId)
 	{
-		if(!$res = Message::latest()->where('conv_id', $convId)->take(50)->get())
+		if(!$res = Message::where('conv_id', $convId)->take(50)->get())
 			return ['ok'=>0, 'message'=>'Error while loading conversations!'];
-		return ['ok'=>1, 'message'=>'Conversations where loadded successfully!', 'data'=>$res];
+		return ['ok'=>1, 'message'=>'Conversations where loadded successfully!', 'data'=>$res, 'user_id'=>auth()->id()];
+	}
+
+	public function store(Request $request)
+	{
+		if(!Message::storeMessage($request))
+			return ['ok'=>0, 'message'=>'Error while sending message!'];
+		return ['ok'=>1, 'message'=>'Message was sent successfully!', 'user_id'=>'none'];
 	}
 }

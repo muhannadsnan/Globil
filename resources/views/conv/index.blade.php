@@ -12,7 +12,7 @@
 	.conversations caption{margin-left: 5px;}
 	
 	.user_img{border-radius: 100%; padding: 0 !important;}
-	.conv_messages{border: 1px solid #ccc; padding:10px 10px;}
+	.conv_messages{border: 1px solid #ccc; padding:10px 10px; overflow-y: auto; height:500px;}
 	.conv_messages .header{ border-bottom: 1px solid #ccc; height: 80px !important; padding:10px; margin-bottom: 10px; 
 		 background-color: #fff; }
 	.conv_messages .header a{
@@ -36,32 +36,14 @@
 		<input type="search" placeholder="Search conversations.." class="form-control">
 		<hr>
 
-		<conversations @conv-clicked="convClicked"></conversations>
-
-		<!-- <a href="#Spideman" class="col-sm-12 user_conv">
-			<img src="{{asset('images/default_user.png')}}" class="col-xs-4 user_img">
-			<div class=" col-xs-8 caption">
-				<p class="user">Spideman</p>
-				<p class="latest_msg">...</p>
-			</div>
-		</a>
-	
-		<a href="#Batman" class="col-sm-12 user_conv">
-			<img src="{{asset('images/default_user.png')}}" class="col-xs-4 user_img">
-			<div class=" col-xs-8 caption">
-				<p class="user">Batman</p>
-				<p class="latest_msg">...</p>
-			</div>
-		</a> -->
+		<conversations @conv-clicked="convClicked" ></conversations>
 
 	</div>
 
+
 	<div class="col-sm-7 conv_messages">
-		
 
 		<messages></messages>
-
-		
 
 	</div>
 

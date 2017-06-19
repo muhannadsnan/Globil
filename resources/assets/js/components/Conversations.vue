@@ -40,7 +40,7 @@
                 axios.get('/read-messages-by-conv-id/'+convId)
                     .then(response => {
                         var msgsForClickedConv = response.data.data
-                        this.$emit('conv-clicked', {'messages': msgsForClickedConv, 'theOtherUser': user})
+                        this.$emit('conv-clicked', {messages: msgsForClickedConv, theOtherUser: user, convId: convId, userId: response.data.user_id})
                     })
                     .catch(err => {
                         toastr.error(err.message, 'Error occured!')
@@ -64,7 +64,7 @@
 
         mounted() {
             console.log('Conversations Component mounted.')
-            this.readConvs()
+            this.readConvs()            
         }
     }
 </script>

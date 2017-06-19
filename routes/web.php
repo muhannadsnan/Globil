@@ -13,6 +13,7 @@ Route::get('/wish-list', 'WishListsController@index');
 Route::post('/wish-list', 'WishListsController@store');
 Route::delete('/wish-list/{wish}', 'WishListsController@destroy');
 Route::get('/messages', 'MessagesController@index');
+Route::post('/messages', 'MessagesController@store');
 
 Route::resource('cars', 'CarsController');
 Route::get('/my-cars', 'CarsController@myCars');
