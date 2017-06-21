@@ -55,6 +55,7 @@ class CarsController extends Controller
 		$this->validate($request, Car::rules());
  		
  		if(! Car::updateCar($request, $car))
+ 			Session::flash('message', 'Error while updating car!');
 
  		if(count($request->images) > 0){ //dd($request->images);
  			$pic_names = [];

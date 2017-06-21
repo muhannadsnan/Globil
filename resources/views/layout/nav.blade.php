@@ -17,7 +17,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/messages"><i class="fa fa-envelope" aria-hidden="true"></i> My messages</a></li>
         
-        @if(auth()->guest() || auth()->user()->type == "B")
+        @if(Auth::guest() || Auth::user()->type == "B")
           <li><a href="/cars/create"><i class="fa fa-plus" aria-hidden="true"></i> Post a car</a></li>
           <li><a href="/profile"><i class="fa fa-user-circle" aria-hidden="true"></i> My profile</a></li>
           <li><a href="/wish-list"><i class="fa fa-heart" aria-hidden="true"></i> Wish list </a></li>
@@ -26,8 +26,8 @@
         <li class="dropdown"> <!-------- DROPDOWN -------->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             
-            @if(auth()->check())  
-              <strong> {{auth()->user()->name}} </strong>
+            @if(Auth::check())  
+              <strong> {{Auth::user()->name}} </strong>
             @else  
               Menu 
             @endif 
@@ -37,9 +37,9 @@
 
           <ul class="dropdown-menu">
 
-            @if(auth()->check())
+            @if(Auth::check())
 
-              @if(auth()->user()->type == "A")
+              @if(Auth::user()->type == "A")
                 <li><a href="/control-panel">Control Panel</a></li>
               @else
                 <li><a href="/profile">Profile</a></li>                

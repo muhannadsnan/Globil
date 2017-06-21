@@ -15,7 +15,7 @@ class CreatePicturesTable extends Migration
     {
         Schema::create('pictures', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('car_id')->nullable()->unsigned();;
+            $table->integer('car_id')->nullable()->unsigned();
             $table->integer('user_id')->nullable()->unsigned(); // not to know who uploaded it, but to use it for profile
             $table->integer('album_id')->nullable()->unsigned();
             $table->string('ext');

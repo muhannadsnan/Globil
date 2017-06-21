@@ -18,7 +18,7 @@ a:hover{color: #68a9e1; text-decoration: none}
 .alert {font-size: 14pt}
 .display-inline{ display: inline; }
 .font-22pt{font-size:22pt;}
-
+.fa{vertical-align: middle; padding: 0px ; font-size: 16pt;}
 /**** NAV ****/
 nav i {font-size: 22pt !important;  vertical-align: middle;}
 .navbar-brand {padding: 14px 15px;}

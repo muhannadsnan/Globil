@@ -20,6 +20,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
  
+window.formData = require('form-data');
 window.moment = require('moment');
 window.axios = require('axios');
 
@@ -56,6 +57,8 @@ Vue.component('search-gear', require('./components/SearchGear.vue'));
 Vue.component('search-areas', require('./components/SearchArea.vue'));
 Vue.component('conversations', require('./components/Conversations.vue'));
 Vue.component('messages', require('./components/Messages.vue'));
+Vue.component('ads', require('./components/Ads.vue'));
+Vue.component('manage-ads', require('./components/ManageAds.vue'));
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

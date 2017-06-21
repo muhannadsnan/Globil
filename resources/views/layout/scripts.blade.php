@@ -17,6 +17,8 @@
 <?php if(session('message')){ ?>
 	toastr.success("<?php echo session('message'); ?>"); 
 <?php } ?>
+
+window.csrf = { value: "{{ csrf_token() }}" }
 </script>
 
 @yield('scripts')

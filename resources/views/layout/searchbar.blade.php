@@ -11,9 +11,6 @@
 		</div>
 
 		<div class="panel-info">
-			<!-- <div class="panel-heading">
-				<h3>Filters</h3>			
-			</div> -->
 
 			<search-filters @search-results-ready="searchResultsReady" v-cloak>
 				<!-- <search-text></search-text> -->
@@ -29,9 +26,7 @@
 
 			</search-filters>
 			
-		</div>
-		
-			
+		</div>			
 
 	</div>
 

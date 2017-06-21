@@ -42,3 +42,7 @@ Route::post('/saved-search', 'SavedSearchController@store');
 Route::get('/read-convs-with-user-info', 'MessagesController@getConvsWithUserInfo');
 Route::get('/read-messages-by-conv-id/{convId}', 'MessagesController@getMessagesByConvId');
 
+// ==============  Ads
+Route::get('/read-ads', 'AdsController@getAllAds');
+Route::get('/read-ads-types', 'AdsController@getAdsTypes');
+Route::post('/ads', 'AdsController@store');
