@@ -14,8 +14,8 @@ class AddColumnPicturesAdsId extends Migration
     public function up()
     {
         Schema::table('pictures', function (Blueprint $table) {
-            $table->integer('ads_id')->after('user_id')->nullable()->unsigned();
-            $table->foreign('ads_id')->references('id')->on('ads')->onDelete('cascade');
+            $table->integer('ad_id')->after('user_id')->nullable()->unsigned();
+            $table->foreign('ad_id')->references('id')->on('ads')->onDelete('cascade');
         });
     }
 
@@ -27,8 +27,8 @@ class AddColumnPicturesAdsId extends Migration
     public function down()
     {
         Schema::table('pictures', function (Blueprint $table) {
-            $table->dropForeign(['ads_id']);
-            $table->dropColumn('ads_id');
+            $table->dropForeign(['ad_id']);
+            $table->dropColumn('ad_id');
         });
     }
 }

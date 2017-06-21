@@ -28,7 +28,7 @@ class PicturesController extends Controller
 
 
 	public function destroyPicByFolder(Picture $pic, $folder="")
-	{
+	{ 
 		if( ! $pic->delete() )
 			return ['ok' => 0, 'message' => 'Error while removing images'];
 

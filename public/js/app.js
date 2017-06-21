@@ -28319,10 +28319,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this = this;
 
 			axios.get('/read-ads').then(function (response) {
-				toastr.success(response.data.message);
+				//toastr.success(response.data.message)
 				_this.ads = response.data.data;
 				_this.showModal = false;
-				_this.readAds;
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error occured!');
 			});
@@ -28356,12 +28355,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 		},
 		editAd: function editAd() {},
-		deleteAd: function deleteAd() {
-			axios.delete(this.url + '/' + this.data1).then(function (response) {
-				toastr.success(response.data.message);
-			}).catch(function (err) {
-				toastr.error(err.message, 'Error occured!');
-			});
+		deleteAd: function deleteAd(id) {
+			var _this4 = this;
+
+			if (confirm("Are you really sure to delete Adv #" + id)) {
+				axios.delete('/ads/' + id).then(function (response) {
+					toastr.success(response.data.message);
+					_this4.ads = _this4.ads.filter(function (ad) {
+						if (ad.id != id) return ad;
+					});
+				}).catch(function (err) {
+					toastr.error(err.message, 'Error occured!');
+				});
+			}
 		},
 		getTypeByTypeId: function getTypeByTypeId(id) {
 			return this.types.filter(function (t) {
@@ -51473,7 +51479,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })]), _vm._v(" "), _c('button', {
       staticClass: "btn btn-danger",
       on: {
-        "click": _vm.deleteAd
+        "click": function($event) {
+          _vm.deleteAd(ad.id)
+        }
       }
     }, [_c('i', {
       staticClass: "fa fa-trash-o",

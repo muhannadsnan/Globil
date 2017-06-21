@@ -43,7 +43,22 @@ class AdsController extends Controller
 		return ['ok'=>1, 'message'=>'Advertisements created!'];
 	}
 
-	// Picture::destroyPicByFolder($pic, $folder)
 
+
+
+
+	public function destroy(Ad $ad)
+	{ //dd($ad);
+		$pictures = $ad->pictures; //dd($pictures);
+
+		if(!$ad->delete())
+			return ['ok'=>0, 'message'=>'Error while deleting advertisement!'];
+
+		foreach ($pictures as $key => $pic) { 
+			@unlink(public_path("/storage/images/ads/$pic->id.$pic->ext"));
+		}
+		return ['ok'=>1, 'message'=>'Advertisements deleted!'];
+
+	}
 
 }

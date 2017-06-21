@@ -30,7 +30,7 @@
 						<button @click="editAd" class="btn btn-warning">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 						</button>
-						<button @click="deleteAd" class="btn btn-danger">
+						<button @click="deleteAd(ad.id)" class="btn btn-danger">
 							<i class="fa fa-trash-o" aria-hidden="true"></i>
 						</button>
 					</td>
@@ -87,10 +87,9 @@
 			readAds(){
 				axios.get('/read-ads')
 					.then(response => {
-						toastr.success(response.data.message)
+						//toastr.success(response.data.message)
 						this.ads = response.data.data
 						this.showModal=false
-						this.readAds
 					})
 					.catch(err => {
 						toastr.error(err.message, 'Error occured!')
@@ -131,15 +130,22 @@
 
 			},
 
-			deleteAd(){
-				axios.delete(this.url +'/'+ this.data1 )
+			deleteAd(id){
+				if(confirm("Are you really sure to delete Adv #"+id)){
+					axios.delete('/ads/' + id)
 					.then(response => {
 						toastr.success(response.data.message)
+						this.ads = this.ads.filter(ad => {
+							if(ad.id != id)
+								return ad
+						})
 					})
 					.catch(err => {
 						toastr.error(err.message, 'Error occured!')
 					})
+				}				
 			},
+
 			getTypeByTypeId(id){
 				return this.types.filter(t => { 
 					if(t.id == id) return t.title 

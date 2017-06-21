@@ -23,14 +23,14 @@ class Picture extends Model
 		return $img_names;
 	}
 
-	public static function createPicsForAds($pictures, $ads_id)
+	public static function createPicsForAds($pictures, $ad_id)
 	{
 		$img_names = [];
 		//dd($pictures);
 		foreach ($pictures as $pic) { //dd($pic);
 			$explode = explode(".", $pic->getClientOriginalName());
 			$newPic = Picture::create([
-				'ads_id' => $ads_id,
+				'ad_id' => $ad_id,
 				'ext' => $explode[count($explode)-1],
 			]);
 
@@ -57,6 +57,11 @@ class Picture extends Model
 	public function car()
 	{
 		return $this->belongsTo('\App\Car');
+	}
+
+	public function ad()
+	{
+		return $this->belongsTo('\App\Ad');
 	}
 
 }
