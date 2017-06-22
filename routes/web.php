@@ -47,3 +47,4 @@ Route::get('/read-ads', 'AdsController@getAllAds');
 Route::get('/read-ads-types', 'AdsController@getAdsTypes');
 Route::post('/ads', 'AdsController@store');
 Route::delete('/ads/{ad}', 'AdsController@destroy');
+Route::patch('/ads/{ad}', 'AdsController@update');

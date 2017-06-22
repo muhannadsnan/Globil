@@ -44,7 +44,19 @@ class AdsController extends Controller
 	}
 
 
+	public function update(Request $request, Ad $ad)
+	{
+		// dd($request->all());
+		$res = $ad->update([
+			'title' => $request->title,		
+			'desc' => $request->desc,		
+			'type' => $request->type,		
+		]);
 
+		if( ! $res)
+			return ['ok'=>0, 'message'=>'Error while updating ad!'];
+		return ['ok'=>1, 'message'=>'Advertisements updated!'];
+	}
 
 
 	public function destroy(Ad $ad)
@@ -58,7 +70,6 @@ class AdsController extends Controller
 			@unlink(public_path("/storage/images/ads/$pic->id.$pic->ext"));
 		}
 		return ['ok'=>1, 'message'=>'Advertisements deleted!'];
-
 	}
 
 }

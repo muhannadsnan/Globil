@@ -3,7 +3,7 @@
 		<div class="panel-heading">
 			<h2>
 				Manage Ads
-				<button @click="showModal=true" class="btn btn-primary pull-right">Create new Ad</button>
+				<button @click="showModalCreate=true" class="btn btn-primary pull-right">Create new Ad</button>
 			</h2>
 		</div>
 
@@ -27,7 +27,7 @@
 					<td>{{ad.desc}}</td>
 					<td>{{ad.image}}</td>
 					<td>
-						<button @click="editAd" class="btn btn-warning">
+						<button @click="preUpdate(ad)" class="btn btn-warning">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 						</button>
 						<button @click="deleteAd(ad.id)" class="btn btn-danger">
@@ -40,8 +40,9 @@
 			</table>
 		</div>
 
-		<form @submit.prevent="storeAd" action="/ads" method="post" enctype="multipart/form-data">
-			<modal title="Create Advertisement" v-show="showModal" @clk-close-modal="showModal=false">
+
+		<form @submit.prevent="storeAd" action="" method="post" enctype="multipart/form-data">
+			<modal title="Create Advertisement" v-show="showModalCreate" @clk-close-modal="showModalCreate=false">
 				<input type="hidden" name="_token" :value="csrf">
 
 				<div class="form-group">
@@ -67,6 +68,36 @@
 				</template>
 			</modal>
 		</form>
+
+
+		<form @submit.prevent="updateAd" action="" method="put" enctype="multipart/form-data">
+			<modal title="Update Advertisement" v-show="showModalUpdate" @clk-close-modal="showModalUpdate=false">
+				<input type="hidden" name="_token" :value="csrf">
+
+				<div class="form-group">
+					<input type="text" v-model="updatedAd.title" placeholder="Title.." class="form-control">
+				</div>
+
+				<div class="form-group">
+					<textarea v-model="updatedAd.desc" placeholder="Description.. " class="form-control"></textarea>
+				</div>
+
+				<div class="form-group">
+					<select v-model="updatedAd.type" class="form-control">
+						<option v-for="(type, i) in types" :value="type.id">{{type.title}}</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<input type="file" @change="updatedAd.images = $event.target.files" class="form-control" multiple>
+				</div>
+
+				<template slot="buttons">
+					<input type="submit" value="Update" class="btn btn-primary" v-show="showUpdateBtn">
+					<input type="submit" value="Update" class="btn btn-primary" v-show="!showUpdateBtn" disabled="disabled">
+				</template>
+			</modal>
+		</form>
 	</div>
 </template>
 
@@ -77,8 +108,11 @@
 				ads: [],
 				types: [],
 				newAd: {title: '', desc: '', type: '', images: []},
-				editAd: {title: '', desc: '', type: '', images: []},
-				showModal: false,
+				updatedAd: {id: '', title: '', desc: '', type: '', images: []},
+				oldAd: {title: '', desc: '', type: '', images: []},
+				showUpdateBtn: false,
+				showModalCreate: false,
+				showModalUpdate: false,
 				csrf: {},
 			}
 		},
@@ -87,9 +121,8 @@
 			readAds(){
 				axios.get('/read-ads')
 					.then(response => {
-						//toastr.success(response.data.message)
 						this.ads = response.data.data
-						this.showModal=false
+						this.showModalCreate=false
 					})
 					.catch(err => {
 						toastr.error(err.message, 'Error occured!')
@@ -107,27 +140,59 @@
 			},
 
 			storeAd(){
-				var formData = new FormData() // Filling formData OBJ
-				formData.append('title', this.newAd.title)
-				formData.append('desc', this.newAd.desc)
-				formData.append('type', this.newAd.type)
-				for(var i =0; i<this.newAd.images.length; i++ ) {
-					formData.append('images[]', this.newAd.images[i])					
-				}
+				if(this.newAd.title != '' && this.newAd.desc != '' && this.newAd.type != ''){
+					var formData = new FormData() // Filling formData OBJ
+					formData.append('title', this.newAd.title)
+					formData.append('desc', this.newAd.desc)
+					formData.append('type', this.newAd.type)
+					for(var i =0; i<this.newAd.images.length; i++ ) {
+						formData.append('images[]', this.newAd.images[i])					
+					}
 
-				axios.post('/ads', formData)
-					.then(response => {
-						toastr.success(response.data.message)
-						this.readAds()
-						this.newAd = {title: '', desc: '', type: '', images: []}
-					})
-					.catch(err => {
-						toastr.error(err.message, 'Error occured!')
-					})               
+					axios.post('/ads', formData)
+						.then(response => {
+							toastr.success(response.data.message)
+							this.readAds()
+							this.newAd = {title: '', desc: '', type: '', images: []}
+						})
+						.catch(err => {
+							toastr.error(err.message, 'Error occured!')
+						})               
+				}
 			},
 
-			editAd(){
+			preUpdate(ad){ 
+				this.updatedAd = ad
+				this.showModalUpdate = true
+				this.oldAd.title = ad.title
+				this.oldAd.desc = ad.desc
+				this.oldAd.type = ad.type
+				this.oldAd.images = ad.images
+			},
 
+			updateAd(e){
+				if(this.showUpdateBtn){
+					axios.patch('/ads/' + this.updatedAd.id, this.updatedAd)
+						.then(response => {
+							toastr.success(response.data.message)
+							var i = 0
+							this.ads.filter(ad => {
+								if(ad.id == this.updatedAd.id){
+									this.ads[i].title = this.updatedAd.title
+									this.ads[i].desc = this.updatedAd.desc
+									this.ads[i].type = this.updatedAd.type
+									this.updatedAd = {id: '', title: '', desc: '', type: '', images: []}
+								}
+								i += 1
+							})
+							this.showModalUpdate = false
+							this.updatedAd = {id: '', title: '', desc: '', type: '', images: []}
+							this.oldAd = {title: '', desc: '', type: '', images: []}
+						})
+						.catch(err => {
+							toastr.error(err.message, 'Error occured!')
+						})
+				}
 			},
 
 			deleteAd(id){
@@ -157,7 +222,6 @@
 			// console.log('Manage ads Component mounted.')
 			this.readAds()
 			this.readTypes()
-			this.showModal = false
 			this.csrf = window.Laravel.csrfToken
 		},
 
@@ -176,6 +240,17 @@
 			types(val){
 				// if(val.length > 0)
 				//     this.newAd.type = this.types[0].title
+			},
+
+			updatedAd : { 
+				handler(val){
+		      	var oldAd = this.oldAd
+					if(val.title == oldAd.title && val.desc == oldAd.desc && val.type == oldAd.type)
+						this.showUpdateBtn = false
+					else
+						this.showUpdateBtn = true
+		     },
+		     deep: true				
 			}
 		}
 	}

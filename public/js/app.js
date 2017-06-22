@@ -28301,6 +28301,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -28308,8 +28339,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			ads: [],
 			types: [],
 			newAd: { title: '', desc: '', type: '', images: [] },
-			editAd: { title: '', desc: '', type: '', images: [] },
-			showModal: false,
+			updatedAd: { id: '', title: '', desc: '', type: '', images: [] },
+			oldAd: { title: '', desc: '', type: '', images: [] },
+			showUpdateBtn: false,
+			showModalCreate: false,
+			showModalUpdate: false,
 			csrf: {}
 		};
 	},
@@ -28319,9 +28353,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this = this;
 
 			axios.get('/read-ads').then(function (response) {
-				//toastr.success(response.data.message)
 				_this.ads = response.data.data;
-				_this.showModal = false;
+				_this.showModalCreate = false;
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error occured!');
 			});
@@ -28338,30 +28371,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		storeAd: function storeAd() {
 			var _this3 = this;
 
-			var formData = new FormData(); // Filling formData OBJ
-			formData.append('title', this.newAd.title);
-			formData.append('desc', this.newAd.desc);
-			formData.append('type', this.newAd.type);
-			for (var i = 0; i < this.newAd.images.length; i++) {
-				formData.append('images[]', this.newAd.images[i]);
-			}
+			if (this.newAd.title != '' && this.newAd.desc != '' && this.newAd.type != '') {
+				var formData = new FormData(); // Filling formData OBJ
+				formData.append('title', this.newAd.title);
+				formData.append('desc', this.newAd.desc);
+				formData.append('type', this.newAd.type);
+				for (var i = 0; i < this.newAd.images.length; i++) {
+					formData.append('images[]', this.newAd.images[i]);
+				}
 
-			axios.post('/ads', formData).then(function (response) {
-				toastr.success(response.data.message);
-				_this3.readAds();
-				_this3.newAd = { title: '', desc: '', type: '', images: [] };
-			}).catch(function (err) {
-				toastr.error(err.message, 'Error occured!');
-			});
+				axios.post('/ads', formData).then(function (response) {
+					toastr.success(response.data.message);
+					_this3.readAds();
+					_this3.newAd = { title: '', desc: '', type: '', images: [] };
+				}).catch(function (err) {
+					toastr.error(err.message, 'Error occured!');
+				});
+			}
 		},
-		editAd: function editAd() {},
-		deleteAd: function deleteAd(id) {
+		preUpdate: function preUpdate(ad) {
+			this.updatedAd = ad;
+			this.showModalUpdate = true;
+			this.oldAd.title = ad.title;
+			this.oldAd.desc = ad.desc;
+			this.oldAd.type = ad.type;
+			this.oldAd.images = ad.images;
+		},
+		updateAd: function updateAd(e) {
 			var _this4 = this;
+
+			if (this.showUpdateBtn) {
+				axios.patch('/ads/' + this.updatedAd.id, this.updatedAd).then(function (response) {
+					toastr.success(response.data.message);
+					var i = 0;
+					_this4.ads.filter(function (ad) {
+						if (ad.id == _this4.updatedAd.id) {
+							_this4.ads[i].title = _this4.updatedAd.title;
+							_this4.ads[i].desc = _this4.updatedAd.desc;
+							_this4.ads[i].type = _this4.updatedAd.type;
+							_this4.updatedAd = { id: '', title: '', desc: '', type: '', images: [] };
+						}
+						i += 1;
+					});
+					_this4.showModalUpdate = false;
+					_this4.updatedAd = { id: '', title: '', desc: '', type: '', images: [] };
+					_this4.oldAd = { title: '', desc: '', type: '', images: [] };
+				}).catch(function (err) {
+					toastr.error(err.message, 'Error occured!');
+				});
+			}
+		},
+		deleteAd: function deleteAd(id) {
+			var _this5 = this;
 
 			if (confirm("Are you really sure to delete Adv #" + id)) {
 				axios.delete('/ads/' + id).then(function (response) {
 					toastr.success(response.data.message);
-					_this4.ads = _this4.ads.filter(function (ad) {
+					_this5.ads = _this5.ads.filter(function (ad) {
 						if (ad.id != id) return ad;
 					});
 				}).catch(function (err) {
@@ -28380,7 +28446,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		// console.log('Manage ads Component mounted.')
 		this.readAds();
 		this.readTypes();
-		this.showModal = false;
 		this.csrf = window.Laravel.csrfToken;
 	},
 
@@ -28400,6 +28465,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		types: function types(val) {
 			// if(val.length > 0)
 			//     this.newAd.type = this.types[0].title
+		},
+
+
+		updatedAd: {
+			handler: function handler(val) {
+				var oldAd = this.oldAd;
+				if (val.title == oldAd.title && val.desc == oldAd.desc && val.type == oldAd.type) this.showUpdateBtn = false;else this.showUpdateBtn = true;
+			},
+
+			deep: true
 		}
 	}
 });
@@ -51458,7 +51533,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "btn btn-primary pull-right",
     on: {
       "click": function($event) {
-        _vm.showModal = true
+        _vm.showModalCreate = true
       }
     }
   }, [_vm._v("Create new Ad")])])]), _vm._v(" "), _c('div', {
@@ -51469,7 +51544,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('tr', [_c('td', [_vm._v(_vm._s(ad.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ad.title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.getTypeByTypeId(ad.type) ? _vm.getTypeByTypeId(ad.type).title : ''))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ad.desc))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ad.image))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-warning",
       on: {
-        "click": _vm.editAd
+        "click": function($event) {
+          _vm.preUpdate(ad)
+        }
       }
     }, [_c('i', {
       staticClass: "fa fa-pencil-square-o",
@@ -51491,7 +51568,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ad.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ad.updated_at))])])
   })], 2)]), _vm._v(" "), _c('form', {
     attrs: {
-      "action": "/ads",
+      "action": "",
       "method": "post",
       "enctype": "multipart/form-data"
     },
@@ -51505,15 +51582,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.showModal),
-      expression: "showModal"
+      value: (_vm.showModalCreate),
+      expression: "showModalCreate"
     }],
     attrs: {
       "title": "Create Advertisement"
     },
     on: {
       "clk-close-modal": function($event) {
-        _vm.showModal = false
+        _vm.showModalCreate = false
       }
     }
   }, [_c('input', {
@@ -51616,6 +51693,153 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "submit",
       "value": "Create Ad"
+    }
+  })])], 2)], 1), _vm._v(" "), _c('form', {
+    attrs: {
+      "action": "",
+      "method": "put",
+      "enctype": "multipart/form-data"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.updateAd($event)
+      }
+    }
+  }, [_c('modal', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.showModalUpdate),
+      expression: "showModalUpdate"
+    }],
+    attrs: {
+      "title": "Update Advertisement"
+    },
+    on: {
+      "clk-close-modal": function($event) {
+        _vm.showModalUpdate = false
+      }
+    }
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "_token"
+    },
+    domProps: {
+      "value": _vm.csrf
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.updatedAd.title),
+      expression: "updatedAd.title"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "Title.."
+    },
+    domProps: {
+      "value": (_vm.updatedAd.title)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.updatedAd.title = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.updatedAd.desc),
+      expression: "updatedAd.desc"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "placeholder": "Description.. "
+    },
+    domProps: {
+      "value": (_vm.updatedAd.desc)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.updatedAd.desc = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.updatedAd.type),
+      expression: "updatedAd.type"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.updatedAd.type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.types), function(type, i) {
+    return _c('option', {
+      domProps: {
+        "value": type.id
+      }
+    }, [_vm._v(_vm._s(type.title))])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "type": "file",
+      "multiple": ""
+    },
+    on: {
+      "change": function($event) {
+        _vm.updatedAd.images = $event.target.files
+      }
+    }
+  })]), _vm._v(" "), _c('template', {
+    slot: "buttons"
+  }, [_c('input', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.showUpdateBtn),
+      expression: "showUpdateBtn"
+    }],
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit",
+      "value": "Update"
+    }
+  }), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.showUpdateBtn),
+      expression: "!showUpdateBtn"
+    }],
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit",
+      "value": "Update",
+      "disabled": "disabled"
     }
   })])], 2)], 1)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
