@@ -48,3 +48,4 @@ Route::get('/read-ads-types', 'AdsController@getAdsTypes');
 Route::post('/ads', 'AdsController@store');
 Route::delete('/ads/{ad}', 'AdsController@destroy');
 Route::patch('/ads/{ad}', 'AdsController@update');
+Route::post('/ads/{ad}/pics', 'AdsController@updatePics');

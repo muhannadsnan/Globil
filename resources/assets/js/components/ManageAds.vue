@@ -89,12 +89,12 @@
 				</div>
 
 				<div class="form-group">
-					<input type="file" @change="updatedAd.images = $event.target.files" class="form-control" multiple>
+					<input type="file" @change="updatedAd.images = $event.target.files; showUpdateBtn=true" class="form-control" multiple>
 				</div>
 
 				<template slot="buttons">
-					<input type="submit" value="Update" class="btn btn-primary" v-show="showUpdateBtn">
-					<input type="submit" value="Update" class="btn btn-primary" v-show="!showUpdateBtn" disabled="disabled">
+					<input type="submit" v-show="showUpdateBtn" value="Update" class="btn btn-primary">
+					<input type="submit" v-show="!showUpdateBtn" value="Update" class="btn btn-primary" disabled="disabled">
 				</template>
 			</modal>
 		</form>
@@ -145,7 +145,7 @@
 					formData.append('title', this.newAd.title)
 					formData.append('desc', this.newAd.desc)
 					formData.append('type', this.newAd.type)
-					for(var i =0; i<this.newAd.images.length; i++ ) {
+					for(var i = 0 ; i < this.newAd.images.length ; i++ ) {
 						formData.append('images[]', this.newAd.images[i])					
 					}
 
@@ -162,19 +162,25 @@
 			},
 
 			preUpdate(ad){ 
-				this.updatedAd = ad
+				this.updatedAd.id = ad.id
+				this.updatedAd.title = ad.title
+				this.updatedAd.desc = ad.desc
+				this.updatedAd.type = ad.type
+				this.updatedAd.images = []
 				this.showModalUpdate = true
 				this.oldAd.title = ad.title
 				this.oldAd.desc = ad.desc
 				this.oldAd.type = ad.type
-				this.oldAd.images = ad.images
+				this.oldAd.images = []
 			},
 
-			updateAd(e){
-				if(this.showUpdateBtn){
+			updateAd(){
+				if(this.showUpdateBtn){					
+					
 					axios.patch('/ads/' + this.updatedAd.id, this.updatedAd)
 						.then(response => {
 							toastr.success(response.data.message)
+							this.updateImages()
 							var i = 0
 							this.ads.filter(ad => {
 								if(ad.id == this.updatedAd.id){
@@ -193,6 +199,21 @@
 							toastr.error(err.message, 'Error occured!')
 						})
 				}
+			},
+
+			updateImages(){ 
+				var formData = new FormData() // Filling formData OBJ
+				for(var i = 0 ; i < this.updatedAd.images.length ; i++ ) {
+					formData.append('images[]', this.updatedAd.images[i])					
+				}
+
+				axios.post('/ads/' + this.updatedAd.id + '/pics', formData, {processData: false, contentType: false})
+					.then(response => {
+
+					})
+					.catch(err => {
+						toastr.error(err.message, 'Error occured!')
+					})
 			},
 
 			deleteAd(id){
@@ -227,20 +248,10 @@
 
 		computed: {
 			isValid(){
-				// if(this.newAd.title == '')
-				//     this.showError['title']
-				// if(this.newAd.type == '')
-				//     this.showError['type']
-
-				// return this.showError.length > 0
 			}
 		},
 
 		watch:{
-			types(val){
-				// if(val.length > 0)
-				//     this.newAd.type = this.types[0].title
-			},
 
 			updatedAd : { 
 				handler(val){

@@ -47,15 +47,28 @@ class AdsController extends Controller
 	public function update(Request $request, Ad $ad)
 	{
 		// dd($request->all());
-		$res = $ad->update([
-			'title' => $request->title,		
-			'desc' => $request->desc,		
-			'type' => $request->type,		
-		]);
+			$res = $ad->update([
+				'title' => $request->title,		
+				'desc' => $request->desc,		
+				'type' => $request->type,		
+			]);
+			if( ! $res)
+				return ['ok'=>0, 'message'=>'Error while updating ad!'];
+			return ['ok'=>1, 'message'=>'Advertisements updated!'];
+	}
 
-		if( ! $res)
-			return ['ok'=>0, 'message'=>'Error while updating ad!'];
-		return ['ok'=>1, 'message'=>'Advertisements updated!'];
+	public function updatePics(Request $request, Ad $ad)
+	{
+		// dd($request->all());
+		if(count($request->images) > 0){ //dd($request->images); // update only images
+ 			$pic_names = [];
+ 			if(($pic_names = Picture::createPicsForAds($request->images, $ad->id)) != [] ){ //// insert OK? then upload pics
+ 				$resImg = Picture::storePics($request->images, $pic_names, '/ads');
+ 				if( ! $resImg)
+ 					return ['ok'=>0, 'message'=>'Error while updating images!'];
+				return ['ok'=>1, 'message'=>'Advertisements images were updated!'];
+ 			}
+ 		}
 	}
 
 
