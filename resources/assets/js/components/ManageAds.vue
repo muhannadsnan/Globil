@@ -89,7 +89,16 @@
 				</div>
 
 				<div class="form-group">
-					<input type="file" @change="updatedAd.images = $event.target.files; showUpdateBtn=true" class="form-control" multiple>
+					<input type="file" @change="newAd.images=$event.target.files; showUpdateBtn=true" class="form-control" multiple>
+				</div>
+<!-- asset_path+'/'+pic.id+'.'+pic.ext -->
+				<div class="row images">
+					<div v-for="(pic, i) in updatedAd.images" class="col-xs-6 col-md-4">
+						<a :href="imgSRCs[i]" class="thumbnail" target="_blank">
+							<img v-model="imgSRCs[i]"  :alt="'#'+pic.id" />
+						</a>
+						<button @click="deleteImg(pic)" class="btn btn-danger">X</button>
+					</div>
 				</div>
 
 				<template slot="buttons">
@@ -107,9 +116,10 @@
 			return {
 				ads: [],
 				types: [],
-				newAd: {title: '', desc: '', type: '', images: []},
+				newAd: {title: '', desc: '', type: '', images: []}, // update ad : new images to upload here
 				updatedAd: {id: '', title: '', desc: '', type: '', images: []},
 				oldAd: {title: '', desc: '', type: '', images: []},
+				imgSRCs: [],
 				showUpdateBtn: false,
 				showModalCreate: false,
 				showModalUpdate: false,
@@ -172,6 +182,7 @@
 				this.oldAd.desc = ad.desc
 				this.oldAd.type = ad.type
 				this.oldAd.images = []
+				this.loadImages()
 			},
 
 			updateAd(){
@@ -203,8 +214,8 @@
 
 			updateImages(){ 
 				var formData = new FormData() // Filling formData OBJ
-				for(var i = 0 ; i < this.updatedAd.images.length ; i++ ) {
-					formData.append('images[]', this.updatedAd.images[i])					
+				for(var i = 0 ; i < this.newAd.images.length ; i++ ) {
+					formData.append('images[]', this.newAd.images[i])					
 				}
 
 				axios.post('/ads/' + this.updatedAd.id + '/pics', formData, {processData: false, contentType: false})
@@ -236,6 +247,33 @@
 				return this.types.filter(t => { 
 					if(t.id == id) return t.title 
 				})[0]
+			},
+
+			loadImages(){
+				axios.get('/ads/' + this.updatedAd.id + '/pics')
+					.then(response => {
+						this.updatedAd.images = response.data.data
+						this.asset_path = response.data.asset_path
+					})
+					.catch(err => {
+						toastr.error(err.message, 'Error occured!')
+					})
+			},
+
+			deleteImg(pic){
+				if(confirm("Are you really sure to delete image #"+pic.id+" for Adv #"+pic.ad_id)){
+					axios.delete('/images-for-ad/' + pic.id)
+					.then(response => {
+						toastr.success(response.data.message)
+						this.updatedAd.images = this.updatedAd.images.filter(img => {
+							if(img.id != pic.id)
+								return img
+						})
+					})
+					.catch(err => {
+						toastr.error(err.message, 'Error occured!')
+					})
+				}	
 			}
 		},
 
@@ -248,7 +286,7 @@
 
 		computed: {
 			isValid(){
-			}
+			},
 		},
 
 		watch:{
@@ -260,23 +298,51 @@
 						this.showUpdateBtn = false
 					else
 						this.showUpdateBtn = true
+
+					if(val.images.length > 0){
+						val.images.forEach( pic => {
+							this.imgSRCs.push(this.asset_path+'/'+pic.id+'.'+pic.ext)
+						})
+					}	
 		     },
 		     deep: true				
-			}
-		}
+			},
+		},
 	}
 </script>
 
 <style lang="sass" scoped>
-	th
-		width: auto
-	.manage_btns
-		width: 150px !important
-	.panel-heading
-		padding: 0px
-		button
-			margin-right: 10px
-			margin-top: 5px
-	h2
-		line-height: 42px
+th
+	width: auto
+.manage_btns
+	width: 150px !important
+.panel-heading
+	padding: 0px
+	button
+		margin-right: 10px
+		margin-top: 5px
+h2
+	line-height: 42px
+.images
+	position: relative
+	.thumbnail
+		position: relative
+		img 
+			display: block
+			width: 150px
+			height: 150px
+	.thumbnail
+		&:hover
+			& + button
+				opacity: 0.8
+	button
+		position: absolute
+		right: 15px
+		top: 15px
+		z-index: 999 !important
+		top: 5px
+		right: 20px
+		opacity: 0
+		&:hover
+			opacity: 0.6
 </style>

@@ -23,6 +23,28 @@
 		
 		@endif
 	</div>
-</div>	
+</div>
+
+
+<div class="ads panel panel-warning">
+	<div class="panel-heading">
+		Advertisements
+	</div>
+
+	<div class="panel-body">
+		<a href="#" class="thumbnail">
+			<img src="http://lorempixel.com/400/200/animals" alt="...">
+		</a>
+		<a href="#" class="thumbnail">
+			<img src="http://lorempixel.com/400/200/people" alt="...">
+		</a>
+		<a href="#" class="thumbnail">
+			<img src="http://lorempixel.com/400/200/sports" alt="...">
+		</a>
+		<a href="#" class="thumbnail">
+			<img src="http://lorempixel.com/400/200/city" alt="...">
+		</a>
+	</div>
+</div>
 
 

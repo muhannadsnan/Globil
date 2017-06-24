@@ -72,6 +72,14 @@ class AdsController extends Controller
 	}
 
 
+	public function readPics(Ad $ad)
+	{
+		if(! $res = $ad->pictures)
+			return ['ok'=>0, 'message'=>'Error while loading images!'];
+		return ['ok'=>1, 'message'=>'Images loaded!', 'data'=>$res, 'asset_path'=>asset('storage/images/ads')];
+	}
+
+
 	public function destroy(Ad $ad)
 	{ //dd($ad);
 		$pictures = $ad->pictures; //dd($pictures);

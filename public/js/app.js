@@ -28332,15 +28332,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
 			ads: [],
 			types: [],
-			newAd: { title: '', desc: '', type: '', images: [] },
+			newAd: { title: '', desc: '', type: '', images: [] }, // update ad : new images to upload here
 			updatedAd: { id: '', title: '', desc: '', type: '', images: [] },
 			oldAd: { title: '', desc: '', type: '', images: [] },
+			imgSRCs: [],
 			showUpdateBtn: false,
 			showModalCreate: false,
 			showModalUpdate: false,
@@ -28400,6 +28410,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.oldAd.desc = ad.desc;
 			this.oldAd.type = ad.type;
 			this.oldAd.images = [];
+			this.loadImages();
 		},
 		updateAd: function updateAd() {
 			var _this4 = this;
@@ -28429,8 +28440,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		updateImages: function updateImages() {
 			var formData = new FormData(); // Filling formData OBJ
-			for (var i = 0; i < this.updatedAd.images.length; i++) {
-				formData.append('images[]', this.updatedAd.images[i]);
+			for (var i = 0; i < this.newAd.images.length; i++) {
+				formData.append('images[]', this.newAd.images[i]);
 			}
 
 			axios.post('/ads/' + this.updatedAd.id + '/pics', formData, { processData: false, contentType: false }).then(function (response) {}).catch(function (err) {
@@ -28455,6 +28466,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			return this.types.filter(function (t) {
 				if (t.id == id) return t.title;
 			})[0];
+		},
+		loadImages: function loadImages() {
+			var _this6 = this;
+
+			axios.get('/ads/' + this.updatedAd.id + '/pics').then(function (response) {
+				_this6.updatedAd.images = response.data.data;
+				_this6.asset_path = response.data.asset_path;
+			}).catch(function (err) {
+				toastr.error(err.message, 'Error occured!');
+			});
+		},
+		deleteImg: function deleteImg(pic) {
+			var _this7 = this;
+
+			if (confirm("Are you really sure to delete image #" + pic.id + " for Adv #" + pic.ad_id)) {
+				axios.delete('/images-for-ad/' + pic.id).then(function (response) {
+					toastr.success(response.data.message);
+					_this7.updatedAd.images = _this7.updatedAd.images.filter(function (img) {
+						if (img.id != pic.id) return img;
+					});
+				}).catch(function (err) {
+					toastr.error(err.message, 'Error occured!');
+				});
+			}
 		}
 	},
 
@@ -28474,8 +28509,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 		updatedAd: {
 			handler: function handler(val) {
+				var _this8 = this;
+
 				var oldAd = this.oldAd;
 				if (val.title == oldAd.title && val.desc == oldAd.desc && val.type == oldAd.type) this.showUpdateBtn = false;else this.showUpdateBtn = true;
+
+				if (val.images.length > 0) {
+					val.images.forEach(function (pic) {
+						_this8.imgSRCs.push(_this8.asset_path + '/' + pic.id + '.' + pic.ext);
+					});
+				}
 			},
 
 			deep: true
@@ -32088,7 +32131,7 @@ exports.push([module.i, "", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\nth[data-v-687ca18c] {\n  width: auto;\n}\n.manage_btns[data-v-687ca18c] {\n  width: 150px !important;\n}\n.panel-heading[data-v-687ca18c] {\n  padding: 0px;\n}\n.panel-heading button[data-v-687ca18c] {\n    margin-right: 10px;\n    margin-top: 5px;\n}\nh2[data-v-687ca18c] {\n  line-height: 42px;\n}\n", ""]);
+exports.push([module.i, "\nth[data-v-687ca18c] {\n  width: auto;\n}\n.manage_btns[data-v-687ca18c] {\n  width: 150px !important;\n}\n.panel-heading[data-v-687ca18c] {\n  padding: 0px;\n}\n.panel-heading button[data-v-687ca18c] {\n    margin-right: 10px;\n    margin-top: 5px;\n}\nh2[data-v-687ca18c] {\n  line-height: 42px;\n}\n.images[data-v-687ca18c] {\n  position: relative;\n}\n.images .thumbnail[data-v-687ca18c] {\n    position: relative;\n}\n.images .thumbnail img[data-v-687ca18c] {\n      display: block;\n      width: 150px;\n      height: 150px;\n}\n.images .thumbnail:hover + button[data-v-687ca18c] {\n    opacity: 0.8;\n}\n.images button[data-v-687ca18c] {\n    position: absolute;\n    right: 15px;\n    top: 15px;\n    z-index: 999 !important;\n    top: 5px;\n    right: 20px;\n    opacity: 0;\n}\n.images button[data-v-687ca18c]:hover {\n      opacity: 0.6;\n}\n", ""]);
 
 /***/ }),
 /* 177 */
@@ -51541,7 +51584,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "manage-ads panel panel-warning"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_c('h2', [_vm._v("\n\t\t\tManage Ads\n\t\t\t"), _c('button', {
+  }, [_c('h2', [_vm._v("\n\t\t\t\tManage Ads\n\t\t\t\t"), _c('button', {
     staticClass: "btn btn-primary pull-right",
     on: {
       "click": function($event) {
@@ -51823,11 +51866,47 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "change": function($event) {
-        _vm.updatedAd.images = $event.target.files;
+        _vm.newAd.images = $event.target.files;
         _vm.showUpdateBtn = true
       }
     }
-  })]), _vm._v(" "), _c('template', {
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "row images"
+  }, _vm._l((_vm.updatedAd.images), function(pic, i) {
+    return _c('div', {
+      staticClass: "col-xs-6 col-md-4"
+    }, [_c('a', {
+      staticClass: "thumbnail",
+      attrs: {
+        "href": _vm.imgSRCs[i],
+        "target": "_blank"
+      }
+    }, [_c('img', {
+      attrs: {
+        "alt": '#' + pic.id
+      },
+      model: {
+        value: (_vm.imgSRCs[i]),
+        callback: function($$v) {
+          var $$exp = _vm.imgSRCs,
+            $$idx = i;
+          if (!Array.isArray($$exp)) {
+            _vm.imgSRCs[i] = $$v
+          } else {
+            $$exp.splice($$idx, 1, $$v)
+          }
+        },
+        expression: "imgSRCs[i]"
+      }
+    })]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          _vm.deleteImg(pic)
+        }
+      }
+    }, [_vm._v("X")])])
+  })), _vm._v(" "), _c('template', {
     slot: "buttons"
   }, [_c('input', {
     directives: [{

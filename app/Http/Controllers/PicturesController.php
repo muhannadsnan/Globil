@@ -25,6 +25,15 @@ class PicturesController extends Controller
 		@unlink(public_path("/storage/images/$pic->id.$pic->ext"));
 		return ['ok' => 1, 'message' => "Images were removed successfully!"];
 	}
+	
+	public function destroyPicByAd(Picture $pic)
+	{
+		if( ! $pic->delete() )
+			return ['ok' => 0, 'message' => 'Error while removing image'];
+
+		@unlink(public_path("/storage/images/ads/$pic->id.$pic->ext"));
+		return ['ok' => 1, 'message' => "Image removed!"];
+	}
 
 
 	public function destroyPicByFolder(Picture $pic, $folder="")

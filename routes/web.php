@@ -27,6 +27,7 @@ Route::get('/read-data-with-subdata/{data}/{subdata}', 'SubDataController@readDa
 // ==============  Pics
 Route::get('/images-for-car/{car}', 'PicturesController@readPicsByCar');
 Route::delete('/images-for-car/{pic}', 'PicturesController@destroyPicByCar');
+Route::delete('/images-for-ad/{pic}', 'PicturesController@destroyPicByAd');
 
 // ==============  Search
 Route::get('/search/general/{keyword}', 'SearchController@searchGeneral');
@@ -49,3 +50,4 @@ Route::post('/ads', 'AdsController@store');
 Route::delete('/ads/{ad}', 'AdsController@destroy');
 Route::patch('/ads/{ad}', 'AdsController@update');
 Route::post('/ads/{ad}/pics', 'AdsController@updatePics');
+Route::get('/ads/{ad}/pics', 'AdsController@readPics');

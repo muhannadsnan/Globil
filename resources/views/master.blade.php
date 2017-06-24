@@ -15,8 +15,8 @@
 			<div class="row">
 				<?php 
 				if(isset($isHomePage) && $isHomePage){
-					$searchbar_col_width = "col-md-2";
-					$content_col_width = "col-md-8";
+					$searchbar_col_width = "col-md-2 col-sm-4";
+					$content_col_width = "col-md-8 col-sm-8";
 				}else{
 					$searchbar_col_width = "";
 					$content_col_width = "col-md-10";
@@ -35,13 +35,19 @@
 				
 
 				<div class="<?=$content_col_width?>" id="content">
+
+					@if(isset($isHomePage) && $isHomePage)
+						<a href="#" class="thumbnail">
+							<img src="http://lorempixel.com/1000/120/city" alt="...">
+						</a>
+					@endif
 				
 					@yield('content')
 
 				</div><!-- .content -->
 
 
-				<div class="col-md-2" id="sidebar">
+				<div class="col-md-2 col-sm-12" id="sidebar">
 
 					@include('layout.sidebar')
 
