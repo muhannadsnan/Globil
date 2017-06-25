@@ -27892,39 +27892,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            ads: []
+            ads: [],
+            asset_path: ''
         };
     },
 
 
-    methods: {
-        readAds: function readAds() {
+    computed: {
+        paths: function paths() {
             var _this = this;
 
-            axios.get('/read-ads').then(function (response) {
-                _this.ads = response.data.data;
-            }).catch(function (err) {
-                toastr.error(err.message, 'Error occured!');
+            var arr = [];
+            this.ads.filter(function (ad) {
+                arr.push(_this.asset_path + '/' + ad.pictures[0].id + '.' + ad.pictures[0].ext);
             });
-        },
-        deleteRequest: function deleteRequest() {
+            return arr;
+        }
+    },
+
+    props: {
+        items: { default: 1 },
+        type: {},
+        refresh: { default: 0 }
+    },
+
+    methods: {
+        readAds: function readAds() {
             var _this2 = this;
 
-            axios.delete(this.url + '/' + this.data1).then(function (response) {
-                toastr.success(response.data.message);
-                console.log(response.data.message);
-                //alert(response.data.message)
-                _this2.hasClicked = true;
+            axios.get('/read-ads-items/' + this.items + '/' + this.type).then(function (response) {
+                _this2.ads = response.data.data;
+                _this2.asset_path = response.data.asset_path;
             }).catch(function (err) {
                 toastr.error(err.message, 'Error occured!');
             });
@@ -27932,8 +27934,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     mounted: function mounted() {
-        console.log('WishListButton Component mounted.');
+        var _this3 = this;
+
+        console.log('Ads Component mounted.');
         this.readAds();
+
+        if (this.refresh != 0) setInterval(function () {
+            _this3.readAds();
+        }, this.refresh * 1000);
     }
 });
 
@@ -29693,6 +29701,7 @@ Vue.component('conversations', __webpack_require__(188));
 Vue.component('messages', __webpack_require__(192));
 Vue.component('ads', __webpack_require__(186));
 Vue.component('manage-ads', __webpack_require__(191));
+Vue.component('ads', __webpack_require__(186));
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -50865,23 +50874,20 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "ads panel panel-warning"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("\n        Advertisements\n    ")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, _vm._l((_vm.ads), function(ad) {
+    staticClass: "ads"
+  }, _vm._l((_vm.ads), function(ad, i) {
     return _c('a', {
       staticClass: "thumbnail",
       attrs: {
-        "href": "#"
+        "href": _vm.paths[i]
       }
     }, [_c('img', {
       attrs: {
-        "src": "http://www.takepart.com/sites/default/files/styles/tp_gallery_slide/public/slogan-itok=C7mRvp9G.jpg"
+        "src": _vm.paths[i],
+        "alt": ad.id
       }
     })])
-  }))])
+  }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

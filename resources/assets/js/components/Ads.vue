@@ -1,14 +1,8 @@
 <template>
-    <div class="ads panel panel-warning">
-        <div class="panel-heading">
-            Advertisements
-        </div>
-
-        <div class="panel-body">
-            <a v-for="ad in ads" href="#" class="thumbnail">
-                <img src="http://www.takepart.com/sites/default/files/styles/tp_gallery_slide/public/slogan-itok=C7mRvp9G.jpg"/>
-            </a>
-        </div>
+    <div class="ads">
+        <a v-for="(ad, i) in ads" :href="paths[i]" class="thumbnail">
+            <img :src="paths[i]" :alt="ad.id">
+        </a>
     </div>
 </template>
 
@@ -17,38 +11,48 @@
         data(){
             return {
                 ads: [],
+                asset_path: '',
             }
+        },
+
+        computed: {
+            paths(){
+                var arr = []
+                this.ads.filter(ad => {
+                    arr.push(this.asset_path+'/'+ad.pictures[0].id+'.'+ad.pictures[0].ext)
+                })
+                return arr
+            }
+        },
+
+        props: {
+            items: {default: 1},
+            type: {},
+            refresh: { default: 0},
         },
 
         methods: {
             
             readAds(){
-                axios.get('/read-ads')
+                axios.get('/read-ads-items/'+this.items+'/'+this.type)
                     .then(response => {
                         this.ads = response.data.data
+                        this.asset_path = response.data.asset_path
                     })
                     .catch(err => {
                         toastr.error(err.message, 'Error occured!')
                     })
             },
-
-            deleteRequest(){
-                axios.delete(this.url +'/'+ this.data1 )
-                    .then(response => {
-                        toastr.success(response.data.message)
-                        console.log(response.data.message)
-                        //alert(response.data.message)
-                        this.hasClicked = true
-                    })
-                    .catch(err => {
-                        toastr.error(err.message, 'Error occured!')
-                    })
-            }
         },
 
         mounted() {
-            console.log('WishListButton Component mounted.')
-            this.readAds();
+            console.log('Ads Component mounted.')
+            this.readAds()
+
+            if(this.refresh != 0)
+                setInterval(()=>{
+                    this.readAds()
+                }, this.refresh * 1000)
         }
     }
 </script>

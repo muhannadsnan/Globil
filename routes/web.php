@@ -37,15 +37,17 @@ Route::post('/search/filter/checkedBrands/', 'SearchController@readCheckedBrands
 Route::post('/search/filter/checkedModels/', 'SearchController@readCheckedModels');
 Route::post('/search/filter/price-range', 'SearchController@readCarsInPriceRange');
 
-
 Route::post('/saved-search', 'SavedSearchController@store');
 
+// ==============  Messages
 Route::get('/read-convs-with-user-info', 'MessagesController@getConvsWithUserInfo');
 Route::get('/read-messages-by-conv-id/{convId}', 'MessagesController@getMessagesByConvId');
 
 // ==============  Ads
 Route::get('/read-ads', 'AdsController@getAllAds');
+Route::get('/read-ads-items/{items}/{type}', 'AdsController@getAdsItems');
 Route::get('/read-ads-types', 'AdsController@getAdsTypes');
+
 Route::post('/ads', 'AdsController@store');
 Route::delete('/ads/{ad}', 'AdsController@destroy');
 Route::patch('/ads/{ad}', 'AdsController@update');

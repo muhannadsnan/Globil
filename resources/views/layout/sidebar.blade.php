@@ -32,18 +32,9 @@
 	</div>
 
 	<div class="panel-body">
-		<a href="#" class="thumbnail">
-			<img src="http://lorempixel.com/400/200/animals" alt="...">
-		</a>
-		<a href="#" class="thumbnail">
-			<img src="http://lorempixel.com/400/200/people" alt="...">
-		</a>
-		<a href="#" class="thumbnail">
-			<img src="http://lorempixel.com/400/200/sports" alt="...">
-		</a>
-		<a href="#" class="thumbnail">
-			<img src="http://lorempixel.com/400/200/city" alt="...">
-		</a>
+
+		<ads type="sidebar" items="4" refresh="20"></ads>
+
 	</div>
 </div>
 

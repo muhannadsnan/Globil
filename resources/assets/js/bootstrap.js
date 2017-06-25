@@ -59,6 +59,7 @@ Vue.component('conversations', require('./components/Conversations.vue'));
 Vue.component('messages', require('./components/Messages.vue'));
 Vue.component('ads', require('./components/Ads.vue'));
 Vue.component('manage-ads', require('./components/ManageAds.vue'));
+Vue.component('ads', require('./components/Ads.vue'));
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

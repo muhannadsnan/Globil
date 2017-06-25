@@ -12,13 +12,20 @@ class AdsController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware('auth');
+		$this->middleware('auth')->except(['getAdsItems']);
 	}
 
 	public function getAllAds()
 	{
 		$ads = Ad::latest()->get();
 		return ['ok'=>1, 'message'=>'Advertisements loaded!', 'data'=>$ads];
+	}
+
+	public function getAdsItems($items=1, $type="sidebar")
+	{
+		$typeID = Subdata::first()->select('id')->where('title', $type)->get()[0]->id;
+		$ads = Ad::inRandomOrder()->where('type', $typeID)->take($items)->with('pictures')->get();
+		return ['ok'=>1, 'message'=>"$items Advertisements type $type loaded!", 'data'=>$ads, 'asset_path'=>asset('storage/images/ads')];
 	}
 
 	public function getAdsTypes()
