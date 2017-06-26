@@ -14,7 +14,7 @@
 				</template>
 			</div>
 		</div> 
-		<hr>       
+		    
 	</div>
 </template>
 
@@ -70,17 +70,17 @@
 				}
 				else{
 					this.allChecked = this.allChecked.filter(area => { // area[areaId] = [array of cities]
-						console.log(area[1])
+						// console.log(area[1]) // cities in area
 						if(area[1].includes(cityId)){
 							area[1] = area[1].filter(city => {
 								if(city != cityId)
 									return city
 							})
 						}
-						return car
+						return area
 					})
-					this.sendAllFiltersToParent()
 				}
+				this.sendAllFiltersToParent()
 			},
 
 			sendAllFiltersToParent(){

@@ -36,4 +36,25 @@ class SubDataController extends Controller
 	}
 	
 
+	public function readSubDataTypes()
+	{
+		if( !$res = SubData::distinct()->get(['ntype']))
+			return ['ok' => 0, 'message' => 'Error while loading "NTypes"'];
+		return ['ok' => 1, 'message' => "NTypes are loaded successfully!", 'data' => $res];
+	}
+
+	public function store(Request $request)
+	{
+		
+	}
+
+	public function update(Request $request, SubData $sub)
+	{
+		
+	}
+
+	public function destroy(SubData $sub)
+	{
+		
+	}
 }

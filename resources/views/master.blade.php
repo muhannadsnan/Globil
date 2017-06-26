@@ -37,9 +37,7 @@
 				<div class="<?=$content_col_width?>" id="content">
 
 					@if(isset($isHomePage) && $isHomePage)
-						<a href="#" class="thumbnail">
-							<img src="http://lorempixel.com/1000/120/city" alt="...">
-						</a>
+						<ads type="banner" items="1" refresh="15"></ads> <!-- BANNER ADS -->
 					@endif
 				
 					@yield('content')

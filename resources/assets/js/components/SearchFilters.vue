@@ -42,7 +42,10 @@
 		         		//this.searchFilters = {}
 						})
 						.catch(err => {
-							toastr.error(err.message, 'Error was occured!')
+							if(err.response.status === 401)
+								toastr.error(err.message, 'You must be logged in to save a search!')
+							else
+								toastr.error(err.message, 'Error was occured!')
 						})	
 			}, //<<
 

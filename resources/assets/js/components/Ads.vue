@@ -12,11 +12,17 @@
             return {
                 ads: [],
                 asset_path: '',
+                test_paths: ['http://lorempixel.com/400/250/city', 'http://lorempixel.com/400/250/sports', 'http://lorempixel.com/400/250/people', 'http://lorempixel.com/400/250/animals'],
+                test_paths_banner: ['http://lorempixel.com/1000/120/city', 'http://lorempixel.com/1000/120/sports', 'http://lorempixel.com/1000/120/people', 'http://lorempixel.com/1000/120/animals']
             }
         },
 
         computed: {
             paths(){
+                if(this.type == 'banner')
+                    return this.test_paths_banner
+                return this.test_paths
+
                 var arr = []
                 this.ads.filter(ad => {
                     arr.push(this.asset_path+'/'+ad.pictures[0].id+'.'+ad.pictures[0].ext)

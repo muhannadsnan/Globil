@@ -1,23 +1,29 @@
-<div class="col-sm-6 col-md-4 car-card">
+<div class="col-xs-6 col-sm-4 col-md-3 car-card">
 
 	<div class="thumbnail panel-info">
 
 		<img src="{{ asset('storage/images') .'/'. @$car->pictures[0]->id .'.'. @$car->pictures[0]->ext }}" alt="...">
 
-		<div class="caption">
+		<div class="caption">			
 
-			@include('wishlists.wishListButton')
-
-			<span class="hd">{{ $car->sub($car->brand) }}, 
+			<p class="hd">
+				{{ $car->sub($car->brand) }}<br/>
 				<strong>{{ $car->sub($car->model) }}</strong> <br/>
-				<small>year: {{ $car->year }}</small>
-			</span>
-			
-			<p class="desc">
-				{{ substr($car->desc, 0, 100) }} {{ strlen($car->desc) > 100 ? '...' : '' }}
+				<span>year: {{ $car->year }}</span>
 			</p>
+			
+<!-- 			<small class="desc">
+				{{ substr($car->desc, 0, 100) }} {{ strlen($car->desc) > 100 ? '...' : '' }}
+			</small> -->
 
-			<a href="/cars/{{$car->id}}" class="btn btn-info" role="button">See more</a>
+			<div class="foot">
+			
+				<a href="/cars/{{$car->id}}" class="btn btn-info" target="_blank">More</a>
+
+				@include('wishlists.wishListButton')
+
+			</div>
+
 
 			@if(@$update)
 				<a href="/cars/{{ $car->id }}/edit" class="edit-btn pull-right">

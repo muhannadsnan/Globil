@@ -1,10 +1,12 @@
 @extends('master')
 
 @section('content')
-<!-- <h3>@{{loadingPage}}</h3> -->
+
 <div class="loading " v-if="loadingPage">
-	<h3>LOADING POSTS.. </h3><hr>
+	<h3>LOADING POSTS.. </h3>
+	<hr>
 </div>
+
 <div v-else class="col-md-12x" v-if=""  :class="{'blur': searchTyping}" v-cloak>
 	 <div class="row">
 

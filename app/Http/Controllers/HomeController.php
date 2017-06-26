@@ -16,7 +16,7 @@ class HomeController extends Controller
 		public function index()
 		{
 			$latestCars = Car::latest()->get();
-			$savedSearch = SavedSearch::latest()->take(5)->get();
+			$savedSearch = SavedSearch::latest()->where('user_id', auth()->id())->take(5)->get();
 			$isHomePage = true;
 			return view('home', compact('latestCars', 'savedSearch', 'isHomePage'));
 		}

@@ -16,6 +16,7 @@ class SavedSearch extends Model
 		SavedSearch::create([ 
 				'title' => is_null($request->title) ? '' : $request->title,
 				'users' => ! $request->users ? null : json_encode($request->users),
+				'user_id' => auth()->id(),
 				'brand_model' => ! $request->brand_model ? null : json_encode($request->brand_model),
 				'min_price' => ! $request->priceRange ? null : $request->priceRange[0],
 				'max_price' => ! $request->priceRange ? null : $request->priceRange[1],

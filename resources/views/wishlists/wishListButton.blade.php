@@ -22,10 +22,12 @@
 	
 
 @else
+<div class="WishListButton">
 	<a href="/login" class="">
 		<span class="fa" data-toggle="tooltip" data-placement="top"
 				data-original-title="title">
 			<i class="fa fa-heart-o"></i>
 		</span>
 	</a>
+</div>
 @endif

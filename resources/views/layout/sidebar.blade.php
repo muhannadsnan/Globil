@@ -1,10 +1,11 @@
+@if(isset($isHomePage) && $isHomePage)
 
 <div class="saved-search panel panel-success">
 	<div class="panel-heading">
 		Saved Search
 	</div>
 
-	<div class="panel-body">
+	<div class="panel-body text-left">
 		@if(isset($savedSearch))
 		
 			@foreach($savedSearch as $savedS)
@@ -25,6 +26,7 @@
 	</div>
 </div>
 
+@endif
 
 <div class="ads panel panel-warning">
 	<div class="panel-heading">

@@ -37,17 +37,39 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 .latest-posts .panel {margin-right:10px; margin-left:10px; }
 .latest-posts .caption {text-align: left }
 .latest-posts .hd {font-size: 14pt; }
-.latest-posts a:hover{border: 1px solid #000;}
+.latest-posts a:hover{border: 0px solid #000; }
 .latest-posts .no-results{opacity:0; transition: opacity 0.5s linear; }
 
 /**** CAR CARD ****/
-.car-card {  }
-.car-card img{ height: 100px;  }
-.car-card .caption{ height: 150px; /*max-height: 150px;*/  overflow: hidden;}
-.car-card .desc{ overflow:hidden; height: 62px; border: 0px solid #000;}
+.car-card {}
+.car-card:hover{border-color: #000;}
+.car-card img{ height: 80px;  }
+.car-card small{font-size: 9pt; color: #ccc;}
+.car-card .caption{ height: 125px; font-size: 12pt !important;  overflow: hidden; padding: 7px 0px;}
+.car-card .desc{ overflow: hidden; min-height: 50px; border: 0px solid #000;}
 .car-card .fa {margin:0px 5px 0px 0px; font-size: 24pt; line-height: 30px; vertical-align: middle;}
 .car-card .fa:hover {cursor: pointer}
 .car-card .edit-btn {color: #007d05;}
+.car-card .foot{margin-top: 5px;}
+.car-card .foot .btn{ float:left;}
+
+/**** WISHLIST ****/
+
+.wish-list-post a, .wish-list-post a:visited, .wish-list-post a:active{
+	border: 1px solid #3097D1;
+	text-align: left;
+			
+}
+.wish-list-post a:hover{
+	
+}
+
+.wish-list-post .hd{
+	font-size: 16pt; 
+}
+
+.WishListButton{width: 40px; margin: 0; float: right;}
+
 
 footer { padding:5px 40px; background-color: #1c8cad; border-top: 1px solid #555; margin: 20px 0px 0px 0px;
 	color: #2d3092; line-height: 17px; font-weight: 600;}
@@ -68,22 +90,6 @@ footer hr {border-color: #999;}
 	color: #fff; background-color: #5bc0de; font-size: 16pt; margin: 0; margin-bottom: 10px;
 	padding: 10px 20px; border: 1px solid #1c8cad; border-radius: 5px; text-align: center;}
 
-
-/**** WISHLIST ****/
-
-.wish-list-post a, .wish-list-post a:visited, .wish-list-post a:active{
-	border: 1px solid #3097D1;
-	text-align: left;
-			
-}
-.wish-list-post a:hover{
-	
-}
-
-.wish-list-post .hd{
-	font-size: 16pt; 
-}
-
 /**** EditImagesComponent ****/
 .EditImagesComponent{}
 .EditImagesComponent img{padding:0; margin-bottom: 6px}
@@ -95,10 +101,11 @@ footer hr {border-color: #999;}
 
 
 /**** SEARCHBAR ****/
-#searchbar{margin:0; padding:0;}
+#searchbar{margin:0; padding:0; max-height: 700px; overflow-y: scroll;}
 #searchbar .panel{}
 #searchbar hr{margin: 10px 0px;}
-#searchbar select{width: 90%; margin: auto; height: 110px;}
+#searchbar select{width: 90%; margin: auto; height: 125px;}
+#searchbar input[type="search"]{width: 90%; margin: auto; height: 45px;}
 #searchbar option{text-align: center}
 #searchbar input[type='checkbox']{margin-left: 20px}
 
@@ -110,3 +117,29 @@ footer hr {border-color: #999;}
   -o-filter: blur(5px);
   -webkit-transition: -webkit-filter .30s;
 }
+
+//================ CONVERSATIONS
+.conversations{}
+.conversations div, .conversations a, .conversations img{
+	padding:0 !important; margin:0 !important}
+
+.conversations .user_conv{
+	padding: 10px !important; margin-bottom: 5px !important; border-bottom: 1px solid #ccc; background-color: #eee}
+.conversations caption{margin-left: 5px;}
+
+.user_img{border-radius: 100%; padding: 0 !important;}
+.conv_messages{border: 1px solid #ccc; padding:10px 10px; overflow-y: auto; height:500px;}
+.conv_messages .header{ border-bottom: 1px solid #ccc; height: 80px !important; padding:10px; margin-bottom: 10px; 
+	 background-color: #fff; }
+.conv_messages .header a{
+	line-height: 60px; vertical-align: middle;
+	 }
+.conv_messages .header .user_img{ width:auto; height:60px;}
+.conv_messages .header span{float: left; margin-left: 10px}
+.msg {text-align: left ; margin:10px !important	; padding: 10px; }
+.message_text{ padding: 5px 10px; }
+.message_text span{ color: #fff;  background-color: blue; border-radius: 5px;
+	 margin:5px ; padding: 5px 10px;}
+.me{float:right !important; }
+.me span{background-color: #eee; color: #666;}
+.datetime{margin:0px 22px;}
