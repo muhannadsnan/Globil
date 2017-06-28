@@ -26,12 +26,10 @@
 					<th>Created at</th>
 					<th>Updated at</th>
 				</tr>
-
-				<tr v-for="sub in subdata">
-					<td>{{sub.id}}</td>
-					<td>{{sub.ntype}}</td>
-					<td>{{sub.ntype2}}</td>
-					<td>{{sub.title}}</td>
+				<tr v-if="selectedNType == ''"><td colspan="7" class="empty"><span>Select Subdata type to show data..</span></td></tr>
+				<tr v-if="loading"><td colspan="7" class="loading"><span>LOADING DATA..</span></td></tr>
+				<tr v-for="sub in subdata" v-if="selectedNType != '' && !loading">
+					<td>{{sub.id}}</td><td>{{sub.ntype}}</td><td>{{sub.ntype2}}</td><td>{{sub.title}}</td>
 					<td>
 						<button @click="preUpdate(sub)" class="btn btn-warning">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -40,26 +38,25 @@
 							<i class="fa fa-trash-o" aria-hidden="true"></i>
 						</button>
 					</td>
-					<td>{{sub.created_at}}</td>
-					<td>{{sub.updated_at}}</td>
+					<td>{{sub.created_at}}</td><td>{{sub.updated_at}}</td>
 				</tr>
 			</table>
 		</div>
 
 
 		<form @submit.prevent="storeSubdata" action="" method="post" enctype="multipart/form-data">
-			<modal :title="'Create new'+newSub.ntype" v-show="showModalCreate" @clk-close-modal="showModalCreate=false">
+			<modal :title="'Create new '+newSub.ntype" v-show="showModalCreate" @clk-close-modal="showModalCreate=false">
 				<input type="hidden" name="_token" :value="csrf">
 
 				<div class="form-group">
-					<select v-model="newSub.ntype" class="form-control">
-						<option v-for="(type, i) in subdataTypes" :value="type.id">{{type.title}}</option>
+					<select @change="readBrandsForModel" v-model="newSub.ntype" class="form-control">
+						<option v-for="(type, i) in subdataTypes" :value="type.ntype">{{type.ntype}}</option>
 					</select>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group" v-if="newSub.ntype == 'model'">
 					<select v-model="newSub.ntype2" class="form-control">
-						<option v-for="(type, i) in subdataTypes" :value="type.id">{{type.title}}</option>
+						<option v-for="(brand, i) in brands" :value="brand.title">{{brand.title}}</option>
 					</select>
 				</div>
 
@@ -74,22 +71,24 @@
 		</form>
 
 
-		<form @submit.prevent="updateAd" action="" method="put" enctype="multipart/form-data">
+		<form @submit.prevent="updateSub" action="" method="put" enctype="multipart/form-data">
 			<modal title="Update Advertisement" v-show="showModalUpdate" @clk-close-modal="showModalUpdate=false">
 				<input type="hidden" name="_token" :value="csrf">
 
 				<div class="form-group">
-					<input type="text" v-model="updatedSub.title" placeholder="Title.." class="form-control">
-				</div>
-
-				<div class="form-group">
-					<textarea v-model="updatedSub.desc" placeholder="Description.. " class="form-control"></textarea>
-				</div>
-
-				<div class="form-group">
-					<select v-model="updatedSub.type" class="form-control">
-						<option v-for="(type, i) in subdataTypes" :value="type.id">{{type.title}}</option>
+					<select @change="readBrandsForModel" v-model="updatedSub.ntype" class="form-control">
+						<option v-for="(type, i) in subdataTypes" :value="type.ntype">{{type.ntype}}</option>
 					</select>
+				</div>
+
+				<div class="form-group" v-if="updatedSub.ntype == 'model'">
+					<select v-model="updatedSub.ntype2" class="form-control">
+						<option v-for="(brand, i) in brands" :value="brand.title">{{brand.title}}</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<input type="text" v-model="updatedSub.title" placeholder="Title.." class="form-control">
 				</div>
 
 				<template slot="buttons">
@@ -108,6 +107,7 @@
 				subdata: [],
 				subdataTypes: [],
 				selectedNType: '',
+				brands: [],
 				newSub: {ntype: '', ntype2: '', ntype3: '', title: ''}, 
 				updatedSub: {id: '', ntype: '', ntype2: '', ntype3: '', title: ''},
 				oldSub: {ntype: '', ntype2: '', ntype3: '', title: ''},
@@ -115,11 +115,26 @@
 				showModalCreate: false,
 				showModalUpdate: false,
 				csrf: {},
+				loading: false,
 			}
 		},
 		methods: {
+			fillNewSub(type){
+				this.newSub = type;
+			},
+
+			readBrandsForModel(){
+				axios.get('/readSubData/brand/undefined')
+					.then(response => {
+						this.brands = response.data.data
+					})
+					.catch(err => {
+						toastr.error(err.message, 'Error occured!')
+					})
+			},
 			
 			readSubdata(){
+				this.loading = true
 				axios.get('/readSubData/'+this.selectedNType+'/undefined')
 					.then(response => {
 						this.subdata = response.data.data
@@ -128,21 +143,27 @@
 					.catch(err => {
 						toastr.error(err.message, 'Error occured!')
 					})
+					this.loading = false
 			},
 
 			readTypes(){
+				this.loading = true
 				axios.get('/read-subdata-types')
 					.then(response => {
-						this.subdataTypes = response.data.data
+						this.subdataTypes = response.data.data.filter( sub => {
+							if(sub.ntype != 'ads_type')
+								return sub
+						})
 					})
 					.catch(err => {
 						toastr.error(err.message, 'Error occured!')
 					})
+					this.loading = false
 			},
 
 			storeSubdata(){
 				if(this.newSub.ntype != '' && this.newSub.title != ''){
-					axios.post('/subdata', formData)
+					axios.post('/subdata', this.newSub)
 						.then(response => {
 							toastr.success(response.data.message)
 							this.readSubdata()
@@ -165,15 +186,14 @@
 				this.oldSub.ntype2 = sub.ntype2
 				this.oldSub.ntype3 = sub.ntype3
 				this.oldSub.title = sub.title
+				this.readBrandsForModel();
 			},
 
-			updateAd(){
+			updateSub(){
 				if(this.showUpdateBtn){					
 					
 					axios.patch('/subdata/' + this.updatedSub.id, this.updatedSub)
 						.then(response => {
-							toastr.success(response.data.message)
-							this.updateImages()
 							var i = 0
 							this.subdata.filter(sub => { // update the DOM
 								if(sub.id == this.updatedSub.id){
@@ -181,13 +201,13 @@
 									this.subdata[i].ntype2 = this.updatedSub.ntype2
 									this.subdata[i].ntype3 = this.updatedSub.ntype3
 									this.subdata[i].title = this.updatedSub.title
-									this.updatedSub = {id: '', ntype: '', ntype2: '', ntype3: '', title: ''}
 								}
 								i += 1
 							})
 							this.showModalUpdate = false
 							this.updatedSub = {id: '', ntype: '', ntype2: '', ntype3: '', title: ''}
 							this.oldSub = {ntype: '', ntype2: '', ntype3: '', title: ''}
+							toastr.success(response.data.message)
 						})
 						.catch(err => {
 							toastr.error(err.message, 'Error occured!')
@@ -238,6 +258,10 @@
 <style lang="sass" scoped>
 th
 	width: auto
+td.empty
+	text-align: center
+	span
+		color: #ccc
 .manage_btns
 	width: 150px !important
 .panel-heading

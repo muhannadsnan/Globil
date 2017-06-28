@@ -28401,7 +28401,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			showUpdateBtn: false,
 			showModalCreate: false,
 			showModalUpdate: false,
-			csrf: {}
+			csrf: {},
+			loading: false
 		};
 	},
 
@@ -28409,12 +28410,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		readAds: function readAds() {
 			var _this = this;
 
+			this.loading = true;
 			axios.get('/read-ads').then(function (response) {
 				_this.ads = response.data.data;
 				_this.showModalCreate = false;
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error occured!');
 			});
+			this.loading = false;
 		},
 		readTypes: function readTypes() {
 			var _this2 = this;
@@ -51607,7 +51610,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "table-responsive"
   }, [_c('table', {
     staticClass: "table "
-  }, [_vm._m(0), _vm._v(" "), _vm._l((_vm.ads), function(ad) {
+  }, [_vm._m(0), _vm._v(" "), (_vm.loading) ? _c('tr', [_vm._m(1)]) : _vm._l((_vm.ads), function(ad) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(ad.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ad.title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.getTypeByTypeId(ad.type) ? _vm.getTypeByTypeId(ad.type).title : ''))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ad.desc))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ad.image))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-warning",
       on: {
@@ -51950,6 +51953,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Description")]), _vm._v(" "), _c('th', [_vm._v("Image")]), _vm._v(" "), _c('th', {
     staticClass: "manage_btns"
   }, [_vm._v("Manage")]), _vm._v(" "), _c('th', [_vm._v("Created at")]), _vm._v(" "), _c('th', [_vm._v("Updated at")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('td', {
+    staticClass: "loading",
+    attrs: {
+      "colspan": "7"
+    }
+  }, [_c('span', [_vm._v("LOADING DATA..")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -62318,7 +62328,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -62326,44 +62335,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			subdata: [],
 			subdataTypes: [],
 			selectedNType: '',
+			brands: [],
 			newSub: { ntype: '', ntype2: '', ntype3: '', title: '' },
 			updatedSub: { id: '', ntype: '', ntype2: '', ntype3: '', title: '' },
 			oldSub: { ntype: '', ntype2: '', ntype3: '', title: '' },
 			showUpdateBtn: false,
 			showModalCreate: false,
 			showModalUpdate: false,
-			csrf: {}
+			csrf: {},
+			loading: false
 		};
 	},
 
 	methods: {
-		readSubdata: function readSubdata() {
+		fillNewSub: function fillNewSub(type) {
+			this.newSub = type;
+		},
+		readBrandsForModel: function readBrandsForModel() {
 			var _this = this;
 
-			axios.get('/readSubData/' + this.selectedNType + '/undefined').then(function (response) {
-				_this.subdata = response.data.data;
-				_this.showModalCreate = false;
+			axios.get('/readSubData/brand/undefined').then(function (response) {
+				_this.brands = response.data.data;
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error occured!');
 			});
 		},
-		readTypes: function readTypes() {
+		readSubdata: function readSubdata() {
 			var _this2 = this;
 
-			axios.get('/read-subdata-types').then(function (response) {
-				_this2.subdataTypes = response.data.data;
+			this.loading = true;
+			axios.get('/readSubData/' + this.selectedNType + '/undefined').then(function (response) {
+				_this2.subdata = response.data.data;
+				_this2.showModalCreate = false;
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error occured!');
 			});
+			this.loading = false;
 		},
-		storeSubdata: function storeSubdata() {
+		readTypes: function readTypes() {
 			var _this3 = this;
 
+			this.loading = true;
+			axios.get('/read-subdata-types').then(function (response) {
+				_this3.subdataTypes = response.data.data.filter(function (sub) {
+					if (sub.ntype != 'ads_type') return sub;
+				});
+			}).catch(function (err) {
+				toastr.error(err.message, 'Error occured!');
+			});
+			this.loading = false;
+		},
+		storeSubdata: function storeSubdata() {
+			var _this4 = this;
+
 			if (this.newSub.ntype != '' && this.newSub.title != '') {
-				axios.post('/subdata', formData).then(function (response) {
+				axios.post('/subdata', this.newSub).then(function (response) {
 					toastr.success(response.data.message);
-					_this3.readSubdata();
-					_this3.newSub = { ntype: '', ntype2: '', ntype3: '', title: '' };
+					_this4.readSubdata();
+					_this4.newSub = { ntype: '', ntype2: '', ntype3: '', title: '' };
 				}).catch(function (err) {
 					toastr.error(err.message, 'Error occured!');
 				});
@@ -62380,41 +62409,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.oldSub.ntype2 = sub.ntype2;
 			this.oldSub.ntype3 = sub.ntype3;
 			this.oldSub.title = sub.title;
+			this.readBrandsForModel();
 		},
-		updateAd: function updateAd() {
-			var _this4 = this;
+		updateSub: function updateSub() {
+			var _this5 = this;
 
 			if (this.showUpdateBtn) {
 
 				axios.patch('/subdata/' + this.updatedSub.id, this.updatedSub).then(function (response) {
-					toastr.success(response.data.message);
-					_this4.updateImages();
 					var i = 0;
-					_this4.subdata.filter(function (sub) {
+					_this5.subdata.filter(function (sub) {
 						// update the DOM
-						if (sub.id == _this4.updatedSub.id) {
-							_this4.subdata[i].ntype = _this4.updatedSub.ntype;
-							_this4.subdata[i].ntype2 = _this4.updatedSub.ntype2;
-							_this4.subdata[i].ntype3 = _this4.updatedSub.ntype3;
-							_this4.subdata[i].title = _this4.updatedSub.title;
-							_this4.updatedSub = { id: '', ntype: '', ntype2: '', ntype3: '', title: '' };
+						if (sub.id == _this5.updatedSub.id) {
+							_this5.subdata[i].ntype = _this5.updatedSub.ntype;
+							_this5.subdata[i].ntype2 = _this5.updatedSub.ntype2;
+							_this5.subdata[i].ntype3 = _this5.updatedSub.ntype3;
+							_this5.subdata[i].title = _this5.updatedSub.title;
 						}
 						i += 1;
 					});
-					_this4.showModalUpdate = false;
-					_this4.updatedSub = { id: '', ntype: '', ntype2: '', ntype3: '', title: '' };
-					_this4.oldSub = { ntype: '', ntype2: '', ntype3: '', title: '' };
+					_this5.showModalUpdate = false;
+					_this5.updatedSub = { id: '', ntype: '', ntype2: '', ntype3: '', title: '' };
+					_this5.oldSub = { ntype: '', ntype2: '', ntype3: '', title: '' };
+					toastr.success(response.data.message);
 				}).catch(function (err) {
 					toastr.error(err.message, 'Error occured!');
 				});
 			}
 		},
 		deleteSubdata: function deleteSubdata(id) {
-			var _this5 = this;
+			var _this6 = this;
 
 			if (confirm("Are you really sure to delete Subdata #" + id)) {
 				axios.delete('/subdata/' + id).then(function (response) {
-					_this5.subdata = _this5.subdata.filter(function (sub) {
+					_this6.subdata = _this6.subdata.filter(function (sub) {
 						if (sub.id != id) return sub;
 					});
 					toastr.success(response.data.message);
@@ -62451,7 +62479,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\nth[data-v-1c032be6] {\n  width: auto;\n}\n.manage_btns[data-v-1c032be6] {\n  width: 150px !important;\n}\n.panel-heading[data-v-1c032be6] {\n  padding: 0px;\n}\n.panel-heading button[data-v-1c032be6] {\n    margin-right: 10px;\n    margin-top: 5px;\n}\nh2[data-v-1c032be6] {\n  line-height: 42px;\n}\n.images[data-v-1c032be6] {\n  position: relative;\n}\n.images .thumbnail[data-v-1c032be6] {\n    position: relative;\n}\n.images .thumbnail img[data-v-1c032be6] {\n      display: block;\n      width: 150px;\n      height: 150px;\n}\n.images .thumbnail:hover + button[data-v-1c032be6] {\n    opacity: 0.8;\n}\n.images button[data-v-1c032be6] {\n    position: absolute;\n    right: 15px;\n    top: 15px;\n    z-index: 999 !important;\n    top: 5px;\n    right: 20px;\n    opacity: 0;\n}\n.images button[data-v-1c032be6]:hover {\n      opacity: 0.6;\n}\n", ""]);
+exports.push([module.i, "\nth[data-v-1c032be6] {\n  width: auto;\n}\ntd.empty[data-v-1c032be6] {\n  text-align: center;\n}\ntd.empty span[data-v-1c032be6] {\n    color: #ccc;\n}\n.manage_btns[data-v-1c032be6] {\n  width: 150px !important;\n}\n.panel-heading[data-v-1c032be6] {\n  padding: 0px;\n}\n.panel-heading button[data-v-1c032be6] {\n    margin-right: 10px;\n    margin-top: 5px;\n}\nh2[data-v-1c032be6] {\n  line-height: 42px;\n}\n.images[data-v-1c032be6] {\n  position: relative;\n}\n.images .thumbnail[data-v-1c032be6] {\n    position: relative;\n}\n.images .thumbnail img[data-v-1c032be6] {\n      display: block;\n      width: 150px;\n      height: 150px;\n}\n.images .thumbnail:hover + button[data-v-1c032be6] {\n    opacity: 0.8;\n}\n.images button[data-v-1c032be6] {\n    position: absolute;\n    right: 15px;\n    top: 15px;\n    z-index: 999 !important;\n    top: 5px;\n    right: 20px;\n    opacity: 0;\n}\n.images button[data-v-1c032be6]:hover {\n      opacity: 0.6;\n}\n", ""]);
 
 /***/ }),
 /* 249 */
@@ -62540,8 +62568,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "table-responsive"
   }, [_c('table', {
     staticClass: "table "
-  }, [_vm._m(0), _vm._v(" "), _vm._l((_vm.subdata), function(sub) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(sub.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(sub.ntype))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(sub.ntype2))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(sub.title))]), _vm._v(" "), _c('td', [_c('button', {
+  }, [_vm._m(0), _vm._v(" "), (_vm.selectedNType == '') ? _c('tr', [_vm._m(1)]) : _vm._e(), _vm._v(" "), (_vm.loading) ? _c('tr', [_vm._m(2)]) : _vm._e(), _vm._v(" "), _vm._l((_vm.subdata), function(sub) {
+    return (_vm.selectedNType != '' && !_vm.loading) ? _c('tr', [_c('td', [_vm._v(_vm._s(sub.id))]), _c('td', [_vm._v(_vm._s(sub.ntype))]), _c('td', [_vm._v(_vm._s(sub.ntype2))]), _c('td', [_vm._v(_vm._s(sub.title))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-warning",
       on: {
         "click": function($event) {
@@ -62565,7 +62593,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "aria-hidden": "true"
       }
-    })])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(sub.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(sub.updated_at))])])
+    })])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(sub.created_at))]), _c('td', [_vm._v(_vm._s(sub.updated_at))])]) : _vm._e()
   })], 2)]), _vm._v(" "), _c('form', {
     attrs: {
       "action": "",
@@ -62586,7 +62614,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "showModalCreate"
     }],
     attrs: {
-      "title": 'Create new' + _vm.newSub.ntype
+      "title": 'Create new ' + _vm.newSub.ntype
     },
     on: {
       "clk-close-modal": function($event) {
@@ -62612,7 +62640,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     on: {
-      "change": function($event) {
+      "change": [function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
@@ -62620,15 +62648,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.newSub.ntype = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
+      }, _vm.readBrandsForModel]
     }
   }, _vm._l((_vm.subdataTypes), function(type, i) {
     return _c('option', {
       domProps: {
-        "value": type.id
+        "value": type.ntype
       }
-    }, [_vm._v(_vm._s(type.title))])
-  }))]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(type.ntype))])
+  }))]), _vm._v(" "), (_vm.newSub.ntype == 'model') ? _c('div', {
     staticClass: "form-group"
   }, [_c('select', {
     directives: [{
@@ -62649,13 +62677,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.newSub.ntype2 = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, _vm._l((_vm.subdataTypes), function(type, i) {
+  }, _vm._l((_vm.brands), function(brand, i) {
     return _c('option', {
       domProps: {
-        "value": type.id
+        "value": brand.title
       }
-    }, [_vm._v(_vm._s(type.title))])
-  }))]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(brand.title))])
+  }))]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('input', {
     directives: [{
@@ -62695,7 +62723,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "submit": function($event) {
         $event.preventDefault();
-        _vm.updateAd($event)
+        _vm.updateSub($event)
       }
     }
   }, [_c('modal', {
@@ -62723,6 +62751,60 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "form-group"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.updatedSub.ntype),
+      expression: "updatedSub.ntype"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.updatedSub.ntype = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.readBrandsForModel]
+    }
+  }, _vm._l((_vm.subdataTypes), function(type, i) {
+    return _c('option', {
+      domProps: {
+        "value": type.ntype
+      }
+    }, [_vm._v(_vm._s(type.ntype))])
+  }))]), _vm._v(" "), (_vm.updatedSub.ntype == 'model') ? _c('div', {
+    staticClass: "form-group"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.updatedSub.ntype2),
+      expression: "updatedSub.ntype2"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.updatedSub.ntype2 = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.brands), function(brand, i) {
+    return _c('option', {
+      domProps: {
+        "value": brand.title
+      }
+    }, [_vm._v(_vm._s(brand.title))])
+  }))]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
   }, [_c('input', {
     directives: [{
       name: "model",
@@ -62744,56 +62826,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.updatedSub.title = $event.target.value
       }
     }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.updatedSub.desc),
-      expression: "updatedSub.desc"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "placeholder": "Description.. "
-    },
-    domProps: {
-      "value": (_vm.updatedSub.desc)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.updatedSub.desc = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.updatedSub.type),
-      expression: "updatedSub.type"
-    }],
-    staticClass: "form-control",
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.updatedSub.type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, _vm._l((_vm.subdataTypes), function(type, i) {
-    return _c('option', {
-      domProps: {
-        "value": type.id
-      }
-    }, [_vm._v(_vm._s(type.title))])
-  }))]), _vm._v(" "), _c('template', {
+  })]), _vm._v(" "), _c('template', {
     slot: "buttons"
   }, [_c('input', {
     directives: [{
@@ -62825,6 +62858,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("NType")]), _vm._v(" "), _c('th', [_vm._v("NType2")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', {
     staticClass: "manage_btns"
   }, [_vm._v("Manage")]), _vm._v(" "), _c('th', [_vm._v("Created at")]), _vm._v(" "), _c('th', [_vm._v("Updated at")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('td', {
+    staticClass: "empty",
+    attrs: {
+      "colspan": "7"
+    }
+  }, [_c('span', [_vm._v("Select Subdata type to show data..")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('td', {
+    staticClass: "loading",
+    attrs: {
+      "colspan": "7"
+    }
+  }, [_c('span', [_vm._v("LOADING DATA..")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

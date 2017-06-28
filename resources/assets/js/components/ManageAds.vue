@@ -19,8 +19,8 @@
 					<th>Created at</th>
 					<th>Updated at</th>
 				</tr>
-
-				<tr v-for="ad in ads">
+				<tr v-if="loading"><td colspan="7" class="loading"><span>LOADING DATA..</span></td></tr>
+				<tr v-for="ad in ads" v-else>
 					<td>{{ad.id}}</td>
 					<td>{{ad.title}}</td>
 					<td>{{getTypeByTypeId(ad.type)?getTypeByTypeId(ad.type).title:''}}</td>
@@ -124,11 +124,13 @@
 				showModalCreate: false,
 				showModalUpdate: false,
 				csrf: {},
+				loading: false,
 			}
 		},
 		methods: {
 			
 			readAds(){
+				this.loading = true
 				axios.get('/read-ads')
 					.then(response => {
 						this.ads = response.data.data
@@ -137,6 +139,7 @@
 					.catch(err => {
 						toastr.error(err.message, 'Error occured!')
 					})
+				this.loading = false
 			},
 
 			readTypes(){

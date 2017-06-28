@@ -3,11 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\SubData;
 
 class SubData extends Model
 {
 	protected $table = 'sub-data';
-	protected $fillable = ['ntypex', 'title'];
+	protected $fillable = ['ntype', 'ntype2', 'ntype3', 'title'];
+
+	public static function updateSubdata($request, $sub)
+	{
+		$sub->fill($request->all());
+		$sub->save();
+		return true;
+	}
 
 // ============= SCOPEs ============= 
 	
