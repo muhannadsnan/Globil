@@ -19,6 +19,10 @@
 <?php } ?>
 
 window.csrf = { value: "{{ csrf_token() }}" }
+
+$(document).ready(function(){
+       $('[data-toggle="tooltip"]').tooltip();
+    });
 </script>
 
 @yield('scripts')

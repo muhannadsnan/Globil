@@ -4,17 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Car;
 use App\Picture;
-use Illuminate\Http\Request;
 use File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
 
 class CarsController extends Controller
 {
 
 	public function __construct()
 	{
-		$this->middleware('auth')->except(['show']);	
+		$this->middleware('auth')->except(['show']);	  View::addExtension('html', 'php');
 	}
 
 	public function store(Request $request)

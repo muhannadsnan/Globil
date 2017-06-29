@@ -27,6 +27,22 @@ class Car extends Model
 		return $query->get(); // dd($res);	 
 	}
 
+	public function scopeBrandSubdata($query)
+	{
+		return SubData::where('id', $this->brand)->get(['title'])[0]->title;
+	}
+
+	public function scopeModelSubdata($query)
+	{
+		return SubData::where('id', $this->model)->get(['title'])[0]->title;
+	}
+
+	public function scopeFuelSubdata($query)
+	{
+		$fuel = $query->get(['fuel_type_bensin', 'fuel_type_diesel', 'fuel_type_electric'])[0];
+		return $fuel;
+	}
+
 // ============= RELATIONSHIPs =============
 
 	public function user()

@@ -26990,7 +26990,8 @@ var app = new Vue({
 		// CREATE POST
 		brand: '',
 		models: '',
-		loadingModel: false
+		loadingModel: false,
+		showModal: false
 	},
 
 	methods: {
@@ -52042,7 +52043,10 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "modal is-active"
+    staticClass: "modal is-active",
+    staticStyle: {
+      "z-index": "9999"
+    }
   }, [_c('div', {
     staticClass: "modal-background",
     on: {

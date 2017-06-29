@@ -11,10 +11,6 @@
 				<strong>{{ $car->sub($car->model) }}</strong> <br/>
 				<span>year: {{ $car->year }}</span>
 			</p>
-			
-<!-- 			<small class="desc">
-				{{ substr($car->desc, 0, 100) }} {{ strlen($car->desc) > 100 ? '...' : '' }}
-			</small> -->
 
 			<div class="foot">
 			

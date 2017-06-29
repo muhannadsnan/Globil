@@ -1,5 +1,5 @@
 <template>
-  <div class="modal is-active">
+  <div class="modal is-active" style="z-index: 9999">
 
     <div class="modal-background" @click="$emit('clk-close-modal')"></div>
 
@@ -19,7 +19,7 @@
           </slot>
       </footer>
     </div>
-</div>
+  </div>
 </template>
 
 

@@ -15,6 +15,7 @@ const app = new Vue({
 		brand: '',
 		models: '',
 		loadingModel: false,
+		showModal: false,
 	},
 
 	methods: {
