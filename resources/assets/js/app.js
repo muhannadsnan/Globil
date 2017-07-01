@@ -58,10 +58,6 @@ const app = new Vue({
          this.searchTyping = false;
 		}, //<<
 
-		searchResultsReady(ResultsFromSearchFilterComponent){
-			this.searchResult = ResultsFromSearchFilterComponent;
-		},
-
 		searchKeyEnter(){
 			if(this.searchKeyword != ''){
 				this.loadingPage = true;
@@ -69,17 +65,16 @@ const app = new Vue({
 			}
 		}, //<<
 
+		searchResultsReady(ResultsFromSearchFilterComponent){
+			this.searchResult = ResultsFromSearchFilterComponent;
+		},
+
 		convClicked(messages){
 			this.$emit('conv-clicked', messages)
 		},
-
-		// toSendMessage(e){
-		// 	this.$emit('to-send-message', msg)
-		// },
 	},
 
 	mounted(){
-
 	},
 
 	watch:{

@@ -22,7 +22,7 @@
 		data(){
 			return {
 				searchFilters: {},
-				
+				cars: [],
 				showSaveButton: false,
 				showModalSaveSearch: false,
 			}
@@ -70,6 +70,21 @@
 					this.searchFilters.areas = childData.CheckedAreas
 
 				this.showSaveButton = true
+
+				this.readCars()
+
+				//console.log(this.cars)
+			},
+
+			readCars(){
+				axios.post('/search/results', this.searchFilters)
+						.then(response => {
+							this.cars = response.data.data
+							this.$emit('results-ready', this.cars)
+						})
+						.catch(err => {
+							toastr.error(err.message, 'Error was occured!')
+						})	
 			},
 		},
 
@@ -90,7 +105,8 @@
 
 			searchFilters: {
 		   	handler: function (val, oldVal) { 
-		   		console.log(val)
+		   		console.log('searchFilters')
+		   		console.log(this.searchFilters)
 		   	},
 		   	deep: true
 		   },

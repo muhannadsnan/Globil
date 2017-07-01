@@ -27036,9 +27036,6 @@ var app = new Vue({
 		},
 		//<<
 
-		searchResultsReady: function searchResultsReady(ResultsFromSearchFilterComponent) {
-			this.searchResult = ResultsFromSearchFilterComponent;
-		},
 		searchKeyEnter: function searchKeyEnter() {
 			if (this.searchKeyword != '') {
 				this.loadingPage = true;
@@ -27047,6 +27044,9 @@ var app = new Vue({
 		},
 		//<<
 
+		searchResultsReady: function searchResultsReady(ResultsFromSearchFilterComponent) {
+			this.searchResult = ResultsFromSearchFilterComponent;
+		},
 		convClicked: function convClicked(messages) {
 			this.$emit('conv-clicked', messages);
 		}
@@ -28868,8 +28868,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					}
 					return car;
 				});
-				this.sendAllFiltersToParent();
 			}
+			this.sendAllFiltersToParent();
 		},
 		sendAllFiltersToParent: function sendAllFiltersToParent() {
 			this.$parent.$emit('brand-model-changed', { CheckedCars: this.allChecked });
@@ -29003,7 +29003,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			searchFilters: {},
-
+			cars: [],
 			showSaveButton: false,
 			showModalSaveSearch: false
 		};
@@ -29039,6 +29039,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			if (childData.CheckedAreas) this.searchFilters.areas = childData.CheckedAreas;
 
 			this.showSaveButton = true;
+
+			this.readCars();
+
+			//console.log(this.cars)
+		},
+		readCars: function readCars() {
+			var _this2 = this;
+
+			axios.post('/search/results', this.searchFilters).then(function (response) {
+				_this2.cars = response.data.data;
+				_this2.$emit('results-ready', _this2.cars);
+			}).catch(function (err) {
+				toastr.error(err.message, 'Error was occured!');
+			});
 		}
 	},
 
@@ -29060,7 +29074,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 		searchFilters: {
 			handler: function handler(val, oldVal) {
-				console.log(val);
+				console.log('searchFilters');
+				console.log(this.searchFilters);
 			},
 			deep: true
 		}

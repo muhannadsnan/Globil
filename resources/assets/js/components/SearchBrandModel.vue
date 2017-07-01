@@ -79,8 +79,8 @@
 						}
 						return car
 					})
-					this.sendAllFiltersToParent()
 				}
+				this.sendAllFiltersToParent()
 			},
 
 			sendAllFiltersToParent(){

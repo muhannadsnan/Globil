@@ -36,9 +36,10 @@ Route::delete('/images-for-ad/{pic}', 'PicturesController@destroyPicByAd');
 Route::get('/search/general/{keyword}', 'SearchController@searchGeneral');
 // Route::get('/search/filter/brand/{brandId}', 'SearchController@readCarsByBrandId');
 // Route::post('/search/filter/model', 'SearchController@readCarsByModelIds'); // array of IDs
-Route::post('/search/filter/checkedBrands/', 'SearchController@readCheckedBrands');
-Route::post('/search/filter/checkedModels/', 'SearchController@readCheckedModels');
-Route::post('/search/filter/price-range', 'SearchController@readCarsInPriceRange');
+// Route::post('/search/filter/checkedBrands/', 'SearchController@readCheckedBrands');
+// Route::post('/search/filter/checkedModels/', 'SearchController@readCheckedModels');
+// Route::post('/search/filter/price-range', 'SearchController@readCarsInPriceRange');
+Route::post('/search/results', 'SearchController@readResults');
 
 Route::post('/saved-search', 'SavedSearchController@store');
 

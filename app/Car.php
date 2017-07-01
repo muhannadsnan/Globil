@@ -43,6 +43,33 @@ class Car extends Model
 		return $fuel;
 	}
 
+	public function scopeSearchResult($query, $request)
+	{
+		// BRAND, MODEL
+		if(count($request->brand_model)){
+			foreach ($request->brand_model as $brand) {
+				$query->orWhere('brand', $brand[0]); //echo $brand[0];
+				if(count($brand[1])){
+					$query->whereIn('model', $brand[1]); //echo $model;
+				}
+			}
+		}
+
+		//PRICE
+/*		if($request->priceRange[0] == 0 && $request->priceRange[1] > 0){
+			$query->where('price', '<=', $request->priceRange[1]);
+		}
+		elseif($request->priceRange[0] > 0 && $request->priceRange[1] == 0){
+			$query->where('price', '>', $request->priceRange[0]);
+		}
+		elseif($request->priceRange[0] > 0 && $request->priceRange[0] > 0){
+			$query->whereBetween('price', $request->priceRange);
+		}*/
+
+		$query->orderBy('brand', 'desc')->with('pictures'); //dd($res);
+		return $query->get();
+	}
+
 // ============= RELATIONSHIPs =============
 
 	public function user()

@@ -12,7 +12,7 @@
 
 		<div class="panel-info">
 
-			<search-filters @search-results-ready="searchResultsReady" v-cloak>
+			<search-filters @results-ready="searchResultsReady">
 				<!-- <search-text></search-text> -->
 				<search-brand-model></search-brand-model>
 				<search-price></search-price>

@@ -29,18 +29,18 @@ class SearchController extends Controller
 	public function fillCardData($res) // returns array contains cards data
 	{
 		$car_subdata = [];
-		foreach ($res as $key => $val) {
+		foreach ($res as $key => $val) { //dd($key);
 			$car_subdata[$key] = [
 				'pic_file_name' => asset('storage/images').'/'.$val->pictures[0]->id . '.' . $val->pictures[0]->ext,
-				'brand' => $val->sub($val->brand),
-				'model' => $val->sub($val->model),
+				'brand' => $val->brandSubdata($val->brand),
+				'model' => $val->modelSubdata($val->model),
 				'year' => $val->year,
 				'price' => $val->price,
 			];
 		}
 		return $car_subdata;
 	}
-
+/*
 	public function readCheckedBrands(Request $request)
 	{
 		if( !$res = Car::whereIn('brand', $request->all())->orderBy('brand')->orderBy('model')->get() )
@@ -66,5 +66,14 @@ class SearchController extends Controller
 		
 		$data = $this->fillCardData($res);
 		return ['ok' => 1, 'message' => "Search data is loaded successfully!", 'data' => $data];
+	}*/
+
+	public function readResults(Request $request)
+	{
+		if( !$res = Car::searchResult($request))
+			return ['ok' => 0, 'message' => "Error while loading search result!"];
+
+		$res = $this->fillCardData($res);
+		return ['ok' => 1, 'message' => "Search result is loaded successfully!", 'data' => $res];
 	}
 }
