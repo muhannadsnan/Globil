@@ -11,7 +11,7 @@
 
         </select>
         <!-- selected id : {{selectedOPT}} -->
-        <span v-else>{{ loadingmsg }}</span> 
+        <span class="loading" v-else>{{ loadingmsg }}</span> 
     </div>
 </template>
 
@@ -98,3 +98,11 @@
         }
     }
 </script>
+
+<style lang="sass" scoped>
+.input-group-addon
+    font-weight: bold
+.loading
+    color: #aaa
+    font-size: 9pt
+</style>

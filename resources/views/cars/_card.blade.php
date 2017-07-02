@@ -14,7 +14,7 @@
 
 			<div class="foot">
 			
-				<a href="/cars/{{$car->id}}" class="btn btn-info" target="_blank">More</a>
+				<a href="/cars/{{$car->id}}" class="btn btn-info" target="_blank">Show</a>
 
 				@include('wishlists.wishListButton')
 

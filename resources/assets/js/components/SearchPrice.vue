@@ -40,7 +40,14 @@
 		},
 
 		watch:{
-
+			minPrice(val){
+				if(val == '' || val < 0)
+					this.minPrice = 0
+			},
+			maxPrice(val){
+				if(val == '' || val < 0)
+					this.maxPrice = 0
+			},
 		}
 	}
 </script>

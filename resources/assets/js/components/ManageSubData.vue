@@ -49,7 +49,7 @@
 				<input type="hidden" name="_token" :value="csrf">
 
 				<div class="form-group">
-					<select @change="readBrandsForModel" v-model="newSub.ntype" class="form-control">
+					<select @change="readBrandsForModel(); readAreaForCity()" v-model="newSub.ntype" class="form-control">
 						<option v-for="(type, i) in subdataTypes" :value="type.ntype">{{type.ntype}}</option>
 					</select>
 				</div>
@@ -59,6 +59,13 @@
 						<option v-for="(brand, i) in brands" :value="brand.title">{{brand.title}}</option>
 					</select>
 				</div>
+
+				<div class="form-group" v-if="newSub.ntype == 'city'">
+					<select v-model="newSub.ntype2" class="form-control">
+						<option v-for="(area, i) in areas" :value="area.title">{{area.title}}</option>
+					</select>
+				</div>
+
 
 				<div class="form-group">
 					<input type="text" v-model="newSub.title" placeholder="Title.." class="form-control">
@@ -108,6 +115,7 @@
 				subdataTypes: [],
 				selectedNType: '',
 				brands: [],
+				areas: [],
 				newSub: {ntype: '', ntype2: '', ntype3: '', title: ''}, 
 				updatedSub: {id: '', ntype: '', ntype2: '', ntype3: '', title: ''},
 				oldSub: {ntype: '', ntype2: '', ntype3: '', title: ''},
@@ -127,6 +135,16 @@
 				axios.get('/readSubData/brand/undefined')
 					.then(response => {
 						this.brands = response.data.data
+					})
+					.catch(err => {
+						toastr.error(err.message, 'Error occured!')
+					})
+			},
+
+			readAreaForCity(){
+				axios.get('/readSubData/area/undefined')
+					.then(response => {
+						this.areas = response.data.data
 					})
 					.catch(err => {
 						toastr.error(err.message, 'Error occured!')
@@ -187,6 +205,7 @@
 				this.oldSub.ntype3 = sub.ntype3
 				this.oldSub.title = sub.title
 				this.readBrandsForModel();
+				this.readAreaForCity();
 			},
 
 			updateSub(){

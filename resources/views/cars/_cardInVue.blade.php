@@ -1,6 +1,6 @@
 
 
-<div class="col-sm-6 col-md-4 car-card"  v-for="car in searchResult"  v-cloak>
+<div class="col-xs-6 col-sm-4 col-md-3  car-card"  v-for="car in searchResult"  v-cloak>
 	<div class="thumbnail panel-info">
 
 		<img :src="car.pic_file_name" alt="...">

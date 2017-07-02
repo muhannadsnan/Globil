@@ -36,9 +36,9 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('select').val(function(){
-				return $(this).data('old')
-			});
+			// $('select').val(function(){
+			// 	return $(this).data('old')
+			// });
 
 			//updateRangeLabel();
 		});	

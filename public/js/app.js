@@ -29279,7 +29279,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 
-	watch: {}
+	watch: {
+		minKM: function minKM(val) {
+			if (val == '' || val < 0) this.minKM = 0;
+		},
+		maxKM: function maxKM(val) {
+			if (val == '' || val < 0) this.maxKM = 0;
+		}
+	}
 });
 
 /***/ }),
@@ -29331,7 +29338,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 
-	watch: {}
+	watch: {
+		minPrice: function minPrice(val) {
+			if (val == '' || val < 0) this.minPrice = 0;
+		},
+		maxPrice: function maxPrice(val) {
+			if (val == '' || val < 0) this.maxPrice = 0;
+		}
+	}
 });
 
 /***/ }),
@@ -50795,13 +50809,17 @@ module.exports = Component.exports
 /* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(253)
+
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(167),
   /* template */
   __webpack_require__(208),
   /* scopeId */
-  null,
+  "data-v-11b0c627",
   /* cssModules */
   null
 )
@@ -51062,7 +51080,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": sub.id
       }
     }, [_vm._v(_vm._s(sub.title))])
-  })], 2) : _c('span', [_vm._v(_vm._s(_vm.loadingmsg))])])
+  })], 2) : _c('span', {
+    staticClass: "loading"
+  }, [_vm._v(_vm._s(_vm.loadingmsg))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -51134,7 +51154,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-control",
     attrs: {
       "type": "number",
-      "step": "1"
+      "step": "100"
     },
     domProps: {
       "value": (_vm.minKM)
@@ -51159,7 +51179,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-control",
     attrs: {
       "type": "number",
-      "step": "1"
+      "step": "100"
     },
     domProps: {
       "value": (_vm.maxKM)
@@ -62347,6 +62367,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -62355,6 +62382,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			subdataTypes: [],
 			selectedNType: '',
 			brands: [],
+			areas: [],
 			newSub: { ntype: '', ntype2: '', ntype3: '', title: '' },
 			updatedSub: { id: '', ntype: '', ntype2: '', ntype3: '', title: '' },
 			oldSub: { ntype: '', ntype2: '', ntype3: '', title: '' },
@@ -62379,24 +62407,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				toastr.error(err.message, 'Error occured!');
 			});
 		},
-		readSubdata: function readSubdata() {
+		readAreaForCity: function readAreaForCity() {
 			var _this2 = this;
+
+			axios.get('/readSubData/area/undefined').then(function (response) {
+				_this2.areas = response.data.data;
+			}).catch(function (err) {
+				toastr.error(err.message, 'Error occured!');
+			});
+		},
+		readSubdata: function readSubdata() {
+			var _this3 = this;
 
 			this.loading = true;
 			axios.get('/readSubData/' + this.selectedNType + '/undefined').then(function (response) {
-				_this2.subdata = response.data.data;
-				_this2.showModalCreate = false;
+				_this3.subdata = response.data.data;
+				_this3.showModalCreate = false;
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error occured!');
 			});
 			this.loading = false;
 		},
 		readTypes: function readTypes() {
-			var _this3 = this;
+			var _this4 = this;
 
 			this.loading = true;
 			axios.get('/read-subdata-types').then(function (response) {
-				_this3.subdataTypes = response.data.data.filter(function (sub) {
+				_this4.subdataTypes = response.data.data.filter(function (sub) {
 					if (sub.ntype != 'ads_type') return sub;
 				});
 			}).catch(function (err) {
@@ -62405,13 +62442,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.loading = false;
 		},
 		storeSubdata: function storeSubdata() {
-			var _this4 = this;
+			var _this5 = this;
 
 			if (this.newSub.ntype != '' && this.newSub.title != '') {
 				axios.post('/subdata', this.newSub).then(function (response) {
 					toastr.success(response.data.message);
-					_this4.readSubdata();
-					_this4.newSub = { ntype: '', ntype2: '', ntype3: '', title: '' };
+					_this5.readSubdata();
+					_this5.newSub = { ntype: '', ntype2: '', ntype3: '', title: '' };
 				}).catch(function (err) {
 					toastr.error(err.message, 'Error occured!');
 				});
@@ -62429,27 +62466,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.oldSub.ntype3 = sub.ntype3;
 			this.oldSub.title = sub.title;
 			this.readBrandsForModel();
+			this.readAreaForCity();
 		},
 		updateSub: function updateSub() {
-			var _this5 = this;
+			var _this6 = this;
 
 			if (this.showUpdateBtn) {
 
 				axios.patch('/subdata/' + this.updatedSub.id, this.updatedSub).then(function (response) {
 					var i = 0;
-					_this5.subdata.filter(function (sub) {
+					_this6.subdata.filter(function (sub) {
 						// update the DOM
-						if (sub.id == _this5.updatedSub.id) {
-							_this5.subdata[i].ntype = _this5.updatedSub.ntype;
-							_this5.subdata[i].ntype2 = _this5.updatedSub.ntype2;
-							_this5.subdata[i].ntype3 = _this5.updatedSub.ntype3;
-							_this5.subdata[i].title = _this5.updatedSub.title;
+						if (sub.id == _this6.updatedSub.id) {
+							_this6.subdata[i].ntype = _this6.updatedSub.ntype;
+							_this6.subdata[i].ntype2 = _this6.updatedSub.ntype2;
+							_this6.subdata[i].ntype3 = _this6.updatedSub.ntype3;
+							_this6.subdata[i].title = _this6.updatedSub.title;
 						}
 						i += 1;
 					});
-					_this5.showModalUpdate = false;
-					_this5.updatedSub = { id: '', ntype: '', ntype2: '', ntype3: '', title: '' };
-					_this5.oldSub = { ntype: '', ntype2: '', ntype3: '', title: '' };
+					_this6.showModalUpdate = false;
+					_this6.updatedSub = { id: '', ntype: '', ntype2: '', ntype3: '', title: '' };
+					_this6.oldSub = { ntype: '', ntype2: '', ntype3: '', title: '' };
 					toastr.success(response.data.message);
 				}).catch(function (err) {
 					toastr.error(err.message, 'Error occured!');
@@ -62457,11 +62495,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			}
 		},
 		deleteSubdata: function deleteSubdata(id) {
-			var _this6 = this;
+			var _this7 = this;
 
 			if (confirm("Are you really sure to delete Subdata #" + id)) {
 				axios.delete('/subdata/' + id).then(function (response) {
-					_this6.subdata = _this6.subdata.filter(function (sub) {
+					_this7.subdata = _this7.subdata.filter(function (sub) {
 						if (sub.id != id) return sub;
 					});
 					toastr.success(response.data.message);
@@ -62667,7 +62705,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.newSub.ntype = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }, _vm.readBrandsForModel]
+      }, function($event) {
+        _vm.readBrandsForModel();
+        _vm.readAreaForCity()
+      }]
     }
   }, _vm._l((_vm.subdataTypes), function(type, i) {
     return _c('option', {
@@ -62702,6 +62743,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": brand.title
       }
     }, [_vm._v(_vm._s(brand.title))])
+  }))]) : _vm._e(), _vm._v(" "), (_vm.newSub.ntype == 'city') ? _c('div', {
+    staticClass: "form-group"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newSub.ntype2),
+      expression: "newSub.ntype2"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.newSub.ntype2 = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.areas), function(area, i) {
+    return _c('option', {
+      domProps: {
+        "value": area.title
+      }
+    }, [_vm._v(_vm._s(area.title))])
   }))]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('input', {
@@ -62918,6 +62986,39 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1c032be6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ManageSubData.vue", function() {
      var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1c032be6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ManageSubData.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+exports.push([module.i, "\n.input-group-addon[data-v-11b0c627] {\n  font-weight: bold;\n}\n.loading[data-v-11b0c627] {\n  color: #aaa;\n  font-size: 9pt;\n}\n", ""]);
+
+/***/ }),
+/* 253 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(252);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("7fe2102d", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-11b0c627\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SubDataSelect.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-11b0c627\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SubDataSelect.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

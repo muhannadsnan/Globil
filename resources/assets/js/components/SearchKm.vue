@@ -2,9 +2,9 @@
 	<div class="search-km">
 		<label>Kilometer driven:</label>
 		<div class="">
-			<input type="number" v-model="minKM" @change="sendDataToParent" step="1" class="form-control">
+			<input type="number" v-model="minKM" @change="sendDataToParent" step="100" class="form-control">
 			<span>til</span>
-			<input type="number" v-model="maxKM" @change="sendDataToParent" step="1" class="form-control">
+			<input type="number" v-model="maxKM" @change="sendDataToParent" step="100" class="form-control">
 		</div>
 		<hr>
 	</div> 
@@ -40,7 +40,14 @@
 		},
 
 		watch:{
-
+			minKM(val){
+				if(val == '' || val < 0)
+					this.minKM = 0
+			},
+			maxKM(val){
+				if(val == '' || val < 0)
+					this.maxKM = 0
+			},
 		}
 	}
 </script>
