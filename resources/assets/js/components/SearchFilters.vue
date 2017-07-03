@@ -70,7 +70,7 @@
 					this.searchFilters.areas = childData.CheckedAreas
 
 				this.showSaveButton = true
-				this.$emit('results-ready', {filters: this.searchFilters})
+				this.$emit('results-ready', {filters: this.cleanFilters()})
 				//this.readCars()
 			},
 
@@ -83,6 +83,33 @@
 						.catch(err => {
 							toastr.error(err.message, 'Error was occured!')
 						})
+			},
+
+			cleanFilters(){
+				if(this.searchFilters != {}){
+					var res = this.searchFilters
+					if(res.car_types){
+						res.car_types = res.car_types.filter(ct => {
+							return ct != 0
+						})
+					}
+					if(res.wheel_drives){
+						res.wheel_drives = res.wheel_drives.filter(wd => {
+							return wd != 0
+						})
+					}
+					if(res.gears){
+						res.gears = res.gears.filter(gr => {
+							return gr != 0
+						})
+					}
+					if(res.fuel_types){
+						res.fuel_types = res.fuel_types.filter(ft => {
+							return ft != 0
+						})
+					}
+					return res
+				}
 			},
 		},
 		mounted() {

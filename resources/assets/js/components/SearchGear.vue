@@ -2,7 +2,7 @@
 	<div class="search-gear">
 		<label>Gear:</label>
 		<div v-for="(gear, i) in gears" class=" text-left">
-			<input type="checkbox"
+			<input type="checkbox" :true-value="1" :false-value="0"
 				:value="gear.id" @change="onCHange($event.target.checked, i, gear)">
 			<span>{{gear.title}}</span> 	
 		</div>		
@@ -20,6 +20,17 @@
 			}
 		},
 
+		computed: {
+			allFalseChecked(){
+				var res = true
+				this.checked.forEach(c => {
+					if(c != 0)
+						res = false
+				})
+				return res
+			},
+		},
+
 		methods: {
 
 			onCHange(check, i, wheelDrive){ 
@@ -28,8 +39,8 @@
 					Vue.set(this.$root.$data.isActiveAll, 6, true)
 				}
 				else{
-					this.$set(this.checked, i, false)
-					if(this.checked.length == 0)
+					this.$set(this.checked, i, 0)
+					if(this.checked.length == 0 || this.allFalseChecked)
 						Vue.set(this.$root.$data.isActiveAll, 6, false)
 				}
 
@@ -67,7 +78,7 @@
 		watch:{
 			gears(val){
 				this.gears.filter(c => {
-					this.checked.push(false)
+					this.checked.push(0)
 				})
 			}
 		}

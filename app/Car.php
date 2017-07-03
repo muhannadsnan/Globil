@@ -56,9 +56,37 @@ class Car extends Model
 				}
 			}
 		}
+// dd($query->get());
+		//YEAR
+		if(isset($request->years) && count(@$request->years) > 0){
+			$query->whereIn('year', $request->years);
+			//dd($request, $request->years, $query->get());
+		}
+
+		//CAR_TYPES
+		if(isset($request->car_types) && count(@$request->car_types) > 0){
+			$query->whereIn('car_type', $request->car_types);
+			// dd($request->car_types, $query->get());
+		}
+
+		//WHEEL_DRIVES
+		if(isset($request->wheel_drives) && count(@$request->wheel_drives) > 0){
+			$query->whereIn('wheel_drive', $request->wheel_drives);
+		}
+
+		//FUEL_TYPES
+		if(isset($request->fuel_types) && count(@$request->fuel_types) > 0){
+			$query->whereIn('fuel_type', $request->fuel_types);
+		}
+
+		//GEAR
+		if(isset($request->gears) && count(@$request->gears) > 0){
+			$query->whereIn('gear', $request->gears);
+		}
+
 		//PRICE [1000,2000]
-		if(isset($request->priceRange)){
-			if((@$request->priceRange[0] == 0 || @$request->priceRange[0] == "0" )&& @$request->priceRange[1] > 0){
+		if( @$request->priceRange !== null ){
+			if((@$request->priceRange[0] == 0 || @$request->priceRange[0] == "0") && @$request->priceRange[1] > 0){
 				$query->where('price', '<=', $request->priceRange[1]);
 			}
 			elseif(@$request->priceRange[0] > 0 && (@$request->priceRange[1] == 0 || @$request->priceRange[1] == "0")){
@@ -66,31 +94,6 @@ class Car extends Model
 			}
 			elseif(@$request->priceRange[0] > 0 && @$request->priceRange[1] > 0 || @$request->priceRange[0] != "0" && @$request->priceRange[1] != "0"){
 				$query->whereBetween('price', $request->priceRange);
-			}
-		}
-
-		//YEAR
-		if(isset($request->years)){
-			if(count(@$request->years)){
-				$query->whereIn('year', $request->years);
-			}
-		}
-
-		//CAR_TYPES
-		if(count(@$request->car_types)){
-			foreach ($request->car_types as $key => $value) {
-				if($value){
-					$query->Where('car_type', $value);
-				}
-			}
-		}
-
-		//WHEEL_DRIVES
-		if(count(@$request->wheel_drives)){
-			foreach ($request->wheel_drives as $key => $value) {
-				if($value){
-					$query->Where('wheel_drive', $value);
-				}
 			}
 		}
 
@@ -104,24 +107,6 @@ class Car extends Model
 			}
 			elseif(@$request->kmRange[0] > 0 && @$request->kmRange[1] > 0 || @$request->kmRange[0] != "0" && @$request->kmRange[1] != "0"){
 				$query->whereBetween('kilometer', @$request->kmRange);
-			}
-		}
-
-		//FUEL_TYPES
-		if(count(@$request->fuel_types)){
-			foreach ($request->fuel_types as $key => $value) {
-				if($value){
-					$query->Where('fuel_type', $value);
-				}
-			}
-		}
-
-		//GEAR
-		if(count(@$request->gears)){
-			foreach ($request->gears as $key => $value) {
-				if($value){
-					$query->orWhere('gear', $value);
-				}
 			}
 		}
 

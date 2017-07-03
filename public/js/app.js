@@ -26984,7 +26984,7 @@ var app = new Vue({
 		searchFilters: [],
 		paginator: { current_page: 1, per_page: 2 },
 		moreResults: 2,
-		isActiveAll: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // area, city, brand, model, carType, FuelType, gear, minKm, maxKm, minPrice, maxPrice, wheelDrive, year
+		isActiveAll: [false, false, false, false, false, false, false, false, false, false, false, false, false], // area, city, brand, model, carType, FuelType, gear, minKm, maxKm, minPrice, maxPrice, wheelDrive, year
 		// HOME PAGE SEARCH
 		searchKeyword: '',
 		searchTyping: false,
@@ -29291,6 +29291,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 
+	computed: {
+		allFalseChecked: function allFalseChecked() {
+			var res = true;
+			this.checked.forEach(function (c) {
+				if (c != 0) res = false;
+			});
+			return res;
+		}
+	},
 	methods: {
 		onCHange: function onCHange(check, i, carType) {
 			//console.log(carType); console.log(check)
@@ -29298,8 +29307,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.$set(this.checked, i, carType.id);
 				Vue.set(this.$root.$data.isActiveAll, 4, true);
 			} else {
-				this.$set(this.checked, i, false);
-				if (this.checked.length == 0) Vue.set(this.$root.$data.isActiveAll, 4, false);
+				this.$set(this.checked, i, 0);
+				if (this.checked.length == 0 || this.allFalseChecked) Vue.set(this.$root.$data.isActiveAll, 4, false);
 			}
 
 			this.sendDataToParent();
@@ -29337,7 +29346,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this2 = this;
 
 			this.carTypes.filter(function (c) {
-				_this2.checked.push(false);
+				_this2.checked.push(0);
 			});
 		}
 	}
@@ -29411,7 +29420,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			if (childData.CheckedAreas) this.searchFilters.areas = childData.CheckedAreas;
 
 			this.showSaveButton = true;
-			this.$emit('results-ready', { filters: this.searchFilters });
+			this.$emit('results-ready', { filters: this.cleanFilters() });
 			//this.readCars()
 		},
 		readCars: function readCars() {
@@ -29423,6 +29432,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error was occured!');
 			});
+		},
+		cleanFilters: function cleanFilters() {
+			if (this.searchFilters != {}) {
+				var res = this.searchFilters;
+				if (res.car_types) {
+					res.car_types = res.car_types.filter(function (ct) {
+						return ct != 0;
+					});
+				}
+				if (res.wheel_drives) {
+					res.wheel_drives = res.wheel_drives.filter(function (wd) {
+						return wd != 0;
+					});
+				}
+				if (res.gears) {
+					res.gears = res.gears.filter(function (gr) {
+						return gr != 0;
+					});
+				}
+				if (res.fuel_types) {
+					res.fuel_types = res.fuel_types.filter(function (ft) {
+						return ft != 0;
+					});
+				}
+				return res;
+			}
 		}
 	},
 	mounted: function mounted() {
@@ -29470,14 +29505,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 
+	computed: {
+		allFalseChecked: function allFalseChecked() {
+			var res = true;
+			this.checked.forEach(function (c) {
+				if (c != 0) res = false;
+			});
+			return res;
+		}
+	},
+
 	methods: {
 		onCHange: function onCHange(check, i, fType) {
 			if (check) {
 				this.$set(this.checked, i, fType.id);
 				Vue.set(this.$root.$data.isActiveAll, 5, true);
 			} else {
-				this.$set(this.checked, i, false);
-				if (this.checked.length == 0) Vue.set(this.$root.$data.isActiveAll, 5, false);
+				this.$set(this.checked, i, 0);
+				if (this.checked.length == 0 || this.allFalseChecked) Vue.set(this.$root.$data.isActiveAll, 5, false);
 			}
 
 			this.sendDataToParent();
@@ -29515,7 +29560,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this2 = this;
 
 			this.fuelTypes.filter(function (c) {
-				_this2.checked.push(false);
+				_this2.checked.push(0);
 			});
 		}
 	}
@@ -29550,14 +29595,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 
+	computed: {
+		allFalseChecked: function allFalseChecked() {
+			var res = true;
+			this.checked.forEach(function (c) {
+				if (c != 0) res = false;
+			});
+			return res;
+		}
+	},
+
 	methods: {
 		onCHange: function onCHange(check, i, wheelDrive) {
 			if (check) {
 				this.$set(this.checked, i, wheelDrive.id);
 				Vue.set(this.$root.$data.isActiveAll, 6, true);
 			} else {
-				this.$set(this.checked, i, false);
-				if (this.checked.length == 0) Vue.set(this.$root.$data.isActiveAll, 6, false);
+				this.$set(this.checked, i, 0);
+				if (this.checked.length == 0 || this.allFalseChecked) Vue.set(this.$root.$data.isActiveAll, 6, false);
 			}
 
 			this.sendDataToParent();
@@ -29595,7 +29650,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this2 = this;
 
 			this.gears.filter(function (c) {
-				_this2.checked.push(false);
+				_this2.checked.push(0);
 			});
 		}
 	}
@@ -29750,14 +29805,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 
+	computed: {
+		allFalseChecked: function allFalseChecked() {
+			var res = true;
+			this.checked.forEach(function (c) {
+				if (c != 0) res = false;
+			});
+			return res;
+		}
+	},
+
 	methods: {
 		onCHange: function onCHange(check, i, wheelDrive) {
 			if (check) {
 				this.$set(this.checked, i, wheelDrive.id);
 				Vue.set(this.$root.$data.isActiveAll, 11, true);
 			} else {
-				this.$set(this.checked, i, false);
-				if (this.checked.length == 0) Vue.set(this.$root.$data.isActiveAll, 11, false);
+				this.$set(this.checked, i, 0);
+				if (this.checked.length == 0 || this.allFalseChecked) Vue.set(this.$root.$data.isActiveAll, 11, false);
 			}
 
 			this.sendDataToParent();
@@ -29795,7 +29860,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this2 = this;
 
 			this.wheelDrives.filter(function (c) {
-				_this2.checked.push(false);
+				_this2.checked.push(0);
 			});
 		}
 	}
@@ -29851,7 +29916,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 
-	watch: {}
+	watch: {
+		years: function years(val, old) {
+			if (val.length > 0) {
+				Vue.set(this.$root.$data.isActiveAll, 12, true);
+			} else {
+				Vue.set(this.$root.$data.isActiveAll, 12, false);
+			}
+		}
+	}
 });
 
 /***/ }),
@@ -52318,7 +52391,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: " text-left"
     }, [_c('input', {
       attrs: {
-        "type": "checkbox"
+        "type": "checkbox",
+        "true-value": 1,
+        "false-value": 0
       },
       domProps: {
         "value": wheelDrive.id
@@ -53025,7 +53100,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: " text-left"
     }, [_c('input', {
       attrs: {
-        "type": "checkbox"
+        "type": "checkbox",
+        "true-value": 1,
+        "false-value": 0
       },
       domProps: {
         "value": gear.id
@@ -53058,7 +53135,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: " text-left"
     }, [_c('input', {
       attrs: {
-        "type": "checkbox"
+        "type": "checkbox",
+        "true-value": 1,
+        "false-value": 0
       },
       domProps: {
         "value": carType.id
@@ -53117,7 +53196,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: " text-left"
     }, [_c('input', {
       attrs: {
-        "type": "checkbox"
+        "type": "checkbox",
+        "true-value": 1,
+        "false-value": 0
       },
       domProps: {
         "value": fuelType.id

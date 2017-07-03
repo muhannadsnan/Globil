@@ -41,7 +41,13 @@
 		},
 
 		watch:{
-
+			years(val, old){
+				if(val.length > 0){
+					Vue.set(this.$root.$data.isActiveAll, 12, true)
+				}else{
+					Vue.set(this.$root.$data.isActiveAll, 12, false)
+				}
+			}
 		}
 	}
 </script>

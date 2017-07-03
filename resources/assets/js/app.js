@@ -8,7 +8,7 @@ const app = new Vue({
 		searchFilters: [],
 		paginator: {current_page:1, per_page: 2},
 		moreResults: 2,
-		isActiveAll: [0,0,0,0,0,0,0,0,0,0,0,0,0], // area, city, brand, model, carType, FuelType, gear, minKm, maxKm, minPrice, maxPrice, wheelDrive, year
+		isActiveAll: [false,false,false,false,false,false,false,false,false,false,false,false,false], // area, city, brand, model, carType, FuelType, gear, minKm, maxKm, minPrice, maxPrice, wheelDrive, year
 		// HOME PAGE SEARCH
 		searchKeyword: '',
 		searchTyping: false,
@@ -147,7 +147,7 @@ const app = new Vue({
 				res = res || e
 			})
 			return res
-		}
+		},
 	},
 
 	watch:{

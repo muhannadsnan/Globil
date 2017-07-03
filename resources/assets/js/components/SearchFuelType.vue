@@ -2,7 +2,7 @@
 	<div class="search-fuel-drive">
 		<label>Fuel type:</label>
 		<div v-for="(fuelType, i) in fuelTypes" class=" text-left">
-			<input type="checkbox"
+			<input type="checkbox" :true-value="1" :false-value="0"
 				:value="fuelType.id" @change="onCHange($event.target.checked, i, fuelType)">
 			<span>{{fuelType.title}}</span> 	
 		</div>		
@@ -20,6 +20,17 @@
 			}
 		},
 
+		computed: {
+			allFalseChecked(){
+				var res = true
+				this.checked.forEach(c => {
+					if(c != 0)
+						res = false
+				})
+				return res
+			},
+		},
+
 		methods: {
 
 			onCHange(check, i, fType){ 
@@ -28,8 +39,8 @@
 					Vue.set(this.$root.$data.isActiveAll, 5, true)
 				}
 				else{
-					this.$set(this.checked, i, false)
-					if(this.checked.length == 0)
+					this.$set(this.checked, i, 0)
+					if(this.checked.length == 0 || this.allFalseChecked)
 						Vue.set(this.$root.$data.isActiveAll, 5, false)
 				}
 
@@ -67,7 +78,7 @@
 		watch:{
 			fuelTypes(val){
 				this.fuelTypes.filter(c => {
-					this.checked.push(false)
+					this.checked.push(0)
 				})
 			}
 		}
