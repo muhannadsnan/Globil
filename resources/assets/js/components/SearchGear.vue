@@ -23,10 +23,15 @@
 		methods: {
 
 			onCHange(check, i, wheelDrive){ 
-				if(check)
+				if(check){
 					this.$set(this.checked, i, wheelDrive.id)
-				else
+					Vue.set(this.$root.$data.isActiveAll, 6, true)
+				}
+				else{
 					this.$set(this.checked, i, false)
+					if(this.checked.length == 0)
+						Vue.set(this.$root.$data.isActiveAll, 6, false)
+				}
 
 				this.sendDataToParent()
 			},
@@ -43,11 +48,12 @@
 
 			sendDataToParent(){ // send your data @on-change or @any-filter-change
 				this.$parent.$emit('gear-changed', {CheckedGears: this.checked})
-				this.$emit('any-filter-change')
+				this.$emit('any-filter-change', {from: 'gear'})
 			}, 
 
-			sendDataToParentWithoutNotifingAll(){ // send your data @on-change or @any-filter-change
-				this.$parent.$emit('gear-changed', {CheckedGears: this.checked})
+			sendDataToParentWithoutNotifingAll(e){ // send your data @on-change or @any-filter-change
+				if(e.from != 'gear')
+					this.$parent.$emit('gear-changed', {CheckedGears: this.checked})
 			},			
 		},
 

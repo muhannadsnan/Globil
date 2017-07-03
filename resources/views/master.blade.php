@@ -37,7 +37,7 @@
 				<div class="<?=$content_col_width?>" id="content">
 
 					@if(isset($isHomePage) && $isHomePage)
-						<ads type="banner" items="1" refresh="15"></ads> <!-- BANNER ADS -->
+						<!-- <ads type="banner" items="1" refresh="15"></ads> -->
 					@endif
 				
 					@yield('content')

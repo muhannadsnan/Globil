@@ -49,12 +49,15 @@
 			areaChanged(val, areaId, areaTitle){ 
 				if(val == 1){ // add area to all-data
 					this.allChecked.push([areaId, []])
+					Vue.set(this.$root.$data.isActiveAll, 0, true)
 				}
 				else{ // remove area and it's cities
 					this.allChecked = this.allChecked.filter(city => { 
 						if(city[0] != areaId)
 							return city
 					})
+					if(this.allChecked.length == 0)
+						Vue.set(this.$root.$data.isActiveAll, 0, false)
 				}
 				this.sendAllFiltersToParent()
 			},
@@ -67,6 +70,7 @@
 						}
 						return area
 					})
+					Vue.set(this.$root.$data.isActiveAll, 1, true)
 				}
 				else{
 					this.allChecked = this.allChecked.filter(area => { // area[areaId] = [array of cities]
@@ -79,17 +83,20 @@
 						}
 						return area
 					})
+					if(this.allChecked.length == 0)
+						Vue.set(this.$root.$data.isActiveAll, 1, false)
 				}
 				this.sendAllFiltersToParent()
 			},
 
 			sendAllFiltersToParent(){
 				this.$parent.$emit('area-changed', {CheckedAreas: this.allChecked})
-				this.$emit('any-filter-change')
+				this.$emit('any-filter-change', {from: 'area'})
 			},
 
-			sendDataToParentWithoutNotifingAll(){
-				this.$parent.$emit('area-changed', {CheckedAreas: this.allChecked})
+			sendDataToParentWithoutNotifingAll(e){
+				if(e.from != 'area')
+					this.$parent.$emit('area-changed', {CheckedAreas: this.allChecked})
 			},
 		},
 

@@ -23,10 +23,15 @@
 		methods: {
 
 			onCHange(check, i, fType){ 
-				if(check)
+				if(check){
 					this.$set(this.checked, i, fType.id)
-				else
+					Vue.set(this.$root.$data.isActiveAll, 5, true)
+				}
+				else{
 					this.$set(this.checked, i, false)
+					if(this.checked.length == 0)
+						Vue.set(this.$root.$data.isActiveAll, 5, false)
+				}
 
 				this.sendDataToParent()
 			},
@@ -43,11 +48,12 @@
 
 			sendDataToParent(){ // send your data @on-change or @any-filter-change
 				this.$parent.$emit('fuel-type-changed', {CheckedFuelTypes: this.checked})
-				this.$emit('any-filter-change')
+				this.$emit('any-filter-change', {from: 'fuel-type'})
 			}, 
 
-			sendDataToParentWithoutNotifingAll(){ // send your data @on-change or @any-filter-change
-				this.$parent.$emit('fuel-type-changed', {CheckedFuelTypes: this.checked})
+			sendDataToParentWithoutNotifingAll(e){ // send your data @on-change or @any-filter-change
+				if(e.from != 'fuel-type')
+					this.$parent.$emit('fuel-type-changed', {CheckedFuelTypes: this.checked})
 			},			
 		},
 

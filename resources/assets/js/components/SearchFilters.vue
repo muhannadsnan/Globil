@@ -4,14 +4,14 @@
 		
 		<div class="form-group">
 			<button v-if="showSaveButton" @click="showModalSaveSearch=true" class="btn btn-primary">Save Search</button>
-		</div>			
+		</div>      
 
 		<modal title="Title for Saved Search" v-show="showModalSaveSearch" @clk-close-modal="showModalSaveSearch=false">
 			<div class="form-group">
 				<input type="text" placeholder="Title for Saved Search.. (optional)" v-model="searchFilters.title" class="form-control" @keyup.enter="storeSearch">
 			</div>
 			<template slot="buttons">
-				<button v-if="showSaveButton" @click="storeSearch" class="btn btn-primary">Save Search</button>									
+				<button v-if="showSaveButton" @click="storeSearch" class="btn btn-primary">Save Search</button>                 
 			</template>
 		</modal>
 	</div>
@@ -27,29 +27,29 @@
 				showModalSaveSearch: false,
 			}
 		},
-
 		props: {
+			paginator: {},
+			is_active: 0,
+			more_results: 0,
 		},  
-
 		methods: {
-
 			storeSearch(){
 				axios.post('/saved-search/', this.searchFilters)
 						.then(response => {
-		         		toastr.success(response.data.message)
-		         		this.showSaveButton = false
-		         		this.showModalSaveSearch = false // close modal
-		         		//this.searchFilters = {}
+								toastr.success(response.data.message)
+								this.showSaveButton = false
+								this.showModalSaveSearch = false // close modal
 						})
 						.catch(err => {
 							if(err.response.status === 401)
 								toastr.error(err.message, 'You must be logged in to save a search!')
 							else
 								toastr.error(err.message, 'Error was occured!')
-						})	
+						})  
 			}, //<<
-
+			
 			FillSearchFilters(childData){
+				this.searchResult = {}
 				if(childData.CheckedCars)
 					this.searchFilters.brand_model = childData.CheckedCars
 				if(childData.priceRange)
@@ -70,26 +70,22 @@
 					this.searchFilters.areas = childData.CheckedAreas
 
 				this.showSaveButton = true
-
-				this.readCars()
-
-				//console.log(this.cars)
+				this.$emit('results-ready', {filters: this.searchFilters})
+				//this.readCars()
 			},
 
 			readCars(){
-				axios.post('/search/results', this.searchFilters)
+				axios.post('/search/results', {req: this.searchFilters, paginator: this.$root.$data.paginator})
 						.then(response => {
 							this.cars = response.data.data
-							this.$emit('results-ready', this.cars)
+							this.$emit('results-ready', {cars: this.cars, moreResults: response.data.moreResults, filters: this.searchFilters})
 						})
 						.catch(err => {
 							toastr.error(err.message, 'Error was occured!')
-						})	
+						})
 			},
 		},
-
 		mounted() {
-			console.log('searchFilters Component mounted.')
 			this.$on('brand-model-changed', this.FillSearchFilters)
 			this.$on('price-range-changed', this.FillSearchFilters)
 			this.$on('year-changed', this.FillSearchFilters)
@@ -99,17 +95,9 @@
 			this.$on('fuel-type-changed', this.FillSearchFilters)
 			this.$on('gear-changed', this.FillSearchFilters)
 			this.$on('area-changed', this.FillSearchFilters)
+			// this.$root.$on('more-search-results', this.readCars)
 		},
-
 		watch:{
-
-			searchFilters: {
-		   	handler: function (val, oldVal) { 
-		   		console.log('searchFilters')
-		   		console.log(this.searchFilters)
-		   	},
-		   	deep: true
-		   },
 		}
 	}
 </script>

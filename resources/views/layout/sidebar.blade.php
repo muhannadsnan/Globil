@@ -35,7 +35,7 @@
 
 	<div class="panel-body">
 
-		<ads type="sidebar" items="4" refresh="20"></ads>
+		<!-- <ads type="sidebar" items="4" refresh="20"></ads> -->
 
 	</div>
 </div>

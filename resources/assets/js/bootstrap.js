@@ -39,6 +39,7 @@ toastr.options.progressBar = false;
 // VUE COMPONENTS
 
 window.Vue = require('vue');
+Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('ajax', require('./components/Ajax.vue'));
 Vue.component('modal', require('./components/modal.vue'));
@@ -61,6 +62,11 @@ Vue.component('ads', require('./components/Ads.vue'));
 Vue.component('manage-ads', require('./components/ManageAds.vue'));
 Vue.component('ads', require('./components/Ads.vue'));
 Vue.component('manage-subdata', require('./components/ManageSubData.vue'));
+
+
+
+
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

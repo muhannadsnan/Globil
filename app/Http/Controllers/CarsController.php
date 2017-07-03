@@ -15,7 +15,7 @@ class CarsController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('auth')->except(['show']);	  View::addExtension('html', 'php');
+		$this->middleware('auth')->except(['show', 'getLatestPosts']);	  View::addExtension('html', 'php');
 	}
 
 	public function store(Request $request)
@@ -80,5 +80,6 @@ class CarsController extends Controller
 		$update = true;
 		return view('cars.myCars', compact('update'));
 	}
+
 
 }

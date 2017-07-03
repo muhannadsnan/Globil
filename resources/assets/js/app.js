@@ -1,4 +1,3 @@
-
 require('./bootstrap');
 
 const app = new Vue({
@@ -6,6 +5,10 @@ const app = new Vue({
 
 	data: {
 		searchResult: ['init'],
+		searchFilters: [],
+		paginator: {current_page:1, per_page: 2},
+		moreResults: 2,
+		isActiveAll: [0,0,0,0,0,0,0,0,0,0,0,0,0], // area, city, brand, model, carType, FuelType, gear, minKm, maxKm, minPrice, maxPrice, wheelDrive, year
 		// HOME PAGE SEARCH
 		searchKeyword: '',
 		searchTyping: false,
@@ -46,6 +49,69 @@ const app = new Vue({
         	this.loadingModel = false;
 		}, //<<
 
+		getLatestCars(){ //==================================================
+			this.loadingModel = true
+
+			axios.get('/cars/readLatestPosts?page='+this.paginator.current_page+'&per_page='+this.paginator.per_page)
+	           .then(response => { console.log(response.data.data)
+	               this.searchResult = response.data.data
+	               ++this.paginator.current_page
+	               this.moreResults = response.data.moreResults
+	           })
+	           .catch(err => {
+	               toastr.error('Error occured!', err.message)
+	           })
+        	this.loadingModel = false
+		}, //======================================================================
+
+		loadMoreResults(){
+			this.loadingModel = true
+
+			++this.paginator.current_page
+			axios.post('/search/results', {req: this.searchFilters, paginator: this.paginator})
+					.then(response => {
+						response.data.data.forEach(car => {
+			         	this.searchResult.push(car)
+			     		})
+						this.moreResults = response.data.moreResults
+					})
+					.catch(err => {
+						toastr.error(err.message, 'Error was occured!')
+					})
+			
+			this.loadingModel = false
+		},
+
+		searchResultsReady(param){ // Results From Search-Filter Component // means filters changed
+			this.searchFilters = param.filters
+			this.paginator.current_page = 1
+			axios.post('/search/results', {req: this.searchFilters, paginator: this.paginator})
+					.then(response => {
+						this.searchResult = response.data.data
+						this.moreResults = response.data.moreResults
+					})
+					.catch(err => {
+						toastr.error(err.message, 'Error was occured!')
+					})
+		},
+
+		loadMoreLatestPosts(){
+			this.loadingModel = true
+			
+			axios.get('/cars/readLatestPosts?page='+this.paginator.current_page+'&per_page='+this.paginator.per_page)
+	           .then(response => {
+	           		response.data.data.forEach(car => {
+	               	this.searchResult.push(car)	           			
+	           		})
+	               ++this.paginator.current_page
+	               this.moreResults = response.data.moreResults
+	           })
+	           .catch(err => {
+	               toastr.error('Error occured!', err.message)
+	           })
+        	this.loadingModel = false
+		},
+
 		searchRequest(){
 			axios.get('/search/general/'+ this.searchKeyword )
               .then(response => {
@@ -60,14 +126,10 @@ const app = new Vue({
 
 		searchKeyEnter(){
 			if(this.searchKeyword != ''){
-				this.loadingPage = true;
-				this.searchRequest();
+				this.loadingPage = true
+				this.searchRequest()
 			}
 		}, //<<
-
-		searchResultsReady(ResultsFromSearchFilterComponent){
-			this.searchResult = ResultsFromSearchFilterComponent;
-		},
 
 		convClicked(messages){
 			this.$emit('conv-clicked', messages)
@@ -75,6 +137,17 @@ const app = new Vue({
 	},
 
 	mounted(){
+		this.getLatestCars()
+	},
+
+	computed: {
+		isActiveSearch(){
+			var res = false
+			this.isActiveAll.forEach(e => {
+				res = res || e
+			})
+			return res
+		}
 	},
 
 	watch:{
@@ -86,5 +159,16 @@ const app = new Vue({
 				this.searchTyping = true;
 			}
 		}, //<<
+
+		isActiveSearch(val){
+			if(val == true){
+				this.paginator.current_page = 1 				
+			}
+			else{
+				this.paginator.current_page = 1
+			}
+			// this.paginator.current_page = 1 				
+			this.searchResult = []
+		},
 	}
 });

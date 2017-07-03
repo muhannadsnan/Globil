@@ -46,9 +46,9 @@ class Car extends Model
 
 
 	public function scopeSearchResult($query, $request)
-	{
+	{  //dd($request->brand_model);
 		// BRAND, MODEL
-		if(count($request->brand_model)){
+		if(count(@$request->brand_model)){
 			foreach ($request->brand_model as $brand) {
 				$query->orWhere('brand', $brand[0]); //echo $brand[0];
 				if(count($brand[1])){
@@ -56,25 +56,28 @@ class Car extends Model
 				}
 			}
 		}
-
 		//PRICE [1000,2000]
-		if($request->priceRange[0] == 0 && $request->priceRange[1] > 0){
-			$query->where('price', '<=', $request->priceRange[1]);
-		}
-		elseif($request->priceRange[0] > 0 && $request->priceRange[1] == 0){
-			$query->where('price', '>=', $request->priceRange[0]);
-		}
-		elseif($request->priceRange[0] > 0 && $request->priceRange[0] > 0){
-			$query->whereBetween('price', $request->priceRange);
+		if(isset($request->priceRange)){
+			if((@$request->priceRange[0] == 0 || @$request->priceRange[0] == "0" )&& @$request->priceRange[1] > 0){
+				$query->where('price', '<=', $request->priceRange[1]);
+			}
+			elseif(@$request->priceRange[0] > 0 && (@$request->priceRange[1] == 0 || @$request->priceRange[1] == "0")){
+				$query->where('price', '>=', $request->priceRange[0]);
+			}
+			elseif(@$request->priceRange[0] > 0 && @$request->priceRange[1] > 0 || @$request->priceRange[0] != "0" && @$request->priceRange[1] != "0"){
+				$query->whereBetween('price', $request->priceRange);
+			}
 		}
 
 		//YEAR
-		if(count($request->years)){
-			$query->whereIn('year', $request->year);
+		if(isset($request->years)){
+			if(count(@$request->years)){
+				$query->whereIn('year', $request->years);
+			}
 		}
 
 		//CAR_TYPES
-		if(count($request->car_types)){
+		if(count(@$request->car_types)){
 			foreach ($request->car_types as $key => $value) {
 				if($value){
 					$query->Where('car_type', $value);
@@ -83,7 +86,7 @@ class Car extends Model
 		}
 
 		//WHEEL_DRIVES
-		if(count($request->wheel_drives)){
+		if(count(@$request->wheel_drives)){
 			foreach ($request->wheel_drives as $key => $value) {
 				if($value){
 					$query->Where('wheel_drive', $value);
@@ -92,18 +95,20 @@ class Car extends Model
 		}
 
 		//KM [0,100] -- [100,200] -- [100,0]		
-		if($request->kmRange[0] == 0 && $request->kmRange[1] > 0){
-			$query->where('kilometer', '<=', $request->kmRange[1]);
-		}
-		elseif($request->kmRange[0] > 0 && $request->kmRange[1] == 0){
-			$query->where('kilometer', '>=', $request->kmRange[0]);
-		}
-		elseif($request->kmRange[0] > 0 && $request->kmRange[0] > 0){
-			$query->whereBetween('kilometer', $request->kmRange);
+		if(isset($request->kmRange)){
+			if((@$request->kmRange[0] == 0 || @$request->kmRange[0] == "0") && @$request->kmRange[1] > 0){
+				$query->where('kilometer', '<=', $request->kmRange[1]);
+			}
+			elseif(@$request->kmRange[0] > 0 && (@$request->kmRange[1] == 0 || @$request->kmRange[1] == "0")){
+				$query->where('kilometer', '>=', $request->kmRange[0]);
+			}
+			elseif(@$request->kmRange[0] > 0 && @$request->kmRange[1] > 0 || @$request->kmRange[0] != "0" && @$request->kmRange[1] != "0"){
+				$query->whereBetween('kilometer', @$request->kmRange);
+			}
 		}
 
 		//FUEL_TYPES
-		if(count($request->fuel_types)){
+		if(count(@$request->fuel_types)){
 			foreach ($request->fuel_types as $key => $value) {
 				if($value){
 					$query->Where('fuel_type', $value);
@@ -112,7 +117,7 @@ class Car extends Model
 		}
 
 		//GEAR
-		if(count($request->gears)){
+		if(count(@$request->gears)){
 			foreach ($request->gears as $key => $value) {
 				if($value){
 					$query->orWhere('gear', $value);
@@ -121,7 +126,7 @@ class Car extends Model
 		}
 
 		$query->orderBy('created_at', 'desc')->with('pictures'); //dd($res);
-		return $query->get();
+		return $query;
 	}
 
 // ============= RELATIONSHIPs =============

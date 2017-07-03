@@ -27,13 +27,10 @@
 				brands: [],
 				models: [],
 				brandCheckboxes: [],
-				// CheckedModels: [], 
 				allChecked: [],
 			}
 		},
-
 		methods: {
-
 			getBrandsAndModels(){
 				axios.get('/read-data-with-subdata/brand/model')
 					.then(response => {
@@ -49,13 +46,16 @@
 			brandChanged(val, brandId, brandTitle){ 
 				if(val == 1){ // add brand to all-data
 					this.allChecked.push([brandId, []])
+					Vue.set(this.$root.$data.isActiveAll, 2, true)
 				}
 				else{ // remove brand and it's models
 					this.allChecked = this.allChecked.filter(car => { 
 						if(car[0] != brandId)
 							return car
 					})
-				}
+					if(this.allChecked.length == 0)
+						Vue.set(this.$root.$data.isActiveAll, 2, false)
+				} 
 				this.sendAllFiltersToParent()
 			},
 
@@ -67,6 +67,7 @@
 						}
 						return car
 					})
+					Vue.set(this.$root.$data.isActiveAll, 3, true)
 				}
 				else{
 					this.allChecked = this.allChecked.filter(car => { // car[brandId] = [array of models]
@@ -79,22 +80,23 @@
 						}
 						return car
 					})
+					if(this.allChecked.length == 0)
+						Vue.set(this.$root.$data.isActiveAll, 3, false)
 				}
 				this.sendAllFiltersToParent()
 			},
 
 			sendAllFiltersToParent(){
 				this.$parent.$emit('brand-model-changed', {CheckedCars: this.allChecked})
-				this.$emit('any-filter-change')
+				this.$emit('any-filter-change', {from: 'brand_model'})
 			},
-
-			sendDataToParentWithoutNotifingAll(){
-				this.$parent.$emit('brand-model-changed', {CheckedCars: this.allChecked})
+			sendDataToParentWithoutNotifingAll(e){
+				if(e.from != 'brand_model')
+					this.$parent.$emit('brand-model-changed', {CheckedCars: this.allChecked})
 			},
 		},
 
 		mounted() {
-			// console.log('SearchBrandModel Component mounted.')
 			this.getBrandsAndModels()
 			this.$on('any-filter-change', this.sendDataToParentWithoutNotifingAll)
 		},
@@ -110,7 +112,7 @@
 </script>
 
 <style lang="sass" scoped>
-.models input	
+.models input 
 	margin-left: 30px !important
 .models label
 	color: #46b8da

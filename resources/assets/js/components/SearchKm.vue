@@ -24,11 +24,12 @@
 
 			sendDataToParent(){ // send your data @on-change or @any-filter-change
 				this.$parent.$emit('km-range-changed', {kmRange: [this.minKM, this.maxKM]})
-				this.$emit('any-filter-change')
+				this.$emit('any-filter-change', {from: 'km'})
 			}, 
 
-			sendDataToParentWithoutNotifingAll(){ // send your data @on-change or @any-filter-change
-				this.$parent.$emit('km-range-changed', {kmRange: this.checked})
+			sendDataToParentWithoutNotifingAll(e){ // send your data @on-change or @any-filter-change
+				if(e.from != 'km')
+					this.$parent.$emit('km-range-changed', {kmRange: this.checked})
 			},			
 		},
 
@@ -43,10 +44,20 @@
 			minKM(val){
 				if(val == '' || val < 0)
 					this.minKM = 0
+				if(this.minKM != 0)
+					Vue.set(this.$root.$data.isActiveAll, 7, true)
+				else
+					if(this.minKM == 0 && this.maxKM == 0)
+						Vue.set(this.$root.$data.isActiveAll, 7, false)
 			},
 			maxKM(val){
 				if(val == '' || val < 0)
 					this.maxKM = 0
+				if(this.maxKM != 0)
+					Vue.set(this.$root.$data.isActiveAll, 8, true)
+				else
+					if(this.maxKM == 0 && this.minKM == 0)
+						Vue.set(this.$root.$data.isActiveAll, 8, false)
 			},
 		}
 	}

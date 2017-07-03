@@ -23,10 +23,15 @@
 		methods: {
 
 			onCHange(check, i, carType){ //console.log(carType); console.log(check)
-				if(check)
+				if(check){
 					this.$set(this.checked, i, carType.id)
-				else
+					Vue.set(this.$root.$data.isActiveAll, 4, true)
+				}
+				else{
 					this.$set(this.checked, i, false)
+					if(this.checked.length == 0)
+						Vue.set(this.$root.$data.isActiveAll, 4, false)
+				}
 
 				this.sendDataToParent()
 			},
@@ -43,11 +48,12 @@
 
 			sendDataToParent(){ // send your data @on-change or @any-filter-change
 				this.$parent.$emit('car-type-changed', {CheckedCarTypes: this.checked})
-				this.$emit('any-filter-change')
+				this.$emit('any-filter-change', {from: 'car-type'})
 			}, 
 
-			sendDataToParentWithoutNotifingAll(){ // send your data @on-change or @any-filter-change
-				this.$parent.$emit('car-type-changed', {CheckedCarTypes: this.checked})
+			sendDataToParentWithoutNotifingAll(e){ // send your data @on-change or @any-filter-change
+				if(e.from != 'car-type')
+					this.$parent.$emit('car-type-changed', {CheckedCarTypes: this.checked})
 			},			
 		},
 
