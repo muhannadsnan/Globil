@@ -40,7 +40,8 @@ class Car extends Model
 
 	public function scopeFuelSubdata($query)
 	{
-		$fuel = $query->get(['fuel_type_bensin', 'fuel_type_diesel', 'fuel_type_electric'])[0];
+		//$fuel = $query->get(['fuel_type_bensin', 'fuel_type_diesel', 'fuel_type_electric'])[0];
+		$fuel = SubData::where('id', $this->fuel_type)->get(['title'])[0]->title;
 		return $fuel;
 	}
 

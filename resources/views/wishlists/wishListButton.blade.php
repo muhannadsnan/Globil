@@ -6,10 +6,8 @@
 		@if( auth()->user()->wishList->contains('car_id', $car->id) )
 			@foreach(auth()->user()->wishList as $wish)
 
-				@if($wish->car_id == $car->id)
-				
-				<wishlistbutton act="remove" data1="{{$car->id}}" data2="{{auth()->id()}}" data3="{{$wish->id}}"></wishlistbutton>
-
+				@if($wish->car_id == $car->id)				
+					<wishlistbutton act="remove" data1="{{$car->id}}" data2="{{auth()->id()}}" data3="{{$wish->id}}"></wishlistbutton>
 				@endif
 			
 			@endforeach

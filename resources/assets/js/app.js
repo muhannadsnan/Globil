@@ -4,6 +4,9 @@ const app = new Vue({
 	el: '#app',
 
 	data: {
+		user_id: '0',
+		wishList: [],
+		
 		searchResult: ['init'],
 		searchFilters: [],
 		paginator: {current_page:1, per_page: 2},
@@ -54,6 +57,8 @@ const app = new Vue({
 
 			axios.get('/cars/readLatestPosts?page='+this.paginator.current_page+'&per_page='+this.paginator.per_page)
 	           .then(response => { console.log(response.data.data)
+	           		this.user_id = response.data.user_id
+	           		this.wishList = response.data.wish_list
 	               this.searchResult = response.data.data
 	               ++this.paginator.current_page
 	               this.moreResults = response.data.moreResults

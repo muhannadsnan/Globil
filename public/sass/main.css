@@ -3,6 +3,7 @@ html, body {
 	color: #636b6f;
 	//font-family: 'Raleway', sans-serif;
 	font-weight: 500;
+	font-size: 11pt;
 	margin: 0; 
 	padding: 0;
 }
@@ -23,15 +24,8 @@ a:hover{color: #68a9e1; text-decoration: none}
 nav i {font-size: 22pt !important;  vertical-align: middle;}
 .navbar-brand {padding: 14px 15px;}
 .navbar-brand h2{margin:0px ; padding: 0px;}
-/*.navbar {border-radius: 0}*/
-.well h1{color: #;;}
-.well .panel {float:none;}
-.well .panel-header {margin: 0px; border-width: 0px;}
-.well .panel-body {margin: 0px; border:0px solid #ccc;}
-.panel {padding:0;}
-.panel h1, .panel h2, .panel h3, .panel h4 {margin:0;}
-.panel-me { background-color: ; border: 1px solid #1c8cad;}
 
+#content{min-height: 350px;}
 /**** LATEST CARS ****/
 .latest-posts {}
 .latest-posts .panel {margin-right:10px; margin-left:10px; }
@@ -41,11 +35,12 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 .latest-posts .no-results{opacity:0; transition: opacity 0.5s linear; }
 
 /**** CAR CARD ****/
-.car-card {}
+.car-card{margin-bottom: 15px;}
+.car-card .panel{margin: 0px;}
 .car-card:hover{border-color: #000;}
 .car-card img{ height: 80px;  }
 .car-card small{font-size: 9pt; color: #ccc;}
-.car-card .caption{ height: 125px; font-size: 12pt !important;  overflow: hidden; padding: 7px 0px;}
+.car-card .caption{ height:; font-size: 12pt !important;  overflow: hidden; padding: 7px 0px;}
 .car-card .desc{ overflow: hidden; min-height: 50px; border: 0px solid #000;}
 .car-card .fa {margin:0px 5px 0px 0px; font-size: 24pt; line-height: 30px; vertical-align: middle;}
 .car-card .fa:hover {cursor: pointer}
@@ -53,23 +48,34 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 .car-card .foot{margin-top: 5px;}
 .car-card .foot .btn{ float:left;}
 
+.card-in-vue{}
+.card-in-vue .panel{padding:10px 10px;}
+
+/**** CAR SHOW ****/
+.card #myCarousel{height: 350px;}
+.card .carousel-inner{position: relative; height: 350px;}
+.card .carousel-inner img{position: relative;}
+.card .user-profile{}
+.card .user-profile .blk{ margin: 10px 0px;}
+.card .user-profile a{width: 100%;}
+.card .user-profile img{border: 3px solid blue; border-radius: 100%; width: 100%; height: 100%;}
+.card .user-profile span{font-size: 14pt;}
+
+.user-timeline{min-height: 500px;}
+
 /**** WISHLIST ****/
-
 .wish-list-post a, .wish-list-post a:visited, .wish-list-post a:active{
-	border: 1px solid #3097D1;
-	text-align: left;
-			
+	border: 1px solid #3097D1;	text-align: left;
 }
-.wish-list-post a:hover{
-	
-}
-
 .wish-list-post .hd{
 	font-size: 16pt; 
 }
 
-.WishListButton{width: 40px; margin: 0; float: right;}
-
+.WishListButton{width: 35px; margin: 0; float: right;}
+.WishListButton .fa-heart{color: red;}
+.WishListButton .fa-heart:hover{opacity: 0.5}
+.WishListButton .fa-heart-o{color: #555;}
+.WishListButton .fa-heart-o:hover{opacity: 0.5}
 
 footer { padding:5px 40px; background-color: #1c8cad; border-top: 1px solid #555; margin: 20px 0px 0px 0px;
 	color: #2d3092; line-height: 17px; font-weight: 600;}

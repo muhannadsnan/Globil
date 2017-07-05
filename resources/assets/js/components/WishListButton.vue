@@ -1,10 +1,18 @@
 <template>
 	<div class="WishListButton">
-		<span class="fa" data-toggle="tooltip" data-placement="top"
+		<span v-if="$root.$data.user_id > 0" class="" data-toggle="tooltip" data-placement="top"
 				:data-original-title="title" @click="makeRequest">
 			<i :class="{'fa fa-heart': act == 'remove',
-							'fa fa-heart-o': act == 'add', css}"></i>
+							'fa fa-heart-o': act == 'add' || data1 == wish_id, css}"></i>
 		</span>
+		<div v-else class="WishListButton">
+			<a href="/login" class="">
+				<span class="fa" data-toggle="tooltip" data-placement="top"
+						data-original-title="title">
+					<i class="fa fa-heart-o"></i>
+				</span>
+			</a>
+		</div>
 	</div>
 </template>
 
@@ -41,13 +49,7 @@
 					this.title = 'Add to Wish list';
 				else if(val == 'remove')
 					this.title = 'Remove from wish list';
-			}
-		    // 'this.act' ('remove', 'add') {
-		    //     this.title = 'Remove from wish list';
-		    // },
-		    // 'this.act' ('add', 'remove'){
-		    // 	this.title = 'Add to wish list';
-		    // }
+			},
 		},
 
 		methods: {
@@ -89,7 +91,7 @@
 		mounted() {
 			// console.log('WishListButton Component mounted.')
 			this.wish_id = this.data3;
-			//console.log(this.user)
+			//console.log(this.$root.$data.user_id)
 		}
 	}
 </script>

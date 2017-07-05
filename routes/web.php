@@ -5,8 +5,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout');
-Route::get('/control-panel', 'Auth\LoginController@controlPanel');
-Route::get('/profile', 'Auth\LoginController@profile');
+Route::get('/control-panel', 'Auth\LoginController@controlPanel')->middleware('auth');
+Route::get('/profile', 'Auth\LoginController@profile')->middleware('auth');
+Route::get('/users/{user}', 'Auth\LoginController@userTimeline');
 
 
 Route::get('/wish-list', 'WishListsController@index');

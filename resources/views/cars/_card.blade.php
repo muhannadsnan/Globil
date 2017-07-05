@@ -1,4 +1,4 @@
-<div class="col-xs-6 col-sm-4 col-md-3 car-card">
+<div class="car-card col-xs-6 col-sm-4 col-md-3 ">
 
 	<div class="thumbnail panel-info">
 
@@ -7,9 +7,9 @@
 		<div class="caption">			
 
 			<p class="hd">
-				{{ $car->sub($car->brand) }}<br/>
-				<strong>{{ $car->sub($car->model) }}</strong> <br/>
-				<span>year: {{ $car->year }}</span>
+				<strong>{{ $car->sub($car->brand) }}</strong>
+				<p>{{ $car->sub($car->model) }}</p>
+				<small>year: {{ $car->year }}</p>
 			</p>
 
 			<div class="foot">

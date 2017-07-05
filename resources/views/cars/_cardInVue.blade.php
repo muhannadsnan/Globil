@@ -1,20 +1,26 @@
 
 
-<div class="col-xs-6 col-sm-4 col-md-3 car-card"  v-for="car in searchResult"  v-cloak>
-	<div class="thumbnail panel-info">
+<div   v-for="car in searchResult"  class="card-in-vue car-card col-xs-6 col-sm-4 col-md-3"  v-cloak>
+	<div class="panel panel-info">
 
-		<img :src="car.pic_file_name" alt="...">
+		<img :src="car.pic_file_name" alt="car.brand +' - '+ car.model">
 
 		<div class="caption">
 
-			<span class="hd">@{{ car.brand }}, 
-				<strong>@{{ car.model }}</strong> <br/>
-				<small>year: @{{ car.year }}</small> <br>
-				<strong> @{{ car.price }} ,- </strong>
+			<span class="hd">
+				<strong>@{{ car.brand }}</strong> 
+				<p>@{{ car.model }}</p>
+				<small>year: @{{ car.year }}</small> 
+				<h3> @{{ car.price }} ,- </h3>
 			</span>
 			
-			<a href="/cars/car.id" class="btn btn-info" role="button">Explore</a>
+			<div class="foot">
+			
+				<a :href="'/cars/'+car.id" class="btn btn-info" target="_blank">Show</a>
+				
+				@include('wishlists.wishListButton')
 
+			</div>
 		</div>
 	</div>
 

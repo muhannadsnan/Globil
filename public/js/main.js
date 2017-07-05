@@ -6,6 +6,7 @@ $(document).ready(function(){
   // closeImageOnClickOutside();
   toggleDropdown();
   tooltip();
+  userTimelineTabs();
 });
 // ================================================
 function changeNavbarOnScroll(){ 
@@ -40,39 +41,39 @@ function expandAdvancedSearchDiv (){
 
   });
 }
-// // ================================================
+// ================================================
 function clickImageToShowSlider(){
 
   console.log('img_a');
 
   var html =$(this).find('img').attr('id'); console.log(html);
   $('.modal-slider .content img').attr('src', html);
-    // $('#wowslider-container1').on('click', function(){
-      
-    //   // var src = $('.preview-pic .active img').attr('src'); console.log(src);
-    //   // $('.mfp-bg .content').add(html);
-    //   $('#wowslider-container1').addClass('enlagre');
-    // });
 };
-// // ================================================
+// ================================================
 function closeImageOnClickOutside (){
   $('.mfp-close, .mfp-container').on('click', function(){
     $('.ws_images').removeClass('is-active');
   });
 }
-
-
-
+// ================================================
 function toggleDropdown(){
   $('.dropdown-toggle').on('click', function(){
     $('.dropdown-menu').toggle(); 
   });
 }
-
+// ================================================
 function updateRangeLabel(val){
   $('#range_year').text = val; 
 }
-
+// ================================================
 function tooltip(){
   $('[data-toggle="tooltip"]').tooltip();
 }
+// ================================================
+function userTimelineTabs(){
+  $('.user-timeline .nav-tabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+}
+// ================================================

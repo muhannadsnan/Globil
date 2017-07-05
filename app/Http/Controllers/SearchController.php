@@ -31,11 +31,12 @@ class SearchController extends Controller
 		$car_subdata = [];
 		foreach ($res as $key => $val) { //dd($key);
 			$car_subdata[$key] = [
-				'pic_file_name' => asset('storage/images').'/'.$val->pictures[0]->id . '.' . $val->pictures[0]->ext,
+				'id' => $val->id,
 				'brand' => $val->brandSubdata($val->brand),
 				'model' => $val->modelSubdata($val->model),
 				'year' => $val->year,
 				'price' => $val->price,
+				'pic_file_name' => asset('storage/images').'/'.$val->pictures[0]->id . '.' . $val->pictures[0]->ext,
 			];
 		}
 		return $car_subdata;
@@ -98,6 +99,8 @@ class SearchController extends Controller
 		$data = $this->fillCardData($paginator);
 		$more_results = Car::latest()->skip($page*$perpage)->take($perpage)->get()->count();
 		return ['ok' => 1, 'message' => "Latest posts are loaded successfully!", 
-			'data'=>$data, 'moreResults'=>$more_results];
+			'data'=>$data, 'moreResults'=>$more_results, 
+			// becuase it is the first request in the app
+			'user_id'=>auth()->id(), 'wish_list'=>auth()->user()->wishList];
 	}
 }

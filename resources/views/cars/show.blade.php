@@ -4,8 +4,8 @@
 @section('content')
 
 <div class="card">
-	<div class="container-flued">
-		<div class="row"> 
+	<div class="rowX">
+		<div class="containerX"> 
 
 			<!-- SLIDER >> -->
 
@@ -27,8 +27,7 @@
 		    	<div class="item {{$active ? 'active' : ''}}">
 		        <img src="{{asset('storage/images'.'/'.$pic->id.'.'.$pic->ext)}}" alt="Los Angeles" style="width:100%;">
 		        <div class="carousel-caption">
-		          <h3>{{count($car->pictures)}} / {{$key+1}}</h3>
-		          <p>{{$car->brandSubdata().' - '. $car->modelSubdata()}}</p>
+		          <p>{{count($car->pictures)}}/{{$key+1}}</p>
 		        </div>
 		      </div>
 		    	<?php $active = false; ?>
@@ -49,41 +48,51 @@
 
 			<!-- END SLIDER << -->
 
-			<div class="details col-md-4">
+			<div class="details col-sm-12">
 				<h3> 
-				<div class="action">
-					@if( auth()->check() && auth()->id() != $car->user_id)
+					<div class="action">
+						@if( auth()->check() && auth()->id() != $car->user_id)
 
-						@if( auth()->user()->wishList->contains('car_id', $car->id) )
-							@foreach(auth()->user()->wishList as $wish)
+							@if( auth()->user()->wishList->contains('car_id', $car->id) )
+								@foreach(auth()->user()->wishList as $wish)
 
-								@if($wish->car_id == $car->id)
+									@if($wish->car_id == $car->id)
+									
+									<wishlistbutton act="remove" data1="{{$car->id}}" data2="{{auth()->id()}}" data3="{{$wish->id}}"></wishlistbutton>
+
+									@endif
 								
-								<wishlistbutton act="remove" data1="{{$car->id}}" data2="{{auth()->id()}}" data3="{{$wish->id}}"></wishlistbutton>
+								@endforeach
 
-								@endif
-							
-							@endforeach
+							@else 
+									<wishlistbutton act="add" data1="{{$car->id}}" data2="{{auth()->id()}}"></wishlistbutton>			
+							@endif
 
-						@else 
-								<wishlistbutton act="add" data1="{{$car->id}}" data2="{{auth()->id()}}"></wishlistbutton>			
+						@elseif( auth()->guest() )					
+							<a href="/login" class="like btn btn-default wish-list"><span class="fa fa-heart"></span> Add to wish list</a>
 						@endif
+					</div>
 
-					@elseif( auth()->guest() )					
-						<a href="/login" class="like btn btn-default wish-list"><span class="fa fa-heart"></span> Add to wish list</a>
-					@endif
-					
+					{{$car->brandSubdata()}} - {{$car->modelSubdata()}} ({{$car->year}})
+				</h3>
+
+				<div class="user-profile col-sm-2 pull-right">
+					<div class="blk">
+						<a href="/users/{{$car->user->id}}">
+							<img src="{{asset('storage/images/user/1.png')}}">
+							<span>{{$car->user->name}}</span>
+						</a>
+					</div>
+					<button class="btn btn-success">Message</button>			
 				</div>
-
-				{{$car->brandSubdata()}} - {{$car->modelSubdata()}} ({{$car->year}})</h3>
 				
 				<h4 class="price">current price: <span>{{$car->price}} ,-</span></h4>
 				<h4 class="price">kilometer: <span>{{$car->km}}</span></h4>
 				<h4 class="price">fuel: 
 					<span>
-					{{$car->fuelSubdata()->fuel_type_bensin ? 'bensin' : ''}} 
-					{{$car->fuelSubdata()->fuel_type_diesel ? 'diesel' : ''}} 
-					{{$car->fuelSubdata()->fuel_type_electric ? 'electric' : ''}} </span></h4>
+						{{$car->fuelSubdata()}}
+					</span>
+					</h4>
 				<h4 class="price">registration nr: <span>{{$car->reg_nr}}</span></h4>
 				<h4 class="price"><small>{{$car->created_at->diffForHumans()}}</small></small>
 
@@ -91,7 +100,6 @@
 		</div>
 	</div>
 
-	<hr>
 
 	<div class="panel panel-defualt ">
 		<div class="panel-heading">
@@ -101,7 +109,6 @@
 			</div>
 
 		</div>
-
 	</div>
 </div>
 

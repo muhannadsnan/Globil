@@ -26980,6 +26980,9 @@ var app = new Vue({
 	el: '#app',
 
 	data: {
+		user_id: '0',
+		wishList: [],
+
 		searchResult: ['init'],
 		searchFilters: [],
 		paginator: { current_page: 1, per_page: 2 },
@@ -27034,6 +27037,8 @@ var app = new Vue({
 
 			axios.get('/cars/readLatestPosts?page=' + this.paginator.current_page + '&per_page=' + this.paginator.per_page).then(function (response) {
 				console.log(response.data.data);
+				_this3.user_id = response.data.user_id;
+				_this3.wishList = response.data.wish_list;
 				_this3.searchResult = response.data.data;
 				++_this3.paginator.current_page;
 				_this3.moreResults = response.data.moreResults;
@@ -30044,6 +30049,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -30073,13 +30086,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		act: function act(val) {
 			if (val == 'add') this.title = 'Add to Wish list';else if (val == 'remove') this.title = 'Remove from wish list';
 		}
-		// 'this.act' ('remove', 'add') {
-		//     this.title = 'Remove from wish list';
-		// },
-		// 'this.act' ('add', 'remove'){
-		// 	this.title = 'Add to wish list';
-		// }
-
 	},
 
 	methods: {
@@ -30117,7 +30123,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	mounted: function mounted() {
 		// console.log('WishListButton Component mounted.')
 		this.wish_id = this.data3;
-		//console.log(this.user)
+		//console.log(this.$root.$data.user_id)
 	}
 });
 
@@ -52570,8 +52576,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "WishListButton"
-  }, [_c('span', {
-    staticClass: "fa",
+  }, [(_vm.$root.$data.user_id > 0) ? _c('span', {
     attrs: {
       "data-toggle": "tooltip",
       "data-placement": "top",
@@ -52583,9 +52588,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     class: {
       'fa fa-heart': _vm.act == 'remove',
-        'fa fa-heart-o': _vm.act == 'add', css: _vm.css
+        'fa fa-heart-o': _vm.act == 'add' || _vm.data1 == _vm.wish_id, css: _vm.css
     }
-  })])])
+  })]) : _c('div', {
+    staticClass: "WishListButton"
+  }, [_c('a', {
+    attrs: {
+      "href": "/login"
+    }
+  }, [_c('span', {
+    staticClass: "fa",
+    attrs: {
+      "data-toggle": "tooltip",
+      "data-placement": "top",
+      "data-original-title": "title"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-heart-o"
+  })])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

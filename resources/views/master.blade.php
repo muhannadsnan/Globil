@@ -10,22 +10,24 @@
 		@include('layout.nav')
 
 
-		<div class="container">
+		<div class="row">
 			
-			<div class="row">
+			<div class="container-fluid">
 				<?php 
-				if(isset($isHomePage) && $isHomePage){
-					$searchbar_col_width = "col-md-2 col-sm-4";
-					$content_col_width = "col-md-8 col-sm-8";
+				if(@$isHomePage || @$isPostShow){
+					$searchbar_col_width = "col-md-2 col-sm-3";
+					$content_col_width = "col-md-8 col-sm-7";
+					$sidebar_col_width = "col-md-2 col-sm-2";
 				}else{
 					$searchbar_col_width = "";
-					$content_col_width = "col-md-10";
+					$content_col_width = "col-md-8 col-md-offset-2";
+					$sidebar_col_width = "";
 				}
 				?>
 
 				@if(isset($isHomePage) && $isHomePage)
 				
-					<div class="<?=$searchbar_col_width?>" id="searchbar">
+					<div class="{{$searchbar_col_width}}" id="searchbar">
 
 						@include('layout.searchbar')
 
@@ -34,9 +36,9 @@
 				@endif
 				
 
-				<div class="<?=$content_col_width?>" id="content">
+				<div class="{{$content_col_width}}" id="content">
 
-					@if(isset($isHomePage) && $isHomePage)
+					@if(@$isHomePage)
 						<!-- <ads type="banner" items="1" refresh="15"></ads> -->
 					@endif
 				
@@ -45,9 +47,11 @@
 				</div><!-- .content -->
 
 
-				<div class="col-md-2 col-sm-12" id="sidebar">
+				<div class="{{$sidebar_col_width}}" id="sidebar">
 
-					@include('layout.sidebar')
+					@if(@$isHomePage)
+						@include('layout.sidebar')
+					@endif
 
 				</div><!-- .sidebar -->
 			</div><!-- .row -->

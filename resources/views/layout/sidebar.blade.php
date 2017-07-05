@@ -28,16 +28,16 @@
 
 @endif
 
-<div class="ads panel panel-warning">
+<!-- <div class="ads panel panel-warning">
 	<div class="panel-heading">
 		Advertisements
 	</div>
 
 	<div class="panel-body">
 
-		<!-- <ads type="sidebar" items="4" refresh="20"></ads> -->
+		<ads type="sidebar" items="4" refresh="20"></ads>
 
 	</div>
-</div>
+</div> -->
 
 
