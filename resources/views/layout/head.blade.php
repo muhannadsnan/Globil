@@ -9,12 +9,12 @@
 
   <title>Gl0b!l @yield('title')</title>
 
+  <!-- Bulma -->
+  <link rel="stylesheet" href="{{ asset('css/bulma.css') }}">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <!-- BootstrapFormHelpers -->
   <link rel="stylesheet" href="{{ asset('BootstrapFormHelpers/dist/css/bootstrap-formhelpers.min.css') }}">
-  <!-- Bulma -->
-  <link rel="stylesheet" href="{{ asset('css/bulma.css') }}">
   <!-- Font Awesome -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <!-- TOASTR -->

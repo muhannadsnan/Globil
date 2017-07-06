@@ -7,12 +7,12 @@
 
 		<div class="caption">
 
-			<span class="hd">
+			<div class="hd">
 				<strong>@{{ car.brand }}</strong> 
 				<p>@{{ car.model }}</p>
 				<small>year: @{{ car.year }}</small> 
-				<h3> @{{ car.price }} ,- </h3>
-			</span>
+				<label> @{{ car.price }} ,- </label>
+			</div>
 			
 			<div class="foot">
 			

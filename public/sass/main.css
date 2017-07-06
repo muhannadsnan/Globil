@@ -1,16 +1,9 @@
-html, body {
-	background-color: #fff;
-	color: #636b6f;
-	//font-family: 'Raleway', sans-serif;
-	font-weight: 500;
-	font-size: 11pt;
-	margin: 0; 
-	padding: 0;
-}
+html, body {background-color: #fff;	color: #636b6f; /*font-family: 'Raleway', sans-serif;*/ font-weight: 500; font-size: 11pt; margin: 0; padding: 0;}
 /**** INITIALS ****/
 a, a:active, a:visited{/*color: #337ab7;*/}
 a:hover{color: #68a9e1; text-decoration: none}
-.btn{color: #fff;}
+.btn{color: #fff;} strong{color: #636b6f;} label{font-weight: bold; color: #337ab7;}
+small{line-height: 20px;}
 [v-cloak] {display: none;}
 /**** CUSTOM ****/
 .NO-float {float: none;}
@@ -22,8 +15,10 @@ a:hover{color: #68a9e1; text-decoration: none}
 .fa{vertical-align: middle; padding: 0px ; font-size: 16pt;}
 /**** NAV ****/
 nav i {font-size: 22pt !important;  vertical-align: middle;}
+.nav{height: auto;}
 .navbar-brand {padding: 14px 15px;}
 .navbar-brand h2{margin:0px ; padding: 0px;}
+.dropdown-toggle{line-height: 29px; vertical-align: middle;}
 
 #content{min-height: 350px;}
 /**** LATEST CARS ****/
@@ -50,6 +45,7 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 
 .card-in-vue{}
 .card-in-vue .panel{padding:10px 10px;}
+.card-in-vue p{padding: 0px; margin: 0px;}
 
 /**** CAR SHOW ****/
 .card #myCarousel{height: 350px;}
@@ -61,7 +57,6 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 .card .user-profile img{border: 3px solid blue; border-radius: 100%; width: 100%; height: 100%;}
 .card .user-profile span{font-size: 14pt;}
 
-.user-timeline{min-height: 500px;}
 
 /**** WISHLIST ****/
 .wish-list-post a, .wish-list-post a:visited, .wish-list-post a:active{
@@ -149,3 +144,19 @@ footer hr {border-color: #999;}
 .me{float:right !important; }
 .me span{background-color: #eee; color: #666;}
 .datetime{margin:0px 22px;}
+
+
+/*** USER TIMELINE ***/
+.user-timeline{min-height: 300px;}
+.user-timeline .user-profile{}
+.user-timeline .user-profile .blk{ margin: 10px 0px; display: block}
+.user-timeline .user-profile a{width: 100%;}
+.user-timeline .user-profile img{border: 3px solid blue; border-radius: 100%; width: 100%; height: 100%;}
+.user-timeline .user-profile span{font-size: 14pt;}
+.user-timeline .user-profile .blk-right{top: 25%; right: 0; float: right; margin-top: 30px;}
+.user-timeline .user-profile .blk-right strong{line-height: 40px; font-size: 14pt; margin: 10p 10px;}
+
+#about{}
+#about .line{padding: 10px 20px; text-align: left; font-size: 16pt;}
+#about .line label{ color: #337ab7;}
+#about .line strong{}
