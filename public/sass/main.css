@@ -44,8 +44,8 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 .car-card .foot .btn{ float:left;}
 
 .card-in-vue{}
-.card-in-vue .panel{padding:10px 10px;}
-.card-in-vue p{padding: 0px; margin: 0px;}
+.card-in-vue .panel{padding:10px 10px 0px 10px;}
+.card-in-vue p{padding: 0px; margin: 0px; height: 15px;}
 
 /**** CAR SHOW ****/
 .card #myCarousel{height: 350px;}

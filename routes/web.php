@@ -12,7 +12,7 @@ Route::get('/users/{user}', 'Auth\LoginController@userTimeline');
 
 Route::get('/wish-list', 'WishListsController@index');
 Route::post('/wish-list', 'WishListsController@store');
-Route::delete('/wish-list/{wish}', 'WishListsController@destroy');
+Route::delete('/wish-list/{car_id}', 'WishListsController@destroy');
 Route::get('/messages', 'MessagesController@index');
 Route::post('/messages', 'MessagesController@store');
 

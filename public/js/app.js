@@ -26980,8 +26980,8 @@ var app = new Vue({
 	el: '#app',
 
 	data: {
-		user_id: '0',
-		wishList: [],
+		// user_id: '0',
+		wishList: [], // for current user
 
 		searchResult: ['init'],
 		searchFilters: [],
@@ -27037,7 +27037,7 @@ var app = new Vue({
 
 			axios.get('/cars/readLatestPosts?page=' + this.paginator.current_page + '&per_page=' + this.paginator.per_page).then(function (response) {
 				console.log(response.data.data);
-				_this3.user_id = response.data.user_id;
+				// this.user_id = response.data.user_id
 				_this3.wishList = response.data.wish_list;
 				_this3.searchResult = response.data.data;
 				++_this3.paginator.current_page;
@@ -30062,58 +30062,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			url: '/wish-list',
-			wish_id: 0,
-			wish: {}
+			// wish_id: 0,
+			wish: {},
+			action: ''
 		};
 	},
 
 
-	computed: {
-		title: function title() {
-			if (this.act == 'add') return 'Add to Wish list';else if (this.act == 'remove') return 'Remove from wish list';
-		}
-	},
-
 	props: {
 		act: {},
-		data1: {},
-		data2: {},
-		data3: {},
+		data1: {}, // car.id
+		data2: {}, // user.id
+		// data3: {}, // wish.id
 		css: { default: 'nocss' }
 	},
 
+	computed: {
+		title: function title() {
+			if (this.action == 'add' || !this.carInWishlist()) return 'Add to Wish list';else if (this.action == 'remove' || this.carInWishlist()) return 'Remove from wish list';
+		}
+	},
+
 	watch: {
-		act: function act(val) {
-			if (val == 'add') this.title = 'Add to Wish list';else if (val == 'remove') this.title = 'Remove from wish list';
+		action: function action(val) {
+			if (val == 'add' || !this.carInWishlist()) this.title = 'Add to Wish list';else if (val == 'remove' || this.carInWishlist()) this.title = 'Remove from wish list';
 		}
 	},
 
 	methods: {
+		carInWishlist: function carInWishlist() {
+			var _this = this;
+
+			// var res = false
+			this.$root.$data.wishList.forEach(function (w) {
+				if (w.car_id == _this.data1) _this.action = 'remove'; // means car exists in wishlist
+			});
+			// return res
+			if (this.action != 'remove') this.action = 'add';
+		},
 		makeRequest: function makeRequest() {
-			if (this.act == 'add') {
+			// if(this.action == 'add' || ! this.carInWishlist()){
+			if (this.action == 'add') {
 				this.postRequest();
-			} else if (this.act == 'remove') {
-				this.deleteRequest();
 			}
+			// else if (this.action == 'remove' || this.carInWishlist()){
+			else if (this.action == 'remove') {
+					this.deleteRequest();
+				}
+			this.carInWishlist();
 		},
 		postRequest: function postRequest() {
-			var _this = this;
+			var _this2 = this;
 
 			axios.post(this.url, { car_id: this.data1, user_id: this.data2 }).then(function (response) {
 				toastr.success(response.data.message);
-				_this.act = 'remove';
-				_this.wish = response.data.wish;
-				_this.wish_id = response.data.wish.id;
+				_this2.action = 'remove';
+				_this2.wish = response.data.wish;
+				// this.wish_id = response.data.wish.id
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error occured!');
 			});
 		},
 		deleteRequest: function deleteRequest() {
-			var _this2 = this;
+			var _this3 = this;
 
-			axios.delete(this.url + '/' + this.wish_id).then(function (response) {
+			axios.delete(this.url + '/' + this.data1) // delete by car_id
+			.then(function (response) {
 				toastr.success(response.data.message);
-				_this2.act = 'add';
+				_this3.action = 'add';
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error occured!');
 			});
@@ -30122,8 +30138,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	mounted: function mounted() {
 		// console.log('WishListButton Component mounted.')
-		this.wish_id = this.data3;
-		//console.log(this.$root.$data.user_id)
+		// this.wish_id = this.data3
+		this.action = this.act; // set data = prop to avoid mutating
+		console.log(this.$root.$data.wishList);
 	}
 });
 
@@ -52576,7 +52593,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "WishListButton"
-  }, [(_vm.$root.$data.user_id > 0) ? _c('span', {
+  }, [(_vm.data2 > 0) ? _c('span', {
     attrs: {
       "data-toggle": "tooltip",
       "data-placement": "top",
@@ -52587,8 +52604,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     class: {
-      'fa fa-heart': _vm.act == 'remove',
-        'fa fa-heart-o': _vm.act == 'add' || _vm.data1 == _vm.wish_id, css: _vm.css
+      'fa fa-heart': _vm.action == 'remove',
+        'fa fa-heart-o': _vm.action == 'add', css: _vm.css
     }
   })]) : _c('div', {
     staticClass: "WishListButton"

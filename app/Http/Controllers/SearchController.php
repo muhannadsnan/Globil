@@ -92,6 +92,7 @@ class SearchController extends Controller
 		$page = $_GET['page'];
 		$perpage = $_GET['per_page'];
 		$skip = ($page == 1 ? 0 : $page - 1) * $perpage;
+		$user_id = auth()->check() ? auth()->id() : 0; //dd($user_id);
 
 		if( !$paginator = Car::latest()->skip($skip)->take($perpage)->get()) //->paginate(4)
 			return ['ok' => 0, 'message' => "Error while loading the latest posts!"];
@@ -101,6 +102,6 @@ class SearchController extends Controller
 		return ['ok' => 1, 'message' => "Latest posts are loaded successfully!", 
 			'data'=>$data, 'moreResults'=>$more_results, 
 			// becuase it is the first request in the app
-			'user_id'=>auth()->id(), 'wish_list'=>auth()->user()->wishList];
+			'user_id'=>$user_id, 'wish_list'=>auth()->user()->wishList];
 	}
 }
