@@ -22,6 +22,9 @@ const app = new Vue({
 		models: '',
 		loadingModel: false,
 		showModal: false,
+
+		// MESSAGE USER
+		message: '',
 	},
 
 	methods: {
@@ -139,6 +142,18 @@ const app = new Vue({
 		convClicked(messages){
 			this.$emit('conv-clicked', messages)
 		},
+
+		// sendMessageToUser(){
+		// 	axios.post('/messages', this.message )
+  //          .then(response => {
+  //              this.showModal = false
+  //              toastr.success(response.data.message)
+  //              this.message = ''
+  //          })
+  //          .catch(err => {
+  //              toastr.error(err.message, 'Error occured!')
+  //          })
+		// },
 	},
 
 	mounted(){

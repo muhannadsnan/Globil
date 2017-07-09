@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Conversation;
 use App\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class MessagesController extends Controller
 {
@@ -51,5 +52,19 @@ class MessagesController extends Controller
 		if(!Message::storeMessage($request))
 			return ['ok'=>0, 'message'=>'Error while sending message!'];
 		return ['ok'=>1, 'message'=>'Message was sent successfully!', 'user_id'=>'none'];
+	}
+
+	public function sendMessageToUser(Request $request)
+	{
+		if( !isset($request->convId)){
+			$conv = Message::getConv($request->toUser);
+			$request->convId = $conv[0]->id;
+		}
+
+		if(!Message::storeMessage($request))
+			Session::flash('message', 'Error while sending message!');
+		Session::flash('message', 'Message was sent successfully!');
+
+		return back();
 	}
 }

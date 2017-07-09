@@ -76,6 +76,7 @@
 					{{$car->brandSubdata()}} - {{$car->modelSubdata()}} ({{$car->year}})
 				</h3>
 
+				<!-- USER PROFILE  -->
 				<div class="user-profile col-sm-2 pull-right">
 					<div class="blk">
 						<a href="/users/{{$car->user->id}}">
@@ -83,10 +84,16 @@
 							<span>{{$car->user->name}}</span>
 						</a>
 					</div>
-					<button class="btn btn-success">Message</button>			
-				</div>
+
+					@if(auth()->check())					
+						<button @click="showModal=true; " class="btn btn-success">Message</button>
+					@else	
+						<a href="/login" class="btn btn-success">Message</a>
+					@endif
+				</div> <!-- END USER PROFILE -->
 				
-				<h4 class="price">current price: <span>{{$car->price}} ,-</span></h4>
+
+				<h4 class="price">current price: <span>{{$car->price}} ,- </span></h4>
 				<h4 class="price">kilometer: <span>{{$car->km}}</span></h4>
 				<h4 class="price">fuel: 
 					<span>
@@ -103,6 +110,7 @@
 
 	<div class="panel panel-defualt ">
 		<div class="panel-heading">
+
 			<h4>DESCRIPTION</h4>
 			<div class="panelbodyX text-left">
 				{{$car->desc}}			
@@ -112,7 +120,24 @@
 	</div>
 </div>
 
+<form action="/messages/toUser" method="post">
+	<modal title="Send message to {{$car->user->name}}" v-show="showModal" @clk-close-modal="showModal=false; message = ''; ">
+		{{ csrf_field() }}
+		<input type="hidden" name="toUser" value="{{$car->user->id}}">
+
+		<div class="form-group">
+			<textarea v-model="message" name="msg" rows="5" placeholder="Message text.." class="form-control"></textarea>
+		</div>
+
+		<template slot="buttons">
+			<input type="submit" value="Send" v-show="message.length > 0" class="btn btn-primary">
+			<input type="submit" value="Send" v-show="message.length == 0" class="btn btn-primary" disabled="disabled">
+		</template>
+	</modal>
+</form>
+
 @endsection
+
 
 @section ("css")
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

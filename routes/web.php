@@ -15,6 +15,7 @@ Route::post('/wish-list', 'WishListsController@store');
 Route::delete('/wish-list/{car_id}', 'WishListsController@destroy');
 Route::get('/messages', 'MessagesController@index');
 Route::post('/messages', 'MessagesController@store');
+Route::post('/messages/toUser', 'MessagesController@sendMessageToUser');
 
 Route::get('/cars/readLatestPosts', 'SearchController@getLatestCars');
 Route::resource('cars', 'CarsController');

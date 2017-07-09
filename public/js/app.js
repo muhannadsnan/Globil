@@ -26997,7 +26997,10 @@ var app = new Vue({
 		brand: '',
 		models: '',
 		loadingModel: false,
-		showModal: false
+		showModal: false,
+
+		// MESSAGE USER
+		message: ''
 	},
 
 	methods: {
@@ -30150,8 +30153,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -53105,6 +53106,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "delete",
     on: {
       "click": function($event) {
+        $event.preventDefault();
         _vm.$emit('clk-close-modal')
       }
     }

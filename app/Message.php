@@ -8,7 +8,6 @@ use App\Message;
 
 class Message extends Model
 {
-	// protected $
 	public static function storeMessage($request)
 	{ //dd($request->convId);
 		Message::create([
@@ -17,5 +16,25 @@ class Message extends Model
 				'text' => $request->msg,
 			]);
 		return true;
+	}
+
+	public static function getConv($toUser)
+	{ 
+		// if I have a conv with that user then get me convId
+		if( $conv = Message::convExistForTwoUsers(auth()->id(), $toUser ) )
+			return $conv;
+		// else create a conv for us
+		return Conversation::create([
+				'user_id_1' => auth()->id(),
+				'user_id_2' => $toUser
+			]);
+	}
+
+	public static function convExistForTwoUsers($user1, $user2)
+	{
+		if(($c = Conversation::where('user_id_1', $user1)->where('user_id_2', $user2)->get())->count() > 0
+		|| ($c = Conversation::where('user_id_2', $user1)->where('user_id_1', $user2)->get())->count() > 0)
+			return $c;
+		return false;
 	}
 }

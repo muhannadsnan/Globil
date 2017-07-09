@@ -6,7 +6,7 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title"> {{ title }} </p>
-        <button class="delete" @click="$emit('clk-close-modal')"></button>
+        <button class="delete" @click="$event.preventDefault();$emit('clk-close-modal')"></button>
       </header>
 
       <section class="modal-card-body">
@@ -14,9 +14,7 @@
       </section>
 
       <footer class="modal-card-foot" style="margin-top:0">
-          <slot name="buttons">
-            
-          </slot>
+        <slot name="buttons"></slot>
       </footer>
     </div>
   </div>
