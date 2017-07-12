@@ -20,7 +20,7 @@ class SavedSearch extends Model
 				'brand_model' => ! $request->brand_model ? null : json_encode($request->brand_model),
 				'min_price' => ! $request->priceRange ? null : $request->priceRange[0],
 				'max_price' => ! $request->priceRange ? null : $request->priceRange[1],
-				'year' => ! $request->years ? null : json_encode($request->years),
+				'years' => ! $request->years ? null : json_encode($request->years),
 				'car_type' => ! $request->car_types ? null : json_encode($request->car_types),
 				'wheel_drive' => ! $request->wheel_drives ? null : json_encode($request->wheel_drives),
 				'min_kilometer' => $request->kmRange[0],

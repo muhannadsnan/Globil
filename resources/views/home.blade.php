@@ -12,7 +12,7 @@
 						echo 'Brands: ';
 						foreach($savedSearch->idsToBrands() as $brand){
 		 					echo $brand.' [ ';
-		 					if(count($savedSearch->idsToModels())){
+		 					if(count(@$savedSearch->idsToModels()[$brand])){
 		 						foreach($savedSearch->idsToModels()[$brand] as $model){
 			 						echo $model.' ';
 			 					}
@@ -23,29 +23,16 @@
 				?>
 			</p>
 			<p>{{$savedSearch->country ? 'Country: ' . $savedSearch->country : '' }}</p>
+			<p>{{$savedSearch->min_price ? 'Price from ' . $savedSearch->min_price . 
+						($savedSearch->max_price ? ' to ' . $savedSearch->max_price : '') : '' }}</p> 						
 			<p>{{$savedSearch->years ? 'Years: ' . $savedSearch->years : '' }}</p>
-			<p>{{$savedSearch->color ? 'Color: ' . $savedSearch->color : '' }}</p>
 			<p>{{$savedSearch->fuel_type ? 'Fuel type: ' . $savedSearch->fuel_type : '' }}</p>
 			<p>{{$savedSearch->gear ? 'Gear: ' . $savedSearch->gear : '' }}</p>
 			<p>{{$savedSearch->cylinder ? 'Cylinder: ' . $savedSearch->cylinder : '' }}</p>
 			<p>{{$savedSearch->car_type ? 'Car type: ' . $savedSearch->car_type : '' }}</p>
-			<p>{{$savedSearch->roof_type ? 'Roof type: ' . $savedSearch->roof_type : '' }}</p>
 			<p>{{$savedSearch->wheel_drive ? 'Wheel drive: ' . $savedSearch->wheel_drive : '' }}</p>
-			<p>{{$savedSearch->reg_nr ? 'Reg number: ' . $savedSearch->reg_nr : '' }}</p>
-			<p>{{$savedSearch->min_price ? 'Price from ' . $savedSearch->min_ : '' }}</p> 
-			<p>{{$savedSearch->max_price ? 'to ' . $savedSearch->max_price : '' }}</p>
-			<p>{{$savedSearch->min_kilometer ? 'Kilometer from ' . $savedSearch->min_kilo : '' }}</p>
-			<p>{{$savedSearch->max_kilometer ? 'to ' . $savedSearch->max_kilometer : '' }}</p>
-			<p>{{$savedSearch->min_weight ? 'Weight from ' . $savedSearch->min_w : '' }}</p>
-			<p>{{$savedSearch->max_weight ? 'to ' . $savedSearch->max_weight : '' }}</p>
-			<p>{{$savedSearch->min_co2 ? 'CO2 from ' . $savedSearch->mi : '' }}</p>
-			<p>{{$savedSearch->max_co2 ? 'to ' . $savedSearch->max_co2 : '' }}</p>
-			<p>{{$savedSearch->min_hp ? 'HP from ' . $savedSearch->m : '' }}</p>
-			<p>{{$savedSearch->max_hp ? 'to ' . $savedSearch->max_hp : '' }}</p>
-			<p>{{$savedSearch->min_reg_fee ? 'Reg fee from ' . $savedSearch->min_re : '' }}</p>
-			<p>{{$savedSearch->max_reg_fee ? 'to ' . $savedSearch->max_reg_fee : '' }}</p>
-			<p>{{$savedSearch->min_yearly_fee ? 'Yearly fee' . $savedSearch->min_yearl : '' }}</p>
-			<p>{{$savedSearch->max_yearly_fee ? 'to ' . $savedSearch->max_yearly_fee : '' }}</p>
+			<p>{{$savedSearch->min_km ? 'km from ' . $savedSearch->min_km . 
+						($savedSearch->max_km ? ' to ' . $savedSearch->max_km : '') : '' }}</p> 
 		</div>
 		<!-- ============================ -->
 		<div class="row">
