@@ -160,3 +160,9 @@ footer hr {border-color: #999;}
 #about .line{padding: 10px 20px; text-align: left; font-size: 16pt;}
 #about .line label{ color: #337ab7;}
 #about .line strong{}
+
+.saved-search{}
+.saved-search li{list-style-type: none}
+
+.loadedSavedSearch{}
+.loadedSavedSearch p{font-weight: bold}

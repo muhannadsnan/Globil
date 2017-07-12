@@ -25,7 +25,7 @@
 				}
 				?>
 
-				@if(isset($isHomePage) && $isHomePage)
+				@if(@$isHomePage)
 				
 					<div class="{{$searchbar_col_width}}" id="searchbar">
 

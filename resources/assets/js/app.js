@@ -157,6 +157,9 @@ const app = new Vue({
 	},
 
 	mounted(){
+		// if(this.$route.query.page)
+		// 	alert()
+		console.log(this._currentRoute)
 		this.getLatestCars()
 	},
 

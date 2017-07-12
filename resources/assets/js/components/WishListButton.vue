@@ -8,7 +8,7 @@
 		<div v-else class="WishListButton">
 			<a href="/login" class="">
 				<span class="fa" data-toggle="tooltip" data-placement="top"
-						data-original-title="title">
+						:data-original-title="title">
 					<i class="fa fa-heart-o"></i>
 				</span>
 			</a>
@@ -21,9 +21,9 @@
 		data(){
 			return {
 				url: '/wish-list',
-				// wish_id: 0,
 				wish: {},
 				action: '',
+				carExists: '',
 			}
 		},
 
@@ -37,33 +37,26 @@
 
 		computed: {
 			title(){
-				if(this.action == 'add' || ! this.carInWishlist())
+				if(this.action == 'add' )
 					return 'Add to Wish list'
-				else if(this.action == 'remove' || this.carInWishlist())
+				else if(this.action == 'remove')
 					return 'Remove from wish list'
-			},
-		},
-
-		watch: {
-			action(val){
- 				if(val == 'add' || ! this.carInWishlist())
-					this.title = 'Add to Wish list'
-				else if(val == 'remove' || this.carInWishlist())
-					this.title = 'Remove from wish list'
 			},
 		},
 
 		methods: {
 
 			carInWishlist(){
-				// var res = false
 				this.$root.$data.wishList.forEach(w => {
-					if(w.car_id == this.data1)
+					if(w.car_id == this.data1){ //alert('found in wishlist ' + this.data1)
 						this.action = 'remove' // means car exists in wishlist
+						this.carExists = true
+					}
 				})
-				// return res
-				if(this.action != 'remove')
+				if(this.action != 'remove'){
 					this.action = 'add'
+					this.carExists = false
+				}
 			},
 
 			makeRequest(){
@@ -106,7 +99,11 @@
 		mounted() {
 			// console.log('WishListButton Component mounted.')
 			// this.wish_id = this.data3
-			this.action = this.act // set data = prop to avoid mutating
+			if(this.act)
+				this.action = this.act // set data = prop to avoid mutating
+			else { //alert(this.data1)
+				this.carInWishlist()
+			}
 			console.log(this.$root.$data.wishList)
 		}
 	}

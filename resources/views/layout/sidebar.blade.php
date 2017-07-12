@@ -6,19 +6,19 @@
 	</div>
 
 	<div class="panel-body text-left">
-		@if(isset($savedSearch))
+		@if(isset($savedSearches))
 		
-			@foreach($savedSearch as $savedS)
+			@foreach($savedSearches as $savedS)
 		
 				<li><a href="/saved-search/{{$savedS->id}}" class="">
 					{{ ! is_null($savedS->title) ? $savedS->title : "Saved Search {$savedS->id}" }}
-				</a></li>		
+				</a></li>
 			
 			@endforeach		
 
-			@if(count($savedSearch) == 0)
+			@if(count($savedSearches) == 0)
 			
-				No Saved Searches yet.
+				<label class="label label-default">No Saved Searches yet.</label>
 			
 			@endif
 		

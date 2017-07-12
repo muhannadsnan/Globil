@@ -23,6 +23,7 @@ try {
 window.formData = require('form-data');
 window.moment = require('moment');
 window.axios = require('axios');
+window.route = require('vue-router');
 
 window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

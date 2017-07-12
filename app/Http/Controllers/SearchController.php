@@ -20,27 +20,32 @@ class SearchController extends Controller
 
 		if( count($res) > 0){ // results found ? fill data
 			
-			$car_subdata = $this->fillCardData($res);
+			$car_subdata = Car::fillCardData($res);
 		}
 		
 		return ['ok' => 1, 'message' => "Cars that match your search..", 'data' => $car_subdata];
 	}
 
-	public function fillCardData($res) // returns array contains cards data
-	{
-		$car_subdata = [];
-		foreach ($res as $key => $val) { //dd($key);
-			$car_subdata[$key] = [
-				'id' => $val->id,
-				'brand' => $val->brandSubdata($val->brand),
-				'model' => $val->modelSubdata($val->model),
-				'year' => $val->year,
-				'price' => $val->price,
-				'pic_file_name' => asset('storage/images').'/'.$val->pictures[0]->id . '.' . $val->pictures[0]->ext,
-			];
-		}
-		return $car_subdata;
-	}
+	// public function fillCardData($res) // returns array contains cards data
+	// {
+	// 	$car_subdata = [];
+	// 	foreach ($res as $key => $val) { //dd($key);
+	// 		$car_subdata[$key] = [
+	// 			'id' => $val->id,
+	// 			'brand' => $val->brandSubdata($val->brand),
+	// 			'model' => $val->modelSubdata($val->model),
+	// 			'year' => $val->year,
+	// 			'price' => $val->price,
+	// 			'pic_file_name' => asset('storage/images').'/'.$val->pictures[0]->id . '.' . $val->pictures[0]->ext,
+	// 		];
+	// 	}
+	// 	return $car_subdata;
+	// }
+
+
+
+
+
 /*
 	public function readCheckedBrands(Request $request)
 	{
@@ -79,7 +84,7 @@ class SearchController extends Controller
 
 		if( !$res = Car::searchResult($req)->skip($skip)->take($perpage)->get())
 			return ['ok' => 0, 'message' => "Error while loading search result!"];
-		$data = $this->fillCardData($res);
+		$data = Car::fillCardData($res);
 		$more_results = Car::searchResult($req)->skip($skip+$perpage)->take($perpage)->get()->count();
 		//dd($data);
 		return ['ok' => 1, 'message' => "Search result is loaded successfully!",
@@ -97,11 +102,12 @@ class SearchController extends Controller
 		if( !$paginator = Car::latest()->skip($skip)->take($perpage)->get()) //->paginate(4)
 			return ['ok' => 0, 'message' => "Error while loading the latest posts!"];
 
-		$data = $this->fillCardData($paginator);
+		$data = Car::fillCardData($paginator);
 		$more_results = Car::latest()->skip($page*$perpage)->take($perpage)->get()->count();
 		return ['ok' => 1, 'message' => "Latest posts are loaded successfully!", 
 			'data'=>$data, 'moreResults'=>$more_results, 
 			// becuase it is the first request in the app
 			'user_id'=>$user_id, 'wish_list'=>auth()->user()->wishList];
 	}
+
 }

@@ -47,7 +47,7 @@ class Car extends Model
 
 
 	public function scopeSearchResult($query, $request)
-	{  //dd($request->brand_model);
+	{ // dd($request);
 		// BRAND, MODEL
 		if(count(@$request->brand_model)){
 			foreach ($request->brand_model as $brand) {
@@ -217,4 +217,20 @@ class Car extends Model
 		return SubData::find($id)['title'];
 	}
 
+
+	public static function fillCardData($res) // returns array contains cards data
+	{
+		$car_subdata = [];
+		foreach ($res as $key => $val) { //dd($key);
+			$car_subdata[$key] = [
+				'id' => $val->id,
+				'brand' => $val->brandSubdata($val->brand),
+				'model' => $val->modelSubdata($val->model),
+				'year' => $val->year,
+				'price' => $val->price,
+				'pic_file_name' => asset('storage/images').'/'.$val->pictures[0]->id . '.' . $val->pictures[0]->ext,
+			];
+		}
+		return $car_subdata;
+	}
 }

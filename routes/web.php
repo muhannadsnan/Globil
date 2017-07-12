@@ -41,6 +41,7 @@ Route::get('/search/general/{keyword}', 'SearchController@searchGeneral');
 Route::post('/search/results', 'SearchController@readResults');
 
 Route::post('/saved-search', 'SavedSearchController@store');
+Route::get('/saved-search/{savedSearch}', 'SavedSearchController@getSavedSearch');
 
 // ==============  Messages
 Route::get('/read-convs-with-user-info', 'MessagesController@getConvsWithUserInfo');

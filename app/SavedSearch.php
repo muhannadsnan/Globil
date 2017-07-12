@@ -53,4 +53,30 @@ class SavedSearch extends Model
 			]);
 		return true;
 	}
+
+	public function idsToBrands()
+	{ 
+		$res = [];
+		foreach (json_decode($this->brand_model) as $key => $brand) { 
+			$res[$key] = $this->idToTitle($brand[0]);
+		} //dd($res);
+		return $res;
+	}
+
+	public function idsToModels()
+	{ 
+		$res = [];
+		foreach (json_decode($this->brand_model) as $brand) { 
+			$i = 0;
+			foreach ($brand[1] as $model) {
+				$res[$this->idToTitle($brand[0])][$i] = $this->idToTitle($model); $i++;
+			}
+		} //dd($res);
+		return $res;
+	}
+
+	public function scopeIdToTitle($query, $id)
+	{
+		return SubData::where('id', $id)->get(['title'])[0]->title;
+	}
 }
