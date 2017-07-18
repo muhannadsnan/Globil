@@ -51,29 +51,31 @@
 @section('content')
 
 	<div v-if="loadingPage" class="loading">
-		<h3>LOADING POSTS..</h3>	<hr>
+		<h3>LOADING CARS..</h3>	<hr>
 	</div>
 
-	<div v-else class="col-md-12x" v-if=""  :class="{'blur': searchTyping}" v-cloak>
+	<div v-else class="col-md-12x" :class="{'blur': searchTyping}" v-cloak>
 		 <div class="row">
 
 				<div class="latest-posts col-md-12">
 
-					@yield('saved-search')
-
-					<hr>
-					
-		 			<div v-if="searchResult[0] != 'init' " class="row">
-			 			<div v-if="searchResult.length == 0" class="panel panel-info search-results" v-cloak>
-			 				<h3>No results found.</h3>			 				
-			 			</div>
-		 				@include('cars._cardInVue')
-			 		</div>
-					 
-					<div class="col-xs-12 form-group">
-						<button v-if="isActiveSearch" @click="loadMoreResults" :disabled="moreResults == 0" class="btn btn-info btn-lg">Load more</button>
-						<button v-else @click="loadMoreLatestPosts" :disabled="moreResults == 0" class="btn btn-warning btn-lg">Load more</button>
+					<div class="xx" v-if="isSavedSearchPage" v-show=" ! isActiveSearch">
+						@yield('saved-search')					
 					</div>
+					
+					<div class="xx" v-show="searchResult[0] != 'init' && ( !isSavedSearchPage || isActiveSearch)">
+						<div class="row">
+				 			<div v-if="searchResult.length == 0" class="panel panel-info search-results">
+				 				<h3>No results found.</h3>			 				
+				 			</div>
+			 				@include('cars._cardInVue')
+				 		</div>
+						 
+						<div class="col-xs-12 form-group">
+							<button v-if="isActiveSearch" @click="loadMoreResults" :disabled="moreResults == 0" class="btn btn-info btn-lg">Load more</button>
+							<button v-else @click="loadMoreLatestPosts" :disabled="moreResults == 0" class="btn btn-warning btn-lg">Load more</button>
+						</div>
+					</div>		 			
 
 				</div>				 		
 		 </div>

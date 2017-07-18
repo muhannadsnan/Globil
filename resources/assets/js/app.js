@@ -8,7 +8,7 @@ const app = new Vue({
 		wishList: [], // for current user
 		
 		searchResult: ['init'],
-		searchFilters: [],
+		searchFilters: {},
 		paginator: {current_page:1, per_page: 2},
 		moreResults: 2,
 		isActiveAll: [false,false,false,false,false,false,false,false,false,false,false,false,false], // area, city, brand, model, carType, FuelType, gear, minKm, maxKm, minPrice, maxPrice, wheelDrive, year
@@ -57,6 +57,7 @@ const app = new Vue({
 
 		getLatestCars(){ //==================================================
 			this.loadingModel = true
+			this.loadingPage = true
 
 			axios.get('/cars/readLatestPosts?page='+this.paginator.current_page+'&per_page='+this.paginator.per_page)
 	           .then(response => { console.log(response.data.data)
@@ -70,6 +71,7 @@ const app = new Vue({
 	               toastr.error('Error occured!', err.message)
 	           })
         	this.loadingModel = false
+        	this.loadingPage = false
 		}, //======================================================================
 
 		loadMoreResults(){
@@ -123,13 +125,13 @@ const app = new Vue({
 		searchRequest(){
 			axios.get('/search/general/'+ this.searchKeyword )
               .then(response => {
-                  this.searchResult = response.data.data;  
+                  this.searchResult = response.data.data  
               })
               .catch(err => {
-                  toastr.error(err.message, 'Error occured!');
+                  toastr.error(err.message, 'Error occured!')
               })
-        	this.loadingPage = false;
-         this.searchTyping = false;
+        	this.loadingPage = false
+         this.searchTyping = false
 		}, //<<
 
 		searchKeyEnter(){
@@ -156,13 +158,6 @@ const app = new Vue({
 		// },
 	},
 
-	mounted(){
-		// if(this.$route.query.page)
-		// 	alert()
-		console.log(this._currentRoute)
-		this.getLatestCars()
-	},
-
 	computed: {
 		isActiveSearch(){
 			var res = false
@@ -170,6 +165,12 @@ const app = new Vue({
 				res = res || e
 			})
 			return res
+		},
+		//SAVED SEARCH SHOW
+		isSavedSearchPage(){
+			if(window.location.href.indexOf("saved-search") > -1)
+				return true
+			return false
 		},
 	},
 
@@ -193,5 +194,13 @@ const app = new Vue({
 			// this.paginator.current_page = 1 				
 			this.searchResult = []
 		},
-	}
+	},
+
+
+	mounted(){
+		// if(this.$route.query.page)
+		// 	alert()
+		console.log(this._currentRoute)
+		this.getLatestCars()
+	},
 });
