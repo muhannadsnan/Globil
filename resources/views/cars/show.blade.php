@@ -76,6 +76,20 @@
 					{{$car->brandSubdata()}} - {{$car->modelSubdata()}} ({{$car->year}})
 				</h3>
 
+				<!-- ATTRIBS -->
+				<div class="col-sm-5 text-left">
+					<span>current price: </span> <label>{{$car->price}} ,- </label> <br>
+					<span>kilometer: </span> <label>{{$car->km}}</label> <br>
+					<span>fuel:</span> <label>{{$car->fuelSubdata()}}</label> <br>
+					<span>registration nr: </span> <label>{{$car->reg_nr}}</label> <br>
+					<small>{{$car->created_at->diffForHumans()}}</small> <br>
+				</div>
+
+				<!-- MAP -->
+				<div class="map">
+					
+				</div>
+
 				<!-- USER PROFILE  -->
 				<div class="user-profile col-sm-2 pull-right">
 					<div class="blk">
@@ -91,28 +105,17 @@
 						<a href="/login" class="btn btn-success">Message</a>
 					@endif
 				</div> <!-- END USER PROFILE -->
-				
-
-				<h4 class="price">current price: <span>{{$car->price}} ,- </span></h4>
-				<h4 class="price">kilometer: <span>{{$car->km}}</span></h4>
-				<h4 class="price">fuel: 
-					<span>
-						{{$car->fuelSubdata()}}
-					</span>
-					</h4>
-				<h4 class="price">registration nr: <span>{{$car->reg_nr}}</span></h4>
-				<h4 class="price"><small>{{$car->created_at->diffForHumans()}}</small></small>
 
 			</div>
 		</div>
 	</div>
 
-
+ <!-- DESCRIPTION -->
 	<div class="panel panel-defualt ">
-		<div class="panel-heading">
+		<div class="container-fluid">
 
 			<h4>DESCRIPTION</h4>
-			<div class="panelbodyX text-left">
+			<div class="text-left">
 				{{$car->desc}}			
 			</div>
 

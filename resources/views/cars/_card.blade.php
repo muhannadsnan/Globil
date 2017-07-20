@@ -29,6 +29,7 @@
 				<p>{{ $car->modelSubdata() }}</p>
 				<small>year: {{ $car->year }}</small> 
 				<label> {{ $car->price }} ,- </label>
+				<p>{{ $car->area .', '. $car->city }}</p>
 			</div>
 
 			<div class="foot">

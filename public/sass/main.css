@@ -35,17 +35,19 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 .car-card:hover{border-color: #000;}
 .car-card img{ height: 80px;  }
 .car-card small{font-size: 9pt; color: #ccc;}
-.car-card .caption{ height:; font-size: 12pt !important;  overflow: hidden; padding: 7px 0px;}
+.car-card .caption{ height:; font-size: 12pt !important;  overflow: ; padding: 7px 0px;}
 .car-card .desc{ overflow: hidden; min-height: 50px; border: 0px solid #000;}
 .car-card .fa {margin:0px 5px 0px 0px; font-size: 24pt; line-height: 30px; vertical-align: middle;}
 .car-card .fa:hover {cursor: pointer}
 .car-card .edit-btn {color: #007d05;}
-.car-card .foot{margin-top: 5px;}
+.car-card .foot{margin-top: 5px; height: 35px;}
 .car-card .foot .btn{ float:left;}
 
 .card-in-vue{}
 .card-in-vue .panel{padding:10px 10px 0px 10px;}
-.card-in-vue p{padding: 0px; margin: 0px; height: 15px;}
+.card-in-vue label{padding: 0px; margin: 0px; height: 25px; line-height: 25px;}
+.card-in-vue p{padding: 0px; margin: 0px; height: 15px; line-height: 15px;}
+.card-in-vue p small{padding: 0px; margin: 0px; height: 15px; line-height: 15px;}
 
 /**** CAR SHOW ****/
 .card #myCarousel{height: 350px;}
@@ -166,3 +168,45 @@ footer hr {border-color: #999;}
 
 .loadedSavedSearch{margin-bottom: 10px}
 .loadedSavedSearch p{font-weight: bold; margin-bottom: 0px}
+
+
+
+/*************  TOOLTIP  *************/
+.tooltipDiv {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltipDiv .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 1000;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+    font-size: 10pt;
+}
+
+.tooltipDiv .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltipDiv:hover .tooltiptext {
+    visibility: visible;
+    opacity: 0.8;
+}

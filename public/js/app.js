@@ -30070,6 +30070,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -30113,14 +30114,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			}
 		},
 		makeRequest: function makeRequest() {
-			// if(this.action == 'add' || ! this.carInWishlist()){
 			if (this.action == 'add') {
 				this.postRequest();
+			} else if (this.action == 'remove') {
+				this.deleteRequest();
 			}
-			// else if (this.action == 'remove' || this.carInWishlist()){
-			else if (this.action == 'remove') {
-					this.deleteRequest();
-				}
 			this.carInWishlist();
 		},
 		postRequest: function postRequest() {
@@ -30150,7 +30148,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	mounted: function mounted() {
 		// console.log('WishListButton Component mounted.')
-		// this.wish_id = this.data3
 		if (this.act) this.action = this.act; // set data = prop to avoid mutating
 		else {
 				//alert(this.data1)
@@ -52607,13 +52604,9 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "WishListButton"
-  }, [(_vm.data2 > 0) ? _c('span', {
-    attrs: {
-      "data-toggle": "tooltip",
-      "data-placement": "top",
-      "data-original-title": _vm.title
-    },
+    staticClass: "WishListButton "
+  }, [(_vm.data2 > 0) ? _c('div', {
+    staticClass: "tooltipDiv",
     on: {
       "click": _vm.makeRequest
     }
@@ -52622,7 +52615,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       'fa fa-heart': _vm.action == 'remove',
         'fa fa-heart-o': _vm.action == 'add', css: _vm.css
     }
-  })]) : _c('div', {
+  }), _vm._v(" "), _c('span', {
+    staticClass: "tooltiptext"
+  }, [_vm._v(_vm._s(_vm.title))])]) : _c('div', {
     staticClass: "WishListButton"
   }, [_c('a', {
     attrs: {

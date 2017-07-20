@@ -5,7 +5,7 @@ $(document).ready(function(){
   //clickImageToShowSlider();
   // closeImageOnClickOutside();
   toggleDropdown();
-  tooltip();
+  //tooltip();
   userTimelineTabs();
 });
 // ================================================

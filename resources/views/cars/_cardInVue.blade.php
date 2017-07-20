@@ -12,6 +12,7 @@
 				<p>@{{ car.model }}</p>
 				<small>year: @{{ car.year }}</small> 
 				<label> @{{ car.price }} ,- </label>
+				<p><small>@{{ car.area +', '+ car.city }}</small></p>
 			</div>
 			
 			<div class="foot">

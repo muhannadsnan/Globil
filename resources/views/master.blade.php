@@ -10,7 +10,7 @@
 		@include('layout.nav')
 
 
-		<div class="row">
+		<div class="rowX">
 			
 			<div class="container-fluid">
 				<?php 

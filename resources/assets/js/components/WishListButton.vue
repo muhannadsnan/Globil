@@ -1,10 +1,11 @@
 <template>
-	<div class="WishListButton">
-		<span v-if="data2 > 0" class="" data-toggle="tooltip" data-placement="top"
-				:data-original-title="title" @click="makeRequest">
+	<div class="WishListButton ">		
+
+		<div class="tooltipDiv" v-if="data2 > 0" @click="makeRequest">
 			<i :class="{'fa fa-heart': action == 'remove',
 							'fa fa-heart-o': action == 'add' ,  css}"></i>
-		</span>
+			<span class="tooltiptext">{{title}}</span>
+		</div>
 		<div v-else class="WishListButton">
 			<a href="/login" class="">
 				<span class="fa" data-toggle="tooltip" data-placement="top"
@@ -60,11 +61,9 @@
 			},
 
 			makeRequest(){
-				// if(this.action == 'add' || ! this.carInWishlist()){
 				if(this.action == 'add'){
 					this.postRequest()
 				}
-				// else if (this.action == 'remove' || this.carInWishlist()){
 				else if (this.action == 'remove'){
 					this.deleteRequest()
 				}
@@ -98,7 +97,6 @@
 
 		mounted() {
 			// console.log('WishListButton Component mounted.')
-			// this.wish_id = this.data3
 			if(this.act)
 				this.action = this.act // set data = prop to avoid mutating
 			else { //alert(this.data1)

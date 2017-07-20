@@ -25,24 +25,27 @@ class Car extends Model
 		return $query->get(); // dd($res);	 
 	}
 
-
 	public function scopeBrandSubdata($query)
 	{
 		return SubData::where('id', $this->brand)->get(['title'])[0]->title;
 	}
-
-
 	public function scopeModelSubdata($query)
 	{
 		return SubData::where('id', $this->model)->get(['title'])[0]->title;
 	}
-
-
 	public function scopeFuelSubdata($query)
 	{
-		//$fuel = $query->get(['fuel_type_bensin', 'fuel_type_diesel', 'fuel_type_electric'])[0];
-		$fuel = SubData::where('id', $this->fuel_type)->get(['title'])[0]->title;
-		return $fuel;
+		return SubData::where('id', $this->fuel_type)->get(['title'])[0]->title;
+	}
+	public function scopeAreaSubdata($query)
+	{
+		if(!$this->manicipality) return 'No area';
+		return SubData::where('id', $this->manicipality)->get(['title'])[0]->title;
+	}
+	public function scopeCitySubdata($query)
+	{
+		if(!$this->city) return 'No city';
+		return SubData::where('id', $this->city)->get(['title'])[0]->title;
 	}
 
 
@@ -234,10 +237,12 @@ class Car extends Model
 		foreach ($res as $key => $val) { //dd($key);
 			$car_subdata[$key] = [
 				'id' => $val->id,
-				'brand' => $val->brandSubdata($val->brand),
-				'model' => $val->modelSubdata($val->model),
+				'brand' => $val->brandSubdata(),
+				'model' => $val->modelSubdata(),
 				'year' => $val->year,
 				'price' => $val->price,
+				'area' => $val->areaSubdata(),
+				'city' => $val->citySubdata(),
 				'pic_file_name' => asset('storage/images').'/'.$val->pictures[0]->id . '.' . $val->pictures[0]->ext,
 			];
 		}
