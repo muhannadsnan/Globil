@@ -27,7 +27,8 @@
 
 				@if(@$isHomePage)
 				
-					<div class="{{$searchbar_col_width}}" id="searchbar">
+				
+					<div id="searchbar" class="{{$searchbar_col_width}} panel panel-info">
 
 						@include('layout.searchbar')
 
@@ -36,7 +37,7 @@
 				@endif
 				
 
-				<div class="{{$content_col_width}}" id="content">
+				<div id="content" class="{{$content_col_width}}">
 
 					@if(@$isHomePage)
 						<!-- <ads type="banner" items="1" refresh="15"></ads> -->
@@ -47,7 +48,7 @@
 				</div><!-- .content -->
 
 
-				<div class="{{$sidebar_col_width}}" id="sidebar">
+				<div id="sidebar" class="{{$sidebar_col_width}} ">
 
 					@if(@$isHomePage)
 						@include('layout.sidebar')

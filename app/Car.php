@@ -57,7 +57,17 @@ class Car extends Model
 				}
 			}
 		}
-// dd($query->get());
+
+		//AREA
+		if(isset($request->areas) && count(@$request->areas) > 0){
+			foreach ($request->areas as $area) {
+				$query->orWhere('manicipality', $area[0]); //echo $area[0];
+				if(count($area[1])){
+					$query->whereIn('city', $area[1]); //echo $city;
+				}
+			}
+		}
+
 		//YEAR
 		if(isset($request->years) && count(@$request->years) > 0){
 			$query->whereIn('year', $request->years);
