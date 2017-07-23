@@ -3,8 +3,12 @@
 namespace App;
 
 //use Illuminate\Database\Eloquent\Model;
+use App\Events\CarPostedEvent;
+use App\Notifications\CarPosted;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+
 
 class Car extends Model
 {
@@ -60,7 +64,6 @@ class Car extends Model
 				}
 			}
 		}
-
 		//AREA
 		if(isset($request->areas) && count(@$request->areas) > 0){
 			foreach ($request->areas as $area) {
@@ -70,34 +73,28 @@ class Car extends Model
 				}
 			}
 		}
-
 		//YEAR
 		if(isset($request->years) && count(@$request->years) > 0){
 			$query->whereIn('year', $request->years);
 			//dd($request, $request->years, $query->get());
 		}
-
 		//CAR_TYPES
 		if(isset($request->car_types) && count(@$request->car_types) > 0){
 			$query->whereIn('car_type', $request->car_types);
 			// dd($request->car_types, $query->get());
 		}
-
 		//WHEEL_DRIVES
 		if(isset($request->wheel_drives) && count(@$request->wheel_drives) > 0){
 			$query->whereIn('wheel_drive', $request->wheel_drives);
 		}
-
 		//FUEL_TYPES
 		if(isset($request->fuel_types) && count(@$request->fuel_types) > 0){
 			$query->whereIn('fuel_type', $request->fuel_types);
 		}
-
 		//GEAR
 		if(isset($request->gears) && count(@$request->gears) > 0){
 			$query->whereIn('gear', $request->gears);
 		}
-
 		//PRICE [1000,2000]
 		if( @$request->priceRange !== null ){
 			if((@$request->priceRange[0] == 0 || @$request->priceRange[0] == "0") && @$request->priceRange[1] > 0){
@@ -110,7 +107,6 @@ class Car extends Model
 				$query->whereBetween('price', $request->priceRange);
 			}
 		}
-
 		//KM [0,100] -- [100,200] -- [100,0]		
 		if(isset($request->kmRange)){
 			if((@$request->kmRange[0] == 0 || @$request->kmRange[0] == "0") && @$request->kmRange[1] > 0){
@@ -123,7 +119,6 @@ class Car extends Model
 				$query->whereBetween('kilometer', @$request->kmRange);
 			}
 		}
-
 		$query->orderBy('created_at', 'desc')->with('pictures'); //dd($res);
 		return $query;
 	}
@@ -169,8 +164,7 @@ class Car extends Model
 		]);
 	}
 
-
-	protected static function rules()
+	protected static function rules() //=====================
 	{
 		return [
 			"brand" => 'required|max:255',
@@ -198,7 +192,7 @@ class Car extends Model
 		];
 	}
 
-	public static function updateCar($request, $car)
+	public static function updateCar($request, $car) //==================
 	{
 		$updateCar = Car::updateOrCreate(['id'=>$car->id], [
 			"brand" => $request['brand'], 
@@ -247,5 +241,28 @@ class Car extends Model
 			];
 		}
 		return $car_subdata;
+	}
+
+
+	public static function notify_users_for_savedSearch($car)
+	{
+		if($usersToNotify = $car->isInSavedSearch()){
+
+			Notification::send($usersToNotify, new CarPosted($car));
+
+			// broadcast(new CarPostedEvent(/*auth()->user(),*/ $car));
+
+			foreach ($usersToNotify as $userToNotify) {
+				echo "broadcast to : {$userToNotify->name}<br>";
+				broadcast(new CarPostedEvent($userToNotify->id, $car));
+			}
+		}
+	}
+
+	public static function isInSavedSearch()
+	{
+		$userIDS = [3, 1];
+		return User::whereIn('id', $userIDS)->get();
+		return false;
 	}
 }

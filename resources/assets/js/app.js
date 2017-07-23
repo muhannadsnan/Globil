@@ -4,7 +4,6 @@ const app = new Vue({
 	el: '#app',
 
 	data: {
-		// user_id: '0',
 		wishList: [], // for current user
 		
 		searchResult: ['init'],
@@ -27,6 +26,7 @@ const app = new Vue({
 		message: '',
 
 		//NOTIFICATIONS
+		user_id: '0',
 		readNotifications: [],
 		unreadNotifications: [],
 	},
@@ -166,15 +166,16 @@ const app = new Vue({
 				.then(response => {
 					this.readNotifications = response.data.readNotif ? response.data.readNotif : []
 					this.unreadNotifications = response.data.unreadNotif ? response.data.unreadNotif : []
+					this.user_id = response.data.user_id
+					this.EchoNotif()
 				})
 		},
 
-		EchoNotif(){
-			Echo.channel('ch')
-		    	.listen('CarPostedEvent', (notif) => {
+		EchoNotif(){ 
+		   Echo.channel('ch-'+this.user_id)
+		    	.listen('CarPostedEvent', (notif) => { console.log(notif)
 					this.unreadNotifications.unshift(notif)
 		    	})
-
 		}
 	},
 
@@ -193,6 +194,7 @@ const app = new Vue({
 			return false
 		},
 	},
+			// Echo.channel('ch-'+this.user_id)
 
 	watch:{
 		searchKeyword(val){
@@ -219,12 +221,11 @@ const app = new Vue({
 
 	mounted(){
 
-		this.getLatestCars()
+		this.getLatestCars() // should work only in home page
 
-		this.getNotifications()
+		this.getNotifications() // works in all pages
 
-		this.EchoNotif()
-
+		// this.EchoNotif() // works in all pages
 
 	},
 });

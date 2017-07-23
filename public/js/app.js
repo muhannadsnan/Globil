@@ -26980,7 +26980,6 @@ var app = new Vue({
 	el: '#app',
 
 	data: {
-		// user_id: '0',
 		wishList: [], // for current user
 
 		searchResult: ['init'],
@@ -27003,6 +27002,7 @@ var app = new Vue({
 		message: '',
 
 		//NOTIFICATIONS
+		user_id: '0',
 		readNotifications: [],
 		unreadNotifications: []
 	},
@@ -27148,12 +27148,15 @@ var app = new Vue({
 			axios.get('/get-notif').then(function (response) {
 				_this8.readNotifications = response.data.readNotif ? response.data.readNotif : [];
 				_this8.unreadNotifications = response.data.unreadNotif ? response.data.unreadNotif : [];
+				_this8.user_id = response.data.user_id;
+				_this8.EchoNotif();
 			});
 		},
 		EchoNotif: function EchoNotif() {
 			var _this9 = this;
 
-			Echo.channel('ch').listen('CarPostedEvent', function (notif) {
+			Echo.channel('ch-' + this.user_id).listen('CarPostedEvent', function (notif) {
+				console.log(notif);
 				_this9.unreadNotifications.unshift(notif);
 			});
 		}
@@ -27174,6 +27177,7 @@ var app = new Vue({
 			return false;
 		}
 	},
+	// Echo.channel('ch-'+this.user_id)
 
 	watch: {
 		searchKeyword: function searchKeyword(val) {
@@ -27198,11 +27202,11 @@ var app = new Vue({
 
 	mounted: function mounted() {
 
-		this.getLatestCars();
+		this.getLatestCars(); // should work only in home page
 
-		this.getNotifications();
+		this.getNotifications(); // works in all pages
 
-		this.EchoNotif();
+		// this.EchoNotif() // works in all pages
 	}
 });
 

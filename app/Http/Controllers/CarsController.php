@@ -20,7 +20,7 @@ class CarsController extends Controller
 		$this->middleware('auth')->except(['show', 'getLatestPosts']);	  View::addExtension('html', 'php');
 	}
 
-	public function store(Request $request)
+	public function store(Request $request) //==============================
 	{
 		//dd($request->all());
 		$this->validate($request, Car::rules());
@@ -36,10 +36,10 @@ class CarsController extends Controller
 
  		Session::flash('message', 'Car was posted successfully!');
 
- 		$usersToNotify = User::whereIn('id', [1,3])->get();
+ 		// Car::notify_users_for_savedSearch($car);
 
  		return redirect('/cars/create');
-	}
+	} //=====================================================================
 
 	public function create()
 	{

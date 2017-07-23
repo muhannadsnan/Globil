@@ -19,22 +19,20 @@ class CarPostedEvent extends Event implements ShouldBroadcast
 
     public $data;
 
-    public function __construct(User $user, Car $car)
+    public function __construct($userId, Car $car)
     {
-        $this->data = (object) ['car'=>$car, 'user'=>$user, 'message'=>"{$user->name} has created a new car {$car->brandSubdata()} {$car->modelSubdata()}", 'time'=>Carbon::now()];
-        // $this->data->car = $car;
-        // $this->data->user = $user;
-        // $this->data->message = "{$this->user->name} has created a new car {$this->car->brandSubdata()}";
-        // $this->data->time = Carbon::now();
+        //$carObj = (object) [];
+        $this->data = (object) [
+            'car' => $car->id/*$carObj*/, 
+            'userToNotify' => $userId, 
+            'message' => "{$car->user->name} has created a new car {$car->brandSubdata()} {$car->modelSubdata()}", 
+        ];
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return Channel|array
-     */
     public function broadcastOn()
     {
-        return new Channel('ch');
+        // return new PresenceChannel('ch-' . $this->data->usersToNotify);
+        // return new Channel('ch');
+        return new Channel('ch-' . $this->data->userToNotify);
     }
 }

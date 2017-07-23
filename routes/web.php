@@ -69,23 +69,28 @@ Route::get('/mark-notif-as-read', function(){
 });
 
 Route::get('/get-notif', function(){
-	if(auth()->check())
-		return ['readNotif' => auth()->user()->readNotifications, 'unreadNotif' => auth()->user()->unreadNotifications];
+	if(auth()->check()){
+		return [
+			'readNotif' => auth()->user()->readNotifications, 
+			'unreadNotif' => auth()->user()->unreadNotifications,
+			'user_id' => auth()->id()
+		];
+	}
 });
 
 
 Route::get('/not/{car}', function(Car $car){
-	// $usersToNotify = User::whereIn('id', [1,3])->get();
-	$usersToNotify = auth()->user();
-	Notification::send($usersToNotify, new CarPosted($car));
 
-	echo "Count notifications is: ". count(auth()->user()->unreadNotifications). "<br>";
-	foreach (auth()->user()->unreadNotifications as $not) {
-		echo $not->data['car']['brand'] ."<br>";
-	}
+	// $usersToNotify = auth()->user();
+	// Notification::send($usersToNotify, new CarPosted($car));
 
-	broadcast(new CarPostedEvent(auth()->user(), $car));
+	// echo "Count notifications is: ". count(auth()->user()->unreadNotifications). "<br>";
+	// foreach (auth()->user()->unreadNotifications as $not) {
+	// 	echo $not->data['car']['brand'] ."<br>";
+	// }
 
+	// broadcast(new CarPostedEvent(/*auth()->user(), */$car));
+	Car::notify_users_for_savedSearch($car);
 });
 
 
