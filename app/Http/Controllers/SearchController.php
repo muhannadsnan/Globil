@@ -60,7 +60,7 @@ class SearchController extends Controller
 		return ['ok' => 1, 'message' => "Latest posts are loaded successfully!", 
 			'data'=>$data, 'moreResults'=>$more_results, 
 			// becuase it is the first request in the app
-			'user_id'=>$user_id, 'wish_list'=>auth()->user()->wishList];
+			'user_id'=>$user_id, 'wish_list'=>auth()->check() ? auth()->user()->wishList : []];
 	}
 
 }

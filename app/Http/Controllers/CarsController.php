@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Car;
+use App\Notifications\CarPosted;
 use App\Picture;
+use App\User;
 use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -33,6 +35,8 @@ class CarsController extends Controller
  		}
 
  		Session::flash('message', 'Car was posted successfully!');
+
+ 		$usersToNotify = User::whereIn('id', [1,3])->get();
 
  		return redirect('/cars/create');
 	}
@@ -80,6 +84,5 @@ class CarsController extends Controller
 		$update = true;
 		return view('cars.myCars', compact('update'));
 	}
-
 
 }

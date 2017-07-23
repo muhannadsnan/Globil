@@ -48,12 +48,15 @@
 		methods: {
 
 			carInWishlist(){
-				this.$root.$data.wishList.forEach(w => {
-					if(w.car_id == this.data1){ //alert('found in wishlist ' + this.data1)
-						this.action = 'remove' // means car exists in wishlist
-						this.carExists = true
-					}
-				})
+				if(this.$root.$data.wishList.length){
+					this.$root.$data.wishList.forEach(w => {
+						if(w.car_id == this.data1){ //alert('found in wishlist ' + this.data1)
+							this.action = 'remove' // means car exists in wishlist
+							this.carExists = true
+						}
+					})
+				}
+
 				if(this.action != 'remove'){
 					this.action = 'add'
 					this.carExists = false

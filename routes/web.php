@@ -1,5 +1,10 @@
 <?php
 
+use App\Car;
+use App\Events\CarPostedEvent;
+use App\Notifications\CarPosted;
+use App\User;
+
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -57,3 +62,31 @@ Route::delete('/ads/{ad}', 'AdsController@destroy');
 Route::patch('/ads/{ad}', 'AdsController@update');
 Route::post('/ads/{ad}/pics', 'AdsController@updatePics');
 Route::get('/ads/{ad}/pics', 'AdsController@readPics');
+
+Route::get('/mark-notif-as-read', function(){
+	if(auth()->check())
+		auth()->user()->unreadNotifications->markAsRead();
+});
+
+Route::get('/get-notif', function(){
+	if(auth()->check())
+		return ['readNotif' => auth()->user()->readNotifications, 'unreadNotif' => auth()->user()->unreadNotifications];
+});
+
+
+Route::get('/not/{car}', function(Car $car){
+	// $usersToNotify = User::whereIn('id', [1,3])->get();
+	$usersToNotify = auth()->user();
+	Notification::send($usersToNotify, new CarPosted($car));
+
+	echo "Count notifications is: ". count(auth()->user()->unreadNotifications). "<br>";
+	foreach (auth()->user()->unreadNotifications as $not) {
+		echo $not->data['car']['brand'] ."<br>";
+	}
+
+	broadcast(new CarPostedEvent(auth()->user(), $car));
+
+});
+
+
+Route::get('/get-auth-user', function(){ return ['data'=>auth()->id()]; });

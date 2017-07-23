@@ -7,6 +7,7 @@ $(document).ready(function(){
   toggleDropdown();
   //tooltip();
   userTimelineTabs();
+  markNotifAsRead();
 });
 // ================================================
 function changeNavbarOnScroll(){ 
@@ -77,3 +78,6 @@ function userTimelineTabs(){
   })
 }
 // ================================================
+function markNotifAsRead(){ 
+  $.get('/mark-notif-as-read');
+}

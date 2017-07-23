@@ -25,6 +25,10 @@ const app = new Vue({
 
 		// MESSAGE USER
 		message: '',
+
+		//NOTIFICATIONS
+		readNotifications: [],
+		unreadNotifications: [],
 	},
 
 	methods: {
@@ -156,6 +160,22 @@ const app = new Vue({
   //              toastr.error(err.message, 'Error occured!')
   //          })
 		// },
+
+		getNotifications(){
+			axios.get('/get-notif')
+				.then(response => {
+					this.readNotifications = response.data.readNotif ? response.data.readNotif : []
+					this.unreadNotifications = response.data.unreadNotif ? response.data.unreadNotif : []
+				})
+		},
+
+		EchoNotif(){
+			Echo.channel('ch')
+		    	.listen('CarPostedEvent', (notif) => {
+					this.unreadNotifications.unshift(notif)
+		    	})
+
+		}
 	},
 
 	computed: {
@@ -198,9 +218,13 @@ const app = new Vue({
 
 
 	mounted(){
-		// if(this.$route.query.page)
-		// 	alert()
-		console.log(this._currentRoute)
+
 		this.getLatestCars()
+
+		this.getNotifications()
+
+		this.EchoNotif()
+
+
 	},
 });
