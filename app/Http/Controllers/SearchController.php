@@ -33,15 +33,15 @@ class SearchController extends Controller
 		$paginator = $request->paginator;
 		$page = $paginator['current_page'];
 		$perpage = $paginator['per_page'];
-		$skip = ($page-1) * $perpage; //dd($page, $perpage, $skip); //($page == 1 ? 0 : $page - 1)
+		$skip = ($page-1) * $perpage; 
 
 		if( !$res = Car::searchResult($req)->skip($skip)->take($perpage)->get())
 			return ['ok' => 0, 'message' => "Error while loading search result!"];
 		$data = Car::fillCardData($res);
 		$more_results = Car::searchResult($req)->skip($skip+$perpage)->take($perpage)->get()->count();
-		//dd($data);
+
 		return ['ok' => 1, 'message' => "Search result is loaded successfully!",
-		/*'paginator' => collect($res)->except(['data']),*/ 'data' => $data, 'moreResults'=>$more_results];
+				'data' => $data, 'moreResults'=>$more_results];
 	}
 
 

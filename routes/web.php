@@ -92,6 +92,3 @@ Route::get('/not/{car}', function(Car $car){
 	// broadcast(new CarPostedEvent(/*auth()->user(), */$car));
 	Car::notify_users_for_savedSearch($car);
 });
-
-
-Route::get('/get-auth-user', function(){ return ['data'=>auth()->id()]; });

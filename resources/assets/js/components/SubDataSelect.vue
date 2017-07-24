@@ -33,6 +33,7 @@
             data1: {},
             data2: {},
             loadedmodels: '',
+            loadedcities: '',
             loadingmsg: { default: 'LOADING DATA ...'},
             old: {default: 0},
             showanyway: 0 
@@ -42,6 +43,7 @@
         methods: {
 
             selectedChanged(par){ 
+                
                 var t = this;
                 var selectedOBJ = this.subData.filter(function(sub){
                     if(sub.id == t.selectedOPT)
@@ -53,10 +55,14 @@
                 }
                 catch(err) {
                     selectedOBJECT = this.old;
-                    //console.log('selectedOBJECT was reset!!!!');
                 }
-                //console.log('selectedOBJECT: '+selectedOBJECT);
-                this.$emit('brand-changed', selectedOBJECT);
+                
+                if(this.data1 == 'brand'){
+                    this.$emit('brand-changed', selectedOBJECT);
+                }else if(this.data1 == 'area'){
+                    this.$emit('area-changed', selectedOBJECT);
+                }
+                
             },
 
             getRequest(){
@@ -92,6 +98,12 @@
         watch: {
             loadedmodels(){
                 this.subData = this.loadedmodels;
+                this.loading = false;
+                this.selectedOPT = this.old;
+            },
+
+            loadedcities(){
+                this.subData = this.loadedcities;
                 this.loading = false;
                 this.selectedOPT = this.old;
             }

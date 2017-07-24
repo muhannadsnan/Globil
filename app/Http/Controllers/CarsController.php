@@ -36,7 +36,7 @@ class CarsController extends Controller
 
  		Session::flash('message', 'Car was posted successfully!');
 
- 		// Car::notify_users_for_savedSearch($car);
+ 		Car::notify_users_for_savedSearch($car);
 
  		return redirect('/cars/create');
 	} //=====================================================================

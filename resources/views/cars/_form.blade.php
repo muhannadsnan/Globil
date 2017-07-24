@@ -24,14 +24,14 @@
 </div>
 
 
-<div class="col-md-6 form-group {{ $errors->has('country') ? 'has-error' : '' }}">
+<!-- <div class="col-md-6 form-group {{ $errors->has('country') ? 'has-error' : '' }}">
 
 	<subdata-select 
 		data1="country" 
 		placeholder="Country" 
 		old="{{ old('country') ? old('country') : @$car->country }}"></subdata-select>
 
-</div>
+</div> -->
 
 
 <div class="col-md-6 form-group {{ $errors->has('year') ? 'has-error' : '' }}">
@@ -137,6 +137,31 @@
 		old="{{ old('car_type') ? old('car_type') : @$car->car_type }}"></subdata-select>
 
 </div>
+
+<!-- ------------ AREA -------------- -->
+
+<div class="col-md-6 form-group {{ $errors->has('manicipality') ? 'has-error' : '' }}">
+	
+	<subdata-select 
+		data1="area" 
+		placeholder="Manicipality"
+	 	@area-changed="loadCitiesByArea" 
+	 	@area-loaded="loadCitiesBySubID"
+	 	old="{{ old('manicipality') ? old('manicipality') : @$car->manicipality }}"></subdata-select>
+
+</div>
+
+<div class="col-md-6 form-group {{ $errors->has('city') ? 'has-error' : '' }}">
+	
+	<subdata-select 
+		:loadedmodels="cities" 
+		placeholder="City" 
+		showanyway="true" 
+		loadingMSG="Select a municipality to show cities..." 
+		name="city" old="{{ old('city') ? old('city') : @$car->city }}"></subdata-select>
+
+</div>
+
 
 <div class="col-md-6 form-group {{ $errors->has('roof_type') ? 'has-error' : '' }}">
 

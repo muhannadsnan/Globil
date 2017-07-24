@@ -19,6 +19,7 @@ const app = new Vue({
 		// CREATE POST
 		brand: '',
 		models: '',
+		cities: '',
 		loadingModel: false,
 		showModal: false,
 
@@ -52,6 +53,32 @@ const app = new Vue({
 			axios.get('/readSubData/'+ subID )
               .then(response => {
                   this.models = response.data.data;  
+              })
+              .catch(err => {
+                  toastr.error('Error occured!', err.message);
+              })
+        	this.loadingModel = false;
+		}, //<<
+
+		loadCitiesByArea(selectedArea){
+			this.loadingModel = true;
+
+			axios.get('/readSubData/city/'+ selectedArea )
+              .then(response => {
+                  this.cities = response.data.data;  //console.log(response.data.data);
+              })
+              .catch(err => {
+                  toastr.error('Error occured!', err.message);
+              })
+        this.loadingModel = false;
+		}, //<<
+
+		loadCitiesBySubID(subID){ 
+			this.loadingModel = true;
+
+			axios.get('/readSubData/'+ subID )
+              .then(response => {
+                  this.cities = response.data.data;  
               })
               .catch(err => {
                   toastr.error('Error occured!', err.message);

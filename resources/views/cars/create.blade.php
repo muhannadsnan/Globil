@@ -28,10 +28,6 @@
 		</form>
 	</div>
 
-	<!-- <div class="panel-footer">
-		<div class="col-md-6 col-md-offset-3 NO-float">
-		</div>
-	</div> -->
 </div>
 
 @endif

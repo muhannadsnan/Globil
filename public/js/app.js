@@ -26995,6 +26995,7 @@ var app = new Vue({
 		// CREATE POST
 		brand: '',
 		models: '',
+		cities: '',
 		loadingModel: false,
 		showModal: false,
 
@@ -27036,8 +27037,36 @@ var app = new Vue({
 		},
 		//<<
 
-		getLatestCars: function getLatestCars() {
+		loadCitiesByArea: function loadCitiesByArea(selectedArea) {
 			var _this3 = this;
+
+			this.loadingModel = true;
+
+			axios.get('/readSubData/city/' + selectedArea).then(function (response) {
+				_this3.cities = response.data.data; //console.log(response.data.data);
+			}).catch(function (err) {
+				toastr.error('Error occured!', err.message);
+			});
+			this.loadingModel = false;
+		},
+		//<<
+
+		loadCitiesBySubID: function loadCitiesBySubID(subID) {
+			var _this4 = this;
+
+			this.loadingModel = true;
+
+			axios.get('/readSubData/' + subID).then(function (response) {
+				_this4.cities = response.data.data;
+			}).catch(function (err) {
+				toastr.error('Error occured!', err.message);
+			});
+			this.loadingModel = false;
+		},
+		//<<
+
+		getLatestCars: function getLatestCars() {
+			var _this5 = this;
 
 			//==================================================
 			this.loadingModel = true;
@@ -27046,10 +27075,10 @@ var app = new Vue({
 			axios.get('/cars/readLatestPosts?page=' + this.paginator.current_page + '&per_page=' + this.paginator.per_page).then(function (response) {
 				console.log(response.data.data);
 				// this.user_id = response.data.user_id
-				_this3.wishList = response.data.wish_list;
-				_this3.searchResult = response.data.data;
-				++_this3.paginator.current_page;
-				_this3.moreResults = response.data.moreResults;
+				_this5.wishList = response.data.wish_list;
+				_this5.searchResult = response.data.data;
+				++_this5.paginator.current_page;
+				_this5.moreResults = response.data.moreResults;
 			}).catch(function (err) {
 				toastr.error('Error occured!', err.message);
 			});
@@ -27059,16 +27088,16 @@ var app = new Vue({
 		//======================================================================
 
 		loadMoreResults: function loadMoreResults() {
-			var _this4 = this;
+			var _this6 = this;
 
 			this.loadingModel = true;
 
 			++this.paginator.current_page;
 			axios.post('/search/results', { req: this.searchFilters, paginator: this.paginator }).then(function (response) {
 				response.data.data.forEach(function (car) {
-					_this4.searchResult.push(car);
+					_this6.searchResult.push(car);
 				});
-				_this4.moreResults = response.data.moreResults;
+				_this6.moreResults = response.data.moreResults;
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error was occured!');
 			});
@@ -27076,39 +27105,39 @@ var app = new Vue({
 			this.loadingModel = false;
 		},
 		searchResultsReady: function searchResultsReady(param) {
-			var _this5 = this;
+			var _this7 = this;
 
 			// Results From Search-Filter Component // means filters changed
 			this.searchFilters = param.filters;
 			this.paginator.current_page = 1;
 			axios.post('/search/results', { req: this.searchFilters, paginator: this.paginator }).then(function (response) {
-				_this5.searchResult = response.data.data;
-				_this5.moreResults = response.data.moreResults;
+				_this7.searchResult = response.data.data;
+				_this7.moreResults = response.data.moreResults;
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error was occured!');
 			});
 		},
 		loadMoreLatestPosts: function loadMoreLatestPosts() {
-			var _this6 = this;
+			var _this8 = this;
 
 			this.loadingModel = true;
 
 			axios.get('/cars/readLatestPosts?page=' + this.paginator.current_page + '&per_page=' + this.paginator.per_page).then(function (response) {
 				response.data.data.forEach(function (car) {
-					_this6.searchResult.push(car);
+					_this8.searchResult.push(car);
 				});
-				++_this6.paginator.current_page;
-				_this6.moreResults = response.data.moreResults;
+				++_this8.paginator.current_page;
+				_this8.moreResults = response.data.moreResults;
 			}).catch(function (err) {
 				toastr.error('Error occured!', err.message);
 			});
 			this.loadingModel = false;
 		},
 		searchRequest: function searchRequest() {
-			var _this7 = this;
+			var _this9 = this;
 
 			axios.get('/search/general/' + this.searchKeyword).then(function (response) {
-				_this7.searchResult = response.data.data;
+				_this9.searchResult = response.data.data;
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error occured!');
 			});
@@ -27143,21 +27172,21 @@ var app = new Vue({
 		// },
 
 		getNotifications: function getNotifications() {
-			var _this8 = this;
+			var _this10 = this;
 
 			axios.get('/get-notif').then(function (response) {
-				_this8.readNotifications = response.data.readNotif ? response.data.readNotif : [];
-				_this8.unreadNotifications = response.data.unreadNotif ? response.data.unreadNotif : [];
-				_this8.user_id = response.data.user_id;
-				_this8.EchoNotif();
+				_this10.readNotifications = response.data.readNotif ? response.data.readNotif : [];
+				_this10.unreadNotifications = response.data.unreadNotif ? response.data.unreadNotif : [];
+				_this10.user_id = response.data.user_id;
+				_this10.EchoNotif();
 			});
 		},
 		EchoNotif: function EchoNotif() {
-			var _this9 = this;
+			var _this11 = this;
 
 			Echo.channel('ch-' + this.user_id).listen('CarPostedEvent', function (notif) {
 				console.log(notif);
-				_this9.unreadNotifications.unshift(notif);
+				_this11.unreadNotifications.unshift(notif);
 			});
 		}
 	},
@@ -30026,6 +30055,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         data1: {},
         data2: {},
         loadedmodels: '',
+        loadedcities: '',
         loadingmsg: { default: 'LOADING DATA ...' },
         old: { default: 0 },
         showanyway: 0
@@ -30033,6 +30063,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         selectedChanged: function selectedChanged(par) {
+
             var t = this;
             var selectedOBJ = this.subData.filter(function (sub) {
                 if (sub.id == t.selectedOPT) return sub;
@@ -30042,10 +30073,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 selectedOBJECT = selectedOBJ[0].title;
             } catch (err) {
                 selectedOBJECT = this.old;
-                //console.log('selectedOBJECT was reset!!!!');
             }
-            //console.log('selectedOBJECT: '+selectedOBJECT);
-            this.$emit('brand-changed', selectedOBJECT);
+
+            if (this.data1 == 'brand') {
+                this.$emit('brand-changed', selectedOBJECT);
+            } else if (this.data1 == 'area') {
+                this.$emit('area-changed', selectedOBJECT);
+            }
         },
         getRequest: function getRequest() {
             var _this = this;
@@ -30079,6 +30113,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     watch: {
         loadedmodels: function loadedmodels() {
             this.subData = this.loadedmodels;
+            this.loading = false;
+            this.selectedOPT = this.old;
+        },
+        loadedcities: function loadedcities() {
+            this.subData = this.loadedcities;
             this.loading = false;
             this.selectedOPT = this.old;
         }

@@ -31,8 +31,8 @@
 			<p>{{$savedSearch->cylinder ? 'Cylinder: ' . $savedSearch->cylinder : '' }}</p>
 			<p>{{$savedSearch->car_type ? 'Car type: ' . $savedSearch->car_type : '' }}</p>
 			<p>{{$savedSearch->wheel_drive ? 'Wheel drive: ' . $savedSearch->wheel_drive : '' }}</p>
-			<p>{{$savedSearch->min_km ? 'km from ' . $savedSearch->min_km . 
-						($savedSearch->max_km ? ' to ' . $savedSearch->max_km : '') : '' }}</p> 
+			<p>{{$savedSearch->min_kilometer > 0 ? 'kilometer starting from '.$savedSearch->min_kilometer.($savedSearch->max_kilometer > 0 ? ' to ' . $savedSearch->max_kilometer : '')
+						 : 'kilometer less than '.$savedSearch->max_kilometer}}</p> 
 		</div>
 		<!-- ============================ -->
 		<div class="row">

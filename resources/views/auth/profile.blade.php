@@ -1,5 +1,6 @@
 @extends('master')
 
+@section ("title", " - My page")
 
 @section ("content")
 
@@ -7,13 +8,13 @@
 
 
 	<a v-if="unreadNotifications.length > 0"
-		v-for="notif in unreadNotifications" :href="'/cars/' + notif.data.car.id">
+		v-for="notif in unreadNotifications" :href="'/cars/' + notif.data.car">
 
 		<h3><span class="label label-info">@{{ notif.data.message }}</span></h3>
 	</a >
 
 
-	<a v-for="notif in readNotifications" :href="'/cars/' + notif.data.car.id">
+	<a v-for="notif in readNotifications" :href="'/cars/' + notif.data.car">
 		<h3><span class="label label-default">@{{ notif.data.message }}</span></h3>
 	</a>
 	

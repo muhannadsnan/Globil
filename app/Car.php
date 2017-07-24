@@ -3,6 +3,8 @@
 namespace App;
 
 //use Illuminate\Database\Eloquent\Model;
+use App\Car;
+use App\SavedSearch;
 use App\Events\CarPostedEvent;
 use App\Notifications\CarPosted;
 use Illuminate\Auth\AuthManager;
@@ -157,6 +159,8 @@ class Car extends Model
 			"roof_type" => $request['roof_type'],
 			"HP" => $request['HP'],
 			"wheel_drive" => $request['wheel_drive'],
+			"manicipality" => $request['manicipality'],
+			"city" => $request['city'],
 			"reg_nr" => $request['reg_nr'],
 			"reg_fee" => $request['reg_fee'],
 			"yearly_fee" => $request['yearly_fee'],
@@ -169,7 +173,7 @@ class Car extends Model
 		return [
 			"brand" => 'required|max:255',
 			"model" => 'required|max:255',
-			"country" => 'required|max:255',
+			// "country" => 'required|max:255',
 			"year" => 'required|max:255',
 			"price" => 'required|numeric',
 			"kilometer" => 'required|numeric',
@@ -184,6 +188,8 @@ class Car extends Model
 			"roof_type" => 'required|numeric',
 			"HP" => 'required|numeric',
 			"wheel_drive" => 'required|numeric',
+			"manicipality" => 'required|numeric',
+			"city" => 'required|numeric',
 			"reg_nr" => 'required|max:255',
 			"reg_fee" => 'required|numeric',
 			"yearly_fee" => 'required|numeric',
@@ -212,6 +218,8 @@ class Car extends Model
 			"roof_type" => $request['roof_type'],
 			"HP" => $request['HP'],
 			"wheel_drive" => $request['wheel_drive'],
+			"manicipality" => $request['manicipality'],
+			"city" => $request['city'],
 			"reg_nr" => $request['reg_nr'],
 			"reg_fee" => $request['reg_fee'],
 			"yearly_fee" => $request['yearly_fee'],
@@ -246,11 +254,9 @@ class Car extends Model
 
 	public static function notify_users_for_savedSearch($car)
 	{
-		if($usersToNotify = $car->isInSavedSearch()){
+		if($usersToNotify = $car->isCarInSavedsearch($car)){
 
 			Notification::send($usersToNotify, new CarPosted($car));
-
-			// broadcast(new CarPostedEvent(/*auth()->user(),*/ $car));
 
 			foreach ($usersToNotify as $userToNotify) {
 				echo "broadcast to : {$userToNotify->name}<br>";
@@ -259,10 +265,95 @@ class Car extends Model
 		}
 	}
 
-	public static function isInSavedSearch()
+	public static function isCarInSavedsearch($car)
 	{
-		$userIDS = [3, 1];
+		$userIDS = [];
+		// foreach row in SavedSearches, check whether each car attribute matches all
+		//    columns that are not null
+		// if so, then return user_id of the sSearch row
+
+		$SavedSearches = SavedSearch::all();
+
+		echo "Saved Search Rows<br>";
+		foreach ($SavedSearches as $key => $row) { 
+			echo "========== $key ========== <br>";
+
+			$conainsBrand = false;
+			$conainsModel = false;
+
+			if($row->brand_model){ // ROW CONTAINS BRAND & MODEL  // [ [1,[4]], [2,[5]], [3,[7,9]] ]
+				foreach (json_decode($row->brand_model, true) as $k => $arr) { 
+
+					$conainsBrand = $conainsBrand || ($arr[0] == $car->brand); 
+					if($arr[0] == $car->brand && count($arr[1]) && in_array($car->model, $arr[1]))
+						$conainsModel = true;
+				}
+			}else{
+				$conainsBrand = true;
+				$conainsModel = true;
+			}
+			if(($row->min_kilometer == '' || $row->max_kilometer == '') ||
+				(/*[0,900]*/(int)$row->min_kilometer == 0 && (int)$row->max_kilometer > 0 && $car->kilometer <= (int)$row->max_kilometer
+				||/*[900,0]*/ (int)$row->min_kilometer > 0 && (int)$row->max_kilometer == 0 && $car->kilometer >= (int)$row->min_kilometer
+				||/*[900,5000]*/$car->kilometer >= (int)$row->min_kilometer && $car->kilometer <= (int)$row->max_kilometer))
+			{
+				echo "$row->min_kilometer, $row->max_kilometer<br>";
+			}
+
+			if($conainsBrand && $conainsModel &&
+				($row->country == '' || strpos($row->country, (string)$car->country) !== false) &&
+				($row->years == '' || strpos($row->years, (string)$car->year) !== false) &&
+				($row->color == '' || strpos($row->color, (string)$car->color) !== false) &&
+				($row->desc == '' || strpos($row->desc, (string)$car->desc) !== false) &&
+				($row->fuel_type == '' || strpos($row->fuel_type, (string)$car->fuel_type) !== false) &&
+				($row->cylinder == '' || strpos($row->cylinder, (string)$car->cylinder) !== false) &&
+				($row->car_type == '' || strpos($row->car_type, (string)$car->car_type) !== false) &&
+				($row->roof_type == '' || strpos($row->roof_type, (string)$car->roof_type) !== false) &&
+				($row->wheel_drive == '' || strpos($row->wheel_drive, (string)$car->wheel_drive) !== false) &&
+				($row->reg_nr == '' || strpos($row->reg_nr, (string)$car->reg_nr) !== false) &&
+				($row->wheel_drive == '' || strpos($row->wheel_drive, (string)$car->wheel_drive) !== false) &&
+				
+				(($row->min_price == '' || $row->max_price == '') ||
+				(/*[0,900]*/(int)$row->min_price == 0 && (int)$row->max_price > 0 && $car->price <= (int)$row->max_price
+				||/*[900,0]*/ (int)$row->min_price > 0 && (int)$row->max_price == 0 && $car->price >= (int)$row->min_price
+				||/*[900,5000]*/$car->price >= (int)$row->min_price && $car->price <= (int)$row->max_price)) &&
+
+				(($row->min_kilometer == '' || $row->max_kilometer == '') ||
+				(/*[0,900]*/(int)$row->min_kilometer == 0 && (int)$row->max_kilometer > 0 && $car->kilometer <= (int)$row->max_kilometer
+				||/*[900,0]*/ (int)$row->min_kilometer > 0 && (int)$row->max_kilometer == 0 && $car->kilometer >= (int)$row->min_kilometer
+				||/*[900,5000]*/$car->kilometer >= (int)$row->min_kilometer && $car->kilometer <= (int)$row->max_kilometer)) &&
+
+				(($row->min_weight == '' || $row->max_weight == '') ||
+				(/*[0,900]*/(int)$row->min_weight == 0 && (int)$row->max_weight > 0 && $car->weight <= (int)$row->max_weight
+				||/*[900,0]*/ (int)$row->min_weight > 0 && (int)$row->max_weight == 0 && $car->weight >= (int)$row->min_weight
+				||/*[900,5000]*/$car->weight >= (int)$row->min_weight && $car->weight <= (int)$row->max_weight)) &&
+
+				(($row->min_co2 == '' || $row->max_co2 == '') ||
+				(/*[0,900]*/(int)$row->min_co2 == 0 && (int)$row->max_co2 > 0 && $car->co2 <= (int)$row->max_co2
+				||/*[900,0]*/ (int)$row->min_co2 > 0 && (int)$row->max_co2 == 0 && $car->co2 >= (int)$row->min_co2
+				||/*[900,5000]*/$car->co2 >= (int)$row->min_co2 && $car->co2 <= (int)$row->max_co2)) &&
+
+				(($row->min_HP == '' || $row->max_HP == '') ||
+				(/*[0,900]*/(int)$row->min_HP == 0 && (int)$row->max_HP > 0 && $car->HP <= (int)$row->max_HP
+				||/*[900,0]*/ (int)$row->min_HP > 0 && (int)$row->max_HP == 0 && $car->HP >= (int)$row->min_HP
+				||/*[900,5000]*/$car->HP >= (int)$row->min_HP && $car->HP <= (int)$row->max_HP)) &&
+
+				(($row->min_reg_fee == '' || $row->max_reg_fee == '') ||
+				(/*[0,900]*/(int)$row->min_reg_fee == 0 && (int)$row->max_reg_fee > 0 && $car->reg_fee <= (int)$row->max_reg_fee
+				||/*[900,0]*/ (int)$row->min_reg_fee > 0 && (int)$row->max_reg_fee == 0 && $car->reg_fee >= (int)$row->min_reg_fee
+				||/*[900,5000]*/$car->reg_fee >= (int)$row->min_reg_fee && $car->reg_fee <= (int)$row->max_reg_fee))
+
+
+				&& !in_array($row->user_id, $userIDS)
+				// REAMINING AREA in SSEARCH TABLE  with MUNICIPALITY & CITY in CAR TABLE
+				){
+					$userIDS[$key] = $row->user_id;
+				}
+				
+		}
+
+		//dd($userIDS);
 		return User::whereIn('id', $userIDS)->get();
-		return false;
+
 	}
 }

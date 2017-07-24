@@ -127,14 +127,15 @@
 
 					{{$car->brandSubdata()}} - {{$car->modelSubdata()}} ({{$car->year}})
 				</h3>
+				<small class="pull-right">{{$car->created_at->diffForHumans()}}</small> 
 				<br>
 				<!-- ATTRIBS -->
 				<div class="col-sm-4 text-left">
 					<span>Current price: </span> <label>{{$car->price}} ,- </label> <br>
-					<span>Kilometer: </span> <label>{{$car->km}}</label> <br>
+					<span>Kilometer: </span> <label>{{$car->kilometer}}</label> <br>
 					<span>Fuel:</span> <label>{{$car->fuelSubdata()}}</label> <br>
 					<span>Registration nr: </span> <label>{{$car->reg_nr}}</label> <br>
-					<small>{{$car->created_at->diffForHumans()}}</small> <br>
+					
 					<span>Location: </span> <label>{{$car->areaSubdata()?$car->areaSubdata():'No area'}}, {{$car->citySubdata()?$car->citySubdata():'No city'}}</label> <br>
 				</div>
 
