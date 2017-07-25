@@ -20,7 +20,8 @@
 <div class="card-in-vue  car-card col-xs-6 col-sm-4 col-md-3" >
 	<div class="panel panel-info">
 
-		<img src="{{asset('storage/images').'/'.$car->pictures[0]->id.'.'.$car->pictures[0]->ext}}" alt="{{$car->brand .' - '. $car->model}}">
+		<img src="{{ @$car->pictures[0] ? asset('storage/images').'/'.$car->pictures[0]->id.'.'.$car->pictures[0]->ext 
+						: asset('storage/images').'/no-image.png' }}" alt="{{$car->brand .' - '. $car->model}}">
 
 		<div class="caption">
 

@@ -236,7 +236,7 @@ class Car extends Model
 	public static function fillCardData($res) // returns array contains cards data
 	{
 		$car_subdata = [];
-		foreach ($res as $key => $val) { //dd($key);
+		foreach ($res as $key => $val) { 
 			$car_subdata[$key] = [
 				'id' => $val->id,
 				'brand' => $val->brandSubdata(),
@@ -245,9 +245,11 @@ class Car extends Model
 				'price' => $val->price,
 				'area' => $val->areaSubdata(),
 				'city' => $val->citySubdata(),
-				'pic_file_name' => asset('storage/images').'/'.$val->pictures[0]->id . '.' . $val->pictures[0]->ext,
+				'pic_file_name' => @$val->pictures[0] ?
+					asset('storage/images').'/'. @$val->pictures[0]->id . '.' . @$val->pictures[0]->ext
+					: asset('storage/images').'/no-image.png',
 			];
-		}
+		} 
 		return $car_subdata;
 	}
 
@@ -280,7 +282,6 @@ class Car extends Model
 
 			$conainsBrand = false;
 			$conainsModel = false;
-
 			if($row->brand_model){ // ROW CONTAINS BRAND & MODEL  // [ [1,[4]], [2,[5]], [3,[7,9]] ]
 				foreach (json_decode($row->brand_model, true) as $k => $arr) { 
 
@@ -292,15 +293,31 @@ class Car extends Model
 				$conainsBrand = true;
 				$conainsModel = true;
 			}
-			if(($row->min_kilometer == '' || $row->max_kilometer == '') ||
-				(/*[0,900]*/(int)$row->min_kilometer == 0 && (int)$row->max_kilometer > 0 && $car->kilometer <= (int)$row->max_kilometer
-				||/*[900,0]*/ (int)$row->min_kilometer > 0 && (int)$row->max_kilometer == 0 && $car->kilometer >= (int)$row->min_kilometer
-				||/*[900,5000]*/$car->kilometer >= (int)$row->min_kilometer && $car->kilometer <= (int)$row->max_kilometer))
-			{
-				echo "$row->min_kilometer, $row->max_kilometer<br>";
+
+			$containsArea = false;
+			$containsCiry = false;
+			if($row->areas){ // ROW CONTAINS AREAS  // [ [1,[4]], [2,[5]], [3,[7,9]] ]
+				foreach (json_decode($row->areas, true) as $k => $arr) { 
+
+					$conainsBrand = $conainsBrand || ($arr[0] == $car->manicipality); 
+					if($arr[0] == $car->manicipality && count($arr[1]) && in_array($car->city, $arr[1]))
+						$conainsModel = true;
+				}
+			}else{
+				$containsArea = true;
+				$containsCiry = true;
 			}
 
-			if($conainsBrand && $conainsModel &&
+			// ============  Print to debug:
+			// if(($row->min_kilometer == '' || $row->max_kilometer == '') ||
+			// 	(/*[0,900]*/(int)$row->min_kilometer == 0 && (int)$row->max_kilometer > 0 && $car->kilometer <= (int)$row->max_kilometer
+			// 	||/*[900,0]*/ (int)$row->min_kilometer > 0 && (int)$row->max_kilometer == 0 && $car->kilometer >= (int)$row->min_kilometer
+			// 	||/*[900,5000]*/$car->kilometer >= (int)$row->min_kilometer && $car->kilometer <= (int)$row->max_kilometer))
+			// {
+			// 	echo "$row->min_kilometer, $row->max_kilometer<br>";
+			// }
+
+			if($conainsBrand && $conainsModel && $containsArea && $containsCiry &&
 				($row->country == '' || strpos($row->country, (string)$car->country) !== false) &&
 				($row->years == '' || strpos($row->years, (string)$car->year) !== false) &&
 				($row->color == '' || strpos($row->color, (string)$car->color) !== false) &&

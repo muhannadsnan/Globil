@@ -80,15 +80,6 @@ Route::get('/get-notif', function(){
 
 
 Route::get('/not/{car}', function(Car $car){
-
-	// $usersToNotify = auth()->user();
-	// Notification::send($usersToNotify, new CarPosted($car));
-
-	// echo "Count notifications is: ". count(auth()->user()->unreadNotifications). "<br>";
-	// foreach (auth()->user()->unreadNotifications as $not) {
-	// 	echo $not->data['car']['brand'] ."<br>";
-	// }
-
-	// broadcast(new CarPostedEvent(/*auth()->user(), */$car));
+	
 	Car::notify_users_for_savedSearch($car);
 });

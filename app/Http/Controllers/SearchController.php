@@ -34,9 +34,8 @@ class SearchController extends Controller
 		$page = $paginator['current_page'];
 		$perpage = $paginator['per_page'];
 		$skip = ($page-1) * $perpage; 
-
 		if( !$res = Car::searchResult($req)->skip($skip)->take($perpage)->get())
-			return ['ok' => 0, 'message' => "Error while loading search result!"];
+			return ['ok' => 0, 'message' => "Error while loading search result!"]; 
 		$data = Car::fillCardData($res);
 		$more_results = Car::searchResult($req)->skip($skip+$perpage)->take($perpage)->get()->count();
 

@@ -3,7 +3,7 @@
 	
 	@include('layout.head')
 
-<body>
+<body onload="{{ @$isMarkNotifAsRead ? 'markNotifAsRead()' : '' }}" >
 	<div class="page text-center" id="app">
 			
 

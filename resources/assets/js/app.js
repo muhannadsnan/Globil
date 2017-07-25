@@ -91,7 +91,7 @@ const app = new Vue({
 			this.loadingPage = true
 
 			axios.get('/cars/readLatestPosts?page='+this.paginator.current_page+'&per_page='+this.paginator.per_page)
-	           .then(response => { console.log(response.data.data)
+	           .then(response => {  console.log(response.data.data)
 	           		// this.user_id = response.data.user_id
 	           		this.wishList = response.data.wish_list
 	               this.searchResult = response.data.data
@@ -188,7 +188,7 @@ const app = new Vue({
   //          })
 		// },
 
-		getNotifications(){
+		getNotificationsANDlisten(){
 			axios.get('/get-notif')
 				.then(response => {
 					this.readNotifications = response.data.readNotif ? response.data.readNotif : []
@@ -250,9 +250,7 @@ const app = new Vue({
 
 		this.getLatestCars() // should work only in home page
 
-		this.getNotifications() // works in all pages
-
-		// this.EchoNotif() // works in all pages
+		this.getNotificationsANDlisten() // works in all pages
 
 	},
 });

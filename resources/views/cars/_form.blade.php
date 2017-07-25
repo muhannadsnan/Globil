@@ -36,8 +36,6 @@
 
 <div class="col-md-6 form-group {{ $errors->has('year') ? 'has-error' : '' }}">
 
-	<!-- <input type="number" name="year" value="{{ old('year') ? old('year') : @$car->year }}" 
-		min="1950" max="{{date("Y")}}" onchange="updateRangeLabel(this.value);" class="form-control"> -->
 	<div class="SubDataSelect input-group">
         <span class="input-group-addon">Year</span>
         <select class="form-control" name="year" autofocus requiredX> 
@@ -147,6 +145,7 @@
 		placeholder="Manicipality"
 	 	@area-changed="loadCitiesByArea" 
 	 	@area-loaded="loadCitiesBySubID"
+	 	name="manicipality"
 	 	old="{{ old('manicipality') ? old('manicipality') : @$car->manicipality }}"></subdata-select>
 
 </div>

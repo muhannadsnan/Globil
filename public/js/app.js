@@ -27171,7 +27171,7 @@ var app = new Vue({
 		//          })
 		// },
 
-		getNotifications: function getNotifications() {
+		getNotificationsANDlisten: function getNotificationsANDlisten() {
 			var _this10 = this;
 
 			axios.get('/get-notif').then(function (response) {
@@ -27233,9 +27233,7 @@ var app = new Vue({
 
 		this.getLatestCars(); // should work only in home page
 
-		this.getNotifications(); // works in all pages
-
-		// this.EchoNotif() // works in all pages
+		this.getNotificationsANDlisten(); // works in all pages
 	}
 });
 

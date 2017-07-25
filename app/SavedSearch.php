@@ -18,6 +18,7 @@ class SavedSearch extends Model
 				'users' => ! $request->users ? null : json_encode($request->users),
 				'user_id' => auth()->id(),
 				'brand_model' => ! $request->brand_model ? null : json_encode($request->brand_model),
+				'areas' => ! $request->areas ? null : json_encode($request->areas),
 				'min_price' => ! $request->priceRange ? null : $request->priceRange[0],
 				'max_price' => ! $request->priceRange ? null : $request->priceRange[1],
 				'years' => ! $request->years ? null : json_encode($request->years),
@@ -27,13 +28,6 @@ class SavedSearch extends Model
 				'max_kilometer' => $request->kmRange[1],
 				'fuel_type' => ! $request->fuel_types ? null : json_encode($request->fuel_types),
 				'gear' => ! $request->gears ? null : json_encode($request->gears),
-				// 'areas' => $request->areas, 
-				// [
-				// 	[vestfold, [v1,v2,v4] ], 
-				// 	[østfold, [o1,o2,o3] ],
-				// 	[nordland, [n1,n2,n3] ]
-				// ]
-
 				'country' => ! $request->countries ? null : json_encode($request->countries),
 				'color' => ! $request->colors ? null : json_encode($request->colors),
 				'desc' => ! $request->desc ? null : json_encode($request->desc),
@@ -70,6 +64,27 @@ class SavedSearch extends Model
 			$i = 0;
 			foreach ($brand[1] as $model) {
 				$res[$this->idToTitle($brand[0])][$i] = $this->idToTitle($model); $i++;
+			}
+		} //dd($res);
+		return $res;
+	}
+
+	public function idsToAreas()
+	{ 
+		$res = [];
+		foreach (json_decode($this->areas) as $key => $area) { 
+			$res[$key] = $this->idToTitle($area[0]);
+		} //dd($res);
+		return $res;
+	}
+
+	public function idsToCities()
+	{ 
+		$res = [];
+		foreach (json_decode($this->areas) as $area) { 
+			$i = 0;
+			foreach ($area[1] as $city) {
+				$res[$this->idToTitle($area[0])][$i] = $this->idToTitle($city); $i++;
 			}
 		} //dd($res);
 		return $res;

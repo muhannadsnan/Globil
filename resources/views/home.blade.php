@@ -22,6 +22,22 @@
 					}
 				?>
 			</p>
+			<p>
+				<?php 
+					if($savedSearch->areas){
+						echo 'Areas: ';
+						foreach($savedSearch->idsToAreas() as $manicipality){
+		 					echo $manicipality.' [ ';
+		 					if(count(@$savedSearch->idsToCities()[$manicipality])){
+		 						foreach($savedSearch->idsToCities()[$manicipality] as $city){
+			 						echo $city.' ';
+			 					}
+		 					}
+		 					echo ' ] , ';
+						}
+					}
+				?>
+			</p>
 			<p>{{$savedSearch->country ? 'Country: ' . $savedSearch->country : '' }}</p>
 			<p>{{$savedSearch->min_price ? 'Price from ' . $savedSearch->min_price . 
 						($savedSearch->max_price ? ' to ' . $savedSearch->max_price : '') : '' }}</p> 						
@@ -31,8 +47,16 @@
 			<p>{{$savedSearch->cylinder ? 'Cylinder: ' . $savedSearch->cylinder : '' }}</p>
 			<p>{{$savedSearch->car_type ? 'Car type: ' . $savedSearch->car_type : '' }}</p>
 			<p>{{$savedSearch->wheel_drive ? 'Wheel drive: ' . $savedSearch->wheel_drive : '' }}</p>
-			<p>{{$savedSearch->min_kilometer > 0 ? 'kilometer starting from '.$savedSearch->min_kilometer.($savedSearch->max_kilometer > 0 ? ' to ' . $savedSearch->max_kilometer : '')
-						 : 'kilometer less than '.$savedSearch->max_kilometer}}</p> 
+			<p><?php 
+				if($savedSearch->min_kilometer){
+					if($savedSearch->min_kilometer == 0 && $savedSearch->max_kilometer > 0){
+						echo 'kilometer less than '.$savedSearch->max_kilometer;
+					}elseif($savedSearch->min_kilometer > 0){
+						echo 'Kilometer starting from '.$savedSearch->min_kilometer;
+						if($savedSearch->max_kilometer > 0)
+							echo  ' to ' . $savedSearch->max_kilometer;
+					}
+				} ?></p> 
 		</div>
 		<!-- ============================ -->
 		<div class="row">

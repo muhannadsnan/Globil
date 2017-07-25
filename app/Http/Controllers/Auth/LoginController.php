@@ -24,7 +24,8 @@ class LoginController extends Controller
 	{
 		if(auth()->user()->type == "A")
 			return back();
-		return view('auth.profile', compact(''));
+		$isMarkNotifAsRead = true;
+		return view('auth.profile', compact('isMarkNotifAsRead'));
 	}
 
 	public function controlPanel()
