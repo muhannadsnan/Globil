@@ -26,6 +26,9 @@ const app = new Vue({
 		// MESSAGE USER
 		message: '',
 
+		//SUGN UP
+		countries: [],
+
 		//NOTIFICATIONS
 		user_id: '0',
 		readNotifications: [],
@@ -203,6 +206,14 @@ const app = new Vue({
 		    	.listen('CarPostedEvent', (notif) => { console.log(notif)
 					this.unreadNotifications.unshift(notif)
 		    	})
+		},
+
+		getCountriesForRegisterPage(){
+			axios.get('/get-countries').then( response => {
+				this.countries = response.data.data
+			}).catch(err => {
+	         toastr.error(err.message, 'Error occured!')
+	     })
 		}
 	},
 
@@ -251,6 +262,8 @@ const app = new Vue({
 		this.getLatestCars() // should work only in home page
 
 		this.getNotificationsANDlisten() // works in all pages
+
+		//this.getCountriesForRegisterPage()
 
 	},
 });

@@ -27002,6 +27002,9 @@ var app = new Vue({
 		// MESSAGE USER
 		message: '',
 
+		//SUGN UP
+		countries: [],
+
 		//NOTIFICATIONS
 		user_id: '0',
 		readNotifications: [],
@@ -27188,6 +27191,15 @@ var app = new Vue({
 				console.log(notif);
 				_this11.unreadNotifications.unshift(notif);
 			});
+		},
+		getCountriesForRegisterPage: function getCountriesForRegisterPage() {
+			var _this12 = this;
+
+			axios.get('/get-countries').then(function (response) {
+				_this12.countries = response.data.data;
+			}).catch(function (err) {
+				toastr.error(err.message, 'Error occured!');
+			});
 		}
 	},
 
@@ -27234,6 +27246,8 @@ var app = new Vue({
 		this.getLatestCars(); // should work only in home page
 
 		this.getNotificationsANDlisten(); // works in all pages
+
+		//this.getCountriesForRegisterPage()
 	}
 });
 

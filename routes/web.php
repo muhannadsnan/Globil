@@ -4,6 +4,7 @@ use App\Car;
 use App\Events\CarPostedEvent;
 use App\Notifications\CarPosted;
 use App\User;
+use Illuminate\Support\Facades\File;
 
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
@@ -78,8 +79,11 @@ Route::get('/get-notif', function(){
 	}
 });
 
-
 Route::get('/not/{car}', function(Car $car){
-	
 	Car::notify_users_for_savedSearch($car);
+});
+
+Route::get('/get-countries', function(){
+	$path = public_path('storage\json') . "\countries.json";
+	return response()->json(['data' => File::get($path)]);
 });
