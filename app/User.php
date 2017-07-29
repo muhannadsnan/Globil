@@ -2,22 +2,24 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 
-class User extends Authenticatable
+class User extends Authenticatable/* implements BillableInterface*/
 {
     use Notifiable;
-
+    use Billable;
 
     protected $fillable = [
         'name', 'fname', 'lname', 'email', 'password', 'phone', 'country', 'city', 'zip',
     ];
 
     protected $hidden = [
-        'zip', 'password', 'remember_token',
+        'password', 'remember_token',
     ];
 
+    protected $dates = ['trial_ends_at', 'subscription_ends_at'];
 
     public function cars()
     {

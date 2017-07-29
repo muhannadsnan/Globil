@@ -194,7 +194,7 @@
 	<script src="{{asset('js/masked-input.min.js')}}"></script>
 
 	<script>
-		$("#phone").mask("+(99?9) 999-99-999 ? 99999",{placeholder:"+(999) 999-99-999 (+more digits))"});
+		$("#phone").mask("+(99?9) 999-99-999 ? 99999");
 	</script>
 
 @endsection

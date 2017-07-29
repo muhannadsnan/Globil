@@ -67,4 +67,6 @@ class RegisterController extends Controller
             'zip' => $data['zip'],
         ]);
     }
+
+
 }

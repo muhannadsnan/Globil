@@ -87,3 +87,6 @@ Route::get('/get-countries', function(){
 	$path = public_path('storage\json') . "\countries.json";
 	return response()->json(['data' => File::get($path)]);
 });
+
+Route::get('/payment/{plan}', 'Auth\LoginController@getpayment')->middleware('auth');
+Route::post('/payment', 'Auth\LoginController@payment')->middleware('auth');
