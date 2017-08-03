@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\File;
 
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/our-offers', 'HomeController@ourOffers');
+Route::get('/our-offers/{id}', 'HomeController@ourOffers');
 
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout');
@@ -90,3 +92,5 @@ Route::get('/get-countries', function(){
 
 Route::get('/payment/{plan}', 'Auth\LoginController@getpayment')->middleware('auth');
 Route::post('/payment', 'Auth\LoginController@payment')->middleware('auth');
+
+// Route::get('/after-reg', 'Auth\LoginController@afterReg')->middleware('auth');

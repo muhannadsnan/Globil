@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
@@ -21,6 +23,23 @@ class User extends Authenticatable/* implements BillableInterface*/
 
     protected $dates = ['trial_ends_at', 'subscription_ends_at'];
 
+      public static function expiringDate()
+      {
+            $timestamp = auth()->user()->asStripeCustomer()["subscriptions"] -> data[0]["current_period_end"];
+            return \Carbon\Carbon::createFromTimeStamp($timestamp)->toFormattedDateString();
+      }
+
+
+      public static function daysRemaining()
+      {
+         $created = new Carbon(User::expiringDate());
+         $now = Carbon::now();
+          return ($created->diff($now)->days < 1)
+                ? 'today'
+                : $created->diffInDays($now);
+      }
+
+//=================== RELATIONSHIPS ====================
     public function cars()
     {
         return $this->hasMany(Car::class);

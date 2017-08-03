@@ -7,16 +7,18 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <!-- BootstrapFormHelpers -->
 	<script src="{{ asset('BootstrapFormHelpers/dist/js/bootstrap-formhelpers.min.js') }}"></script>
-    
-<script src="{{ asset('js/app.js') }}"></script>
+
+@if( ! isset($loadVue) ||  $loadVue)    
+	<script src="{{ asset('js/app.js') }}"></script>
+@endif
 <script src="{{ asset('js/main.js') }}"></script>
 
 
 
 <script>
-<?php if(session('message')){ ?>
-	toastr.success("<?php echo session('message'); ?>"); 
-<?php } ?>
+@if(session('message'))
+	toastr.success("{{ session('message')}}"); 
+@endif
 
 window.csrf = { value: "{{ csrf_token() }}" }
 

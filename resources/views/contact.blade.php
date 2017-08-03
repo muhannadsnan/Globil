@@ -1,5 +1,7 @@
 @extends('master')
+
 @section('title', ' - About')
+
 @section('content')
 
 <div class="col-md-12">

@@ -19,7 +19,7 @@
         
         @if(Auth::guest() || Auth::user()->type == "B")
           <li><a href="/cars/create"><i class="fa fa-plus" aria-hidden="true"></i> Post a car</a></li>
-          <li><a href="/profile"><i class="fa fa-user-circle" aria-hidden="true"></i> My profile  <span class="badge">@{{unreadNotifications.length}}</span></a></a></li>
+          <li><a href="/profile"><i class="fa fa-user-circle" aria-hidden="true"></i> My profile   @if( ! isset($loadVue) ||  $loadVue)   <span class="badge">@{{unreadNotifications.length}}</span> @endif</a></a></li>
           <li><a href="/wish-list"><i class="fa fa-heart" aria-hidden="true"></i> Wish list </a></li>
         @endif
 

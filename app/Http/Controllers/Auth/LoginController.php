@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Stripe\Stripe;
 
 class LoginController extends Controller
 {
@@ -16,9 +17,7 @@ class LoginController extends Controller
 
 	 public function __construct()
 	 {
-		  //$this->middleware('guest')->except(['logout', 'profile', 'controlPanel']);
-		  // $this->middleware('auth')->only(['profile', 'controlPanel']);
-		  $this->middleware('guest')->only(['logout']);
+		  $this->middleware('guest')->except(['logout']);
 	 }
 
 	 public function profile()
@@ -42,22 +41,23 @@ class LoginController extends Controller
 	 }
 
 
-
+// ======== PAYMENT ========
 	  public function getpayment($plan)
 	  {
-	  		$plans = ['gold' => 999, 'daily' => 86];
-	  		$myPlan['name'] = $plan;
-	  		$myPlan['price'] = $plans[$plan]; //dd($myPlan);
+			$plans = ['gold' => 999, 'daily' => 86];
+			$myPlan['name'] = $plan;
+			$myPlan['price'] = $plans[$plan]; //dd($myPlan);
 			return view('auth.payment', compact('myPlan'));
 	  }
 
 
 	  public function payment(Request $request)
 	  {
-			//dd($request->all());
+			dd($request->all());
 			//dd(auth()->user()->subscription('gold'));
-		  	auth()->user()->newSubscription('gold', 'gold')->create($request->stripeToken);
-		 	return 'DONE !';
+			auth()->user()->newSubscription('gold', 'gold')->create($request->stripeToken);
+			return 'DONE !';
 	  }
+
 
 }

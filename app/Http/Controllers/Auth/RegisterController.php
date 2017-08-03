@@ -23,7 +23,8 @@ class RegisterController extends Controller
     use RegistersUsers;
 
 
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/our-offers/1';
+    // protected $redirectTo = '/after-reg';
 
 
     public function __construct()
@@ -42,7 +43,7 @@ class RegisterController extends Controller
             'password' => 'required|string|confirmed', // <<<<
             'phone' => 'required|string|max:255',
             'country' => 'required|string|max:2',
-            'city' => 'required|string|max:255',
+            // 'city' => 'required|string|max:255',
             'zip' => 'required|numeric',
         ]);
     }
@@ -63,7 +64,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'phone' => $data['phone'],
             'country' => $data['country'],
-            'city' => $data['city'],
+            // 'city' => $data['city'],
             'zip' => $data['zip'],
         ]);
     }
