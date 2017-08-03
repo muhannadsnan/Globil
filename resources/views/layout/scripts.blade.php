@@ -10,6 +10,8 @@
 
 @if( ! isset($loadVue) ||  $loadVue)    
 	<script src="{{ asset('js/app.js') }}"></script>
+@else
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.0/js/toastr.min.js"></script>
 @endif
 <script src="{{ asset('js/main.js') }}"></script>
 
@@ -18,6 +20,10 @@
 <script>
 @if(session('message'))
 	toastr.success("{{ session('message')}}"); 
+@elseif(session('info'))
+	toastr.info("{{ session('info')}}");
+@elseif(session('error'))
+	toastr.error("{{ session('error')}}"); 
 @endif
 
 window.csrf = { value: "{{ csrf_token() }}" }

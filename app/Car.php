@@ -46,12 +46,12 @@ class Car extends Model
 	public function scopeAreaSubdata($query)
 	{
 		if(!$this->manicipality) return 'No area';
-		return SubData::where('id', $this->manicipality)->get(['title'])[0]->title;
+			return SubData::where('id', $this->manicipality)->get(['title'])[0]->title;
 	}
 	public function scopeCitySubdata($query)
 	{
 		if(!$this->city) return 'No city';
-		return SubData::where('id', $this->city)->get(['title'])[0]->title;
+			return SubData::where('id', $this->city)->get(['title'])[0]->title;
 	}
 
 
@@ -237,7 +237,7 @@ class Car extends Model
 	{
 		$car_subdata = [];
 		foreach ($res as $key => $val) { 
-			$car_subdata[$key] = [
+			@$car_subdata[$key] = [
 				'id' => $val->id,
 				'brand' => $val->brandSubdata(),
 				'model' => $val->modelSubdata(),

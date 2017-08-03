@@ -1,5 +1,4 @@
 <?php
-
 use App\Car;
 use App\Events\CarPostedEvent;
 use App\Notifications\CarPosted;
@@ -17,19 +16,24 @@ Route::get('/control-panel', 'Auth\LoginController@controlPanel')->middleware('a
 Route::get('/profile', 'Auth\LoginController@profile')->middleware('auth');
 Route::get('/users/{user}', 'Auth\LoginController@userTimeline');
 
-
+// ============== Wishlist
 Route::get('/wish-list', 'WishListsController@index');
 Route::post('/wish-list', 'WishListsController@store');
 Route::delete('/wish-list/{car_id}', 'WishListsController@destroy');
+// ============== messages
 Route::get('/messages', 'MessagesController@index');
 Route::post('/messages', 'MessagesController@store');
 Route::post('/messages/toUser', 'MessagesController@sendMessageToUser');
+Route::get('/read-convs-with-user-info', 'MessagesController@getConvsWithUserInfo');
+Route::get('/read-messages-by-conv-id/{convId}', 'MessagesController@getMessagesByConvId');
 
+// ============== Car
 Route::get('/cars/readLatestPosts', 'SearchController@getLatestCars');
 Route::resource('cars', 'CarsController');
+Route::get('/cars/create', 'CarsController@create')->middleware('check_create_car');
 Route::get('/my-cars', 'CarsController@myCars');
 
-// ============== Sub Data
+// ============== SubData
 Route::get('/readSubData/{data1}/{data2}', 'SubDataController@readSubData'); // readSubData/model/Mercedes
 Route::get('/readSubData/{subID}', 'SubDataController@readModelsBySubID'); // readSubData/5
 Route::get('/read-data-with-subdata/{data}/{subdata}', 'SubDataController@readDataWithSubdata');
@@ -45,15 +49,9 @@ Route::delete('/images-for-ad/{pic}', 'PicturesController@destroyPicByAd');
 
 // ==============  Search
 Route::get('/search/general/{keyword}', 'SearchController@searchGeneral');
-
 Route::post('/search/results', 'SearchController@readResults');
-
 Route::post('/saved-search', 'SavedSearchController@store');
 Route::get('/saved-search/{savedSearch}', 'SavedSearchController@getSavedSearch');
-
-// ==============  Messages
-Route::get('/read-convs-with-user-info', 'MessagesController@getConvsWithUserInfo');
-Route::get('/read-messages-by-conv-id/{convId}', 'MessagesController@getMessagesByConvId');
 
 // ==============  Ads
 Route::get('/read-ads', 'AdsController@getAllAds');
@@ -81,7 +79,7 @@ Route::get('/get-notif', function(){
 	}
 });
 
-Route::get('/not/{car}', function(Car $car){
+Route::get('/not/{car}', function(Car $car){ // for test
 	Car::notify_users_for_savedSearch($car);
 });
 

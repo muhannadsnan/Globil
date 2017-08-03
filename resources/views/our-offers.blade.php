@@ -22,7 +22,7 @@
 
 
 @section('content')
-
+	
 	@if( @$id == 1)	
 		<div class="alert alert-success">
 			<h3>Welcome to Globil ! 

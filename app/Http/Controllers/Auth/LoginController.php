@@ -17,7 +17,7 @@ class LoginController extends Controller
 
 	 public function __construct()
 	 {
-		  $this->middleware('guest')->except(['logout']);
+		  $this->middleware('auth')->except(['showLoginForm', 'login']);
 	 }
 
 	 public function profile()
@@ -53,7 +53,7 @@ class LoginController extends Controller
 
 	  public function payment(Request $request)
 	  {
-			dd($request->all());
+			// dd($request->all());
 			//dd(auth()->user()->subscription('gold'));
 			auth()->user()->newSubscription('gold', 'gold')->create($request->stripeToken);
 			return 'DONE !';

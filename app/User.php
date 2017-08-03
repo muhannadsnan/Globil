@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
+use Laravel\Cashier\Subscription;
 
 class User extends Authenticatable/* implements BillableInterface*/
 {
@@ -34,9 +35,12 @@ class User extends Authenticatable/* implements BillableInterface*/
       {
          $created = new Carbon(User::expiringDate());
          $now = Carbon::now();
-          return ($created->diff($now)->days < 1)
-                ? 'today'
-                : $created->diffInDays($now);
+          return ($created->diff($now)->days < 1)  ? 'today'  : $created->diffInDays($now);
+      }
+
+      public function plan()
+      {
+        return auth()->user()->subscriptions[0]->name;
       }
 
 //=================== RELATIONSHIPS ====================
@@ -48,5 +52,10 @@ class User extends Authenticatable/* implements BillableInterface*/
     public function wishList()
     {
         return $this->hasMany(WishList::class);
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class)->orderBy('created_at', 'desc');
     }
 }

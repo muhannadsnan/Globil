@@ -1,6 +1,6 @@
 @extends('master')
 
-@section ("title", " | {$car->brandSubdata()} {$car->modelSubdata()}")
+@section ("title", " - {$car->brandSubdata()} {$car->modelSubdata()}")
 
 @section ("scripts")
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -65,25 +65,36 @@
 				<!-- Indicators -->
 				<ol class="carousel-indicators">
 
-					@foreach($car->pictures as $key => $pic)
-						<li data-target="#myCarousel" data-slide-to="{{$key}}"  class="active"></li>
-					@endforeach
+					@if( count($car->pictures))					
+						@foreach($car->pictures as $key => $pic)
+							<li data-target="#myCarousel" data-slide-to="{{$key}}"  class="active"></li>
+						@endforeach
+					@else
+						<li data-target="#myCarousel" data-slide-to="0"  class="active"></li>
+					@endif
 
 				</ol>
 
 			 <!-- Wrapper for slides -->
 			 <div class="carousel-inner">
-			 <?php $active = true; ?>
-			 @foreach($car->pictures as $key => $pic)
-			 
-				<div class="item {{$active ? 'active' : ''}}">
-				  <img src="{{asset('storage/images'.'/'.$pic->id.'.'.$pic->ext)}}" alt="Los Angeles" style="width:100%;">
-				  <div class="carousel-caption">
-					 <p>{{count($car->pictures)}}/{{$key+1}}</p>
-				  </div>
+			 @if( count($car->pictures))
+			 	<?php $active = true; ?>
+
+				 @foreach($car->pictures as $key => $pic)
+				 
+					<div class="item {{$active ? 'active' : ''}}">
+					  <img src="{{asset('storage/images'.'/'.$pic->id.'.'.$pic->ext)}}" alt="Los Angeles" style="width:100%;">
+					  <div class="carousel-caption">
+						 <p>{{count($car->pictures)}}/{{$key+1}}</p>
+					  </div>
+					</div>
+					<?php $active = false; ?>
+				 @endforeach   
+			@else
+				<div class="item active">
+					  <img src="{{asset('storage/images') . '/no-image.png' }}" alt="No Image" style="width:100%;">
 				</div>
-				<?php $active = false; ?>
-			 @endforeach      
+			@endif
 
 			 </div>
 
@@ -105,7 +116,7 @@
 					<div class="action">
 						@if( auth()->check() && auth()->id() != $car->user_id)
 
-							@if( auth()->user()->wishList->contains('car_id', $car->id) )
+							@if( auth()->user()->wishList->contains('car_id', $car->id) && count(auth()->user()->wishList))
 								@foreach(auth()->user()->wishList as $wish)
 
 									@if($wish->car_id == $car->id)
@@ -149,7 +160,7 @@
 						</a>
 					</div>
 
-					@if(auth()->check())             
+					@if(auth()->check()) 
 						<button @click="showModal=true; " class="btn btn-success">Message</button>
 					@else 
 						<a href="/login" class="btn btn-success">Message</a>
