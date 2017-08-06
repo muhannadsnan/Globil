@@ -27163,7 +27163,7 @@ var app = new Vue({
 
 
 		// sendMessageToUser(){
-		// 	axios.post('/messages', this.message )
+		//    axios.post('/messages', this.message )
 		//          .then(response => {
 		//              this.showModal = false
 		//              toastr.success(response.data.message)
@@ -27236,7 +27236,7 @@ var app = new Vue({
 			} else {
 				this.paginator.current_page = 1;
 			}
-			// this.paginator.current_page = 1 				
+			// this.paginator.current_page = 1           
 			this.searchResult = [];
 		}
 	},
@@ -28882,7 +28882,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			subdata: [],
-			subdataTypes: [],
+			subdataTypes: [{ ntype: 'brand' }, { ntype: 'model' }, { ntype: 'country' }, { ntype: 'color' }, { ntype: 'gear' }, { ntype: 'cylinder' }, { ntype: 'fuel_type' }, { ntype: 'car_type' }, { ntype: 'roof_type' }, { ntype: 'wheel_drive' }, { ntype: 'area' }, { ntype: 'city' }, { ntype: 'ads_type' }],
 			selectedNType: '',
 			brands: [],
 			areas: [],
@@ -28925,7 +28925,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.loading = true;
 			axios.get('/readSubData/' + this.selectedNType + '/undefined').then(function (response) {
 				_this3.subdata = response.data.data;
-				_this3.showModalCreate = false;
+				// this.showModalCreate=false
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error occured!');
 			});
@@ -28937,7 +28937,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.loading = true;
 			axios.get('/read-subdata-types').then(function (response) {
 				_this4.subdataTypes = response.data.data.filter(function (sub) {
-					if (sub.ntype != 'ads_type') return sub;
+					return sub.ntype != 'ads_type';
 				});
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error occured!');
@@ -29016,7 +29016,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	mounted: function mounted() {
 		// console.log('Manage subdata Component mounted.')
 
-		this.readTypes();
+		// this.readTypes()
 		this.csrf = window.Laravel.csrfToken;
 	},
 
@@ -30127,11 +30127,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.subData = this.loadedmodels;
             this.loading = false;
             this.selectedOPT = this.old;
-        },
-        loadedcities: function loadedcities() {
-            this.subData = this.loadedcities;
-            this.loading = false;
-            this.selectedOPT = this.old;
         }
     }
 });
@@ -30331,7 +30326,7 @@ toastr.options.closeDuration = 1000;
 toastr.options.showMethod = 'slideDown';
 toastr.options.hideMethod = 'slideUp';
 toastr.options.closeMethod = 'slideUp';
-toastr.options.timeOut = 2500;
+toastr.options.timeOut = 6000;
 toastr.options.progressBar = false;
 
 // VUE COMPONENTS
@@ -56807,7 +56802,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "showModalCreate"
     }],
     attrs: {
-      "title": 'Create new ' + _vm.newSub.ntype
+      "title": 'Create new ' + (_vm.newSub.ntype ? _vm.newSub.ntype : ' ')
     },
     on: {
       "clk-close-modal": function($event) {
@@ -56936,6 +56931,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "submit",
       "value": "Create"
+    },
+    nativeOn: {
+      "keyup": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.storeSubdata($event)
+      }
     }
   })])], 2)], 1), _vm._v(" "), _c('form', {
     attrs: {
@@ -57062,6 +57063,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "submit",
       "value": "Update"
+    },
+    nativeOn: {
+      "keyup": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.updateSub($event)
+      }
     }
   }), _vm._v(" "), _c('input', {
     directives: [{

@@ -20,7 +20,7 @@
   <!-- TOASTR -->
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
   
-  @yield('css')
+<style type="text/css">   @yield('styles') </style>
 
   <!-- App CSS -->
   <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->

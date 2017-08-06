@@ -23,6 +23,7 @@ class CarsController extends Controller
 	public function store(Request $request) //==============================
 	{
 		//dd($request->all());
+		//dd('3');
 		$this->validate($request, Car::rules());
  		
  		$car = Car::createCar($request);
@@ -38,11 +39,11 @@ class CarsController extends Controller
 
  		Car::notify_users_for_savedSearch($car);
 
- 		return redirect('/cars/create');
+ 		return redirect('/my-cars');
 	} //=====================================================================
 
 	public function create()
-	{
+	{ //dd('2');
 		return view('cars.create', compact(''));
 	}
 

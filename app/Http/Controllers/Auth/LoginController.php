@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Stripe\Stripe;
 
 class LoginController extends Controller
@@ -51,12 +52,12 @@ class LoginController extends Controller
 	  }
 
 
-	  public function payment(Request $request)
+	  public function pay(Request $request)
 	  {
-			// dd($request->all());
-			//dd(auth()->user()->subscription('gold'));
-			auth()->user()->newSubscription('gold', 'gold')->create($request->stripeToken);
-			return 'DONE !';
+		// dd($request->all());
+		//dd(auth()->user()->subscription('gold'));
+		auth()->user()->newSubscription('gold', 'gold')->create($request->stripeToken);
+		return redirect('/our-offers/gold');
 	  }
 
 

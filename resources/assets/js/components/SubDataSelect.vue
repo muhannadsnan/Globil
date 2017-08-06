@@ -102,11 +102,11 @@
                 this.selectedOPT = this.old;
             },
 
-            loadedcities(){
-                this.subData = this.loadedcities;
-                this.loading = false;
-                this.selectedOPT = this.old;
-            }
+            // loadedcities(){
+            //     this.subData = this.loadedcities;
+            //     this.loading = false;
+            //     this.selectedOPT = this.old;
+            // }
         }
     }
 </script>

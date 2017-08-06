@@ -15,7 +15,7 @@
 	@endif
 
 @endsection
-	
+<!-- ====================================================  -->
 
 <div class="card-in-vue  car-card col-xs-6 col-sm-4 col-md-3" >
 	<div class="panel panel-info">
@@ -30,7 +30,7 @@
 				<p>{{ $car->modelSubdata() }}</p>
 				<small>year: {{ $car->year }}</small> 
 				<label> {{ $car->price }} ,- </label>
-				<p>{{ $car->area .', '. $car->city }}</p>
+				<p>{{ $car->areaSubdata() .', '. $car->citySubdata() }}</p>
 			</div>
 
 			<div class="foot">

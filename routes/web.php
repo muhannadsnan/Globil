@@ -31,6 +31,7 @@ Route::get('/read-messages-by-conv-id/{convId}', 'MessagesController@getMessages
 Route::get('/cars/readLatestPosts', 'SearchController@getLatestCars');
 Route::resource('cars', 'CarsController');
 Route::get('/cars/create', 'CarsController@create')->middleware('check_create_car');
+Route::post('/cars', 'CarsController@store')->middleware('check_create_car');
 Route::get('/my-cars', 'CarsController@myCars');
 
 // ============== SubData
@@ -89,6 +90,6 @@ Route::get('/get-countries', function(){
 });
 
 Route::get('/payment/{plan}', 'Auth\LoginController@getpayment')->middleware('auth');
-Route::post('/payment', 'Auth\LoginController@payment')->middleware('auth');
+Route::post('/pay', 'Auth\LoginController@pay')->middleware('auth');
 
 // Route::get('/after-reg', 'Auth\LoginController@afterReg')->middleware('auth');

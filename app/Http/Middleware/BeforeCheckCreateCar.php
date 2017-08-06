@@ -5,16 +5,16 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Session;
 
-class CheckCreateCar
+class BeforeCheckCreateCar
 {
 
     public function handle($request, Closure $next)
-    {
+    { //dd('1');
          if(auth()->user()->daysRemaining() == 0){ 
             Session::flash('info', 'Sorry! You can not create a car because your subscription has ended! Please subscribe to one of our offers.');
             return redirect('/our-offers');
         }
-
+//dd(auth()->user()->plan() == 'standard' && count(auth()->user()->cars));
         if(auth()->user()->plan() == 'standard' && count(auth()->user()->cars)){
             Session::flash('info', 'Sorry! You can not create a car because you have published a free car already! Please subscribe to one of our offers.');
             return redirect('/our-offers');

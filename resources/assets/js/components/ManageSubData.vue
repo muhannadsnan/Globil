@@ -45,7 +45,7 @@
 
 
 		<form @submit.prevent="storeSubdata" action="" method="post" enctype="multipart/form-data">
-			<modal :title="'Create new '+newSub.ntype" v-show="showModalCreate" @clk-close-modal="showModalCreate=false">
+			<modal :title="'Create new '+(newSub.ntype? newSub.ntype : ' ') " v-show="showModalCreate" @clk-close-modal="showModalCreate=false">
 				<input type="hidden" name="_token" :value="csrf">
 
 				<div class="form-group">
@@ -72,7 +72,7 @@
 				</div>
 
 				<template slot="buttons">
-					<input type="submit" value="Create" class="btn btn-primary">
+					<input type="submit" value="Create" class="btn btn-primary" @keyup.enter.native="storeSubdata">
 				</template>
 			</modal>
 		</form>
@@ -99,7 +99,7 @@
 				</div>
 
 				<template slot="buttons">
-					<input type="submit" v-show="showUpdateBtn" value="Update" class="btn btn-primary">
+					<input type="submit" v-show="showUpdateBtn" value="Update" class="btn btn-primary"  @keyup.enter.native="updateSub">
 					<input type="submit" v-show="!showUpdateBtn" value="Update" class="btn btn-primary" disabled="disabled">
 				</template>
 			</modal>
@@ -112,7 +112,7 @@
 		data(){
 			return {
 				subdata: [],
-				subdataTypes: [],
+				subdataTypes: [ {ntype: 'brand'}, {ntype: 'model'}, {ntype: 'country'}, {ntype: 'color'}, {ntype: 'gear'}, {ntype: 'cylinder'}, {ntype: 'fuel_type'}, {ntype: 'car_type'}, {ntype: 'roof_type'}, {ntype: 'wheel_drive'}, {ntype: 'area'}, {ntype: 'city'}, {ntype: 'ads_type'}],
 				selectedNType: '',
 				brands: [],
 				areas: [],
@@ -156,12 +156,12 @@
 				axios.get('/readSubData/'+this.selectedNType+'/undefined')
 					.then(response => {
 						this.subdata = response.data.data
-						this.showModalCreate=false
+						// this.showModalCreate=false
 					})
 					.catch(err => {
 						toastr.error(err.message, 'Error occured!')
 					})
-					this.loading = false
+				this.loading = false
 			},
 
 			readTypes(){
@@ -169,14 +169,13 @@
 				axios.get('/read-subdata-types')
 					.then(response => {
 						this.subdataTypes = response.data.data.filter( sub => {
-							if(sub.ntype != 'ads_type')
-								return sub
+							return sub.ntype != 'ads_type'
 						})
 					})
 					.catch(err => {
 						toastr.error(err.message, 'Error occured!')
 					})
-					this.loading = false
+				this.loading = false
 			},
 
 			storeSubdata(){
@@ -254,7 +253,7 @@
 		mounted() {
 			// console.log('Manage subdata Component mounted.')
 			
-			this.readTypes()
+			// this.readTypes()
 			this.csrf = window.Laravel.csrfToken
 		},
 

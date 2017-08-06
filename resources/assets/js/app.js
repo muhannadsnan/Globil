@@ -41,52 +41,52 @@ const app = new Vue({
 			this.loadingModel = true;
 
 			axios.get('/readSubData/model/'+ selectedBrand )
-              .then(response => {
-                  this.models = response.data.data;  //console.log(response.data.data);
-              })
-              .catch(err => {
-                  toastr.error('Error occured!', err.message);
-              })
-        this.loadingModel = false;
+				  .then(response => {
+						this.models = response.data.data;  //console.log(response.data.data);
+				  })
+				  .catch(err => {
+						toastr.error('Error occured!', err.message);
+				  })
+		 	 this.loadingModel = false;
 		}, //<<
 
 		loadModelsBySubID(subID){ 
 			this.loadingModel = true;
 
 			axios.get('/readSubData/'+ subID )
-              .then(response => {
-                  this.models = response.data.data;  
-              })
-              .catch(err => {
-                  toastr.error('Error occured!', err.message);
-              })
-        	this.loadingModel = false;
+				  .then(response => {
+						this.models = response.data.data;  
+				  })
+				  .catch(err => {
+						toastr.error('Error occured!', err.message);
+				  })
+			this.loadingModel = false;
 		}, //<<
 
 		loadCitiesByArea(selectedArea){
 			this.loadingModel = true;
 
 			axios.get('/readSubData/city/'+ selectedArea )
-              .then(response => {
-                  this.cities = response.data.data;  //console.log(response.data.data);
-              })
-              .catch(err => {
-                  toastr.error('Error occured!', err.message);
-              })
-        this.loadingModel = false;
+				  .then(response => {
+						this.cities = response.data.data;  //console.log(response.data.data);
+				  })
+				  .catch(err => {
+						toastr.error('Error occured!', err.message);
+				  })
+		  	this.loadingModel = false;
 		}, //<<
 
 		loadCitiesBySubID(subID){ 
 			this.loadingModel = true;
 
 			axios.get('/readSubData/'+ subID )
-              .then(response => {
-                  this.cities = response.data.data;  
-              })
-              .catch(err => {
-                  toastr.error('Error occured!', err.message);
-              })
-        	this.loadingModel = false;
+				  .then(response => {
+						this.cities = response.data.data;  
+				  })
+				  .catch(err => {
+						toastr.error('Error occured!', err.message);
+				  })
+			this.loadingModel = false;
 		}, //<<
 
 		getLatestCars(){ //==================================================
@@ -94,18 +94,18 @@ const app = new Vue({
 			this.loadingPage = true
 
 			axios.get('/cars/readLatestPosts?page='+this.paginator.current_page+'&per_page='+this.paginator.per_page)
-	           .then(response => {  console.log(response.data.data)
-	           		// this.user_id = response.data.user_id
-	           		this.wishList = response.data.wish_list
-	               this.searchResult = response.data.data
-	               ++this.paginator.current_page
-	               this.moreResults = response.data.moreResults
-	           })
-	           .catch(err => {
-	               toastr.error('Error occured!', err.message)
-	           })
-        	this.loadingModel = false
-        	this.loadingPage = false
+				  .then(response => {  console.log(response.data.data)
+						// this.user_id = response.data.user_id
+						this.wishList = response.data.wish_list
+						this.searchResult = response.data.data
+						++this.paginator.current_page
+						this.moreResults = response.data.moreResults
+				  })
+				  .catch(err => {
+						toastr.error('Error occured!', err.message)
+				  })
+			this.loadingModel = false
+			this.loadingPage = false
 		}, //======================================================================
 
 		loadMoreResults(){
@@ -115,8 +115,8 @@ const app = new Vue({
 			axios.post('/search/results', {req: this.searchFilters, paginator: this.paginator})
 					.then(response => {
 						response.data.data.forEach(car => {
-			         	this.searchResult.push(car)
-			     		})
+							this.searchResult.push(car)
+						})
 						this.moreResults = response.data.moreResults
 					})
 					.catch(err => {
@@ -143,29 +143,29 @@ const app = new Vue({
 			this.loadingModel = true
 			
 			axios.get('/cars/readLatestPosts?page='+this.paginator.current_page+'&per_page='+this.paginator.per_page)
-	           .then(response => {
-	           		response.data.data.forEach(car => {
-	               	this.searchResult.push(car)	           			
-	           		})
-	               ++this.paginator.current_page
-	               this.moreResults = response.data.moreResults
-	           })
-	           .catch(err => {
-	               toastr.error('Error occured!', err.message)
-	           })
-        	this.loadingModel = false
+				  .then(response => {
+						response.data.data.forEach(car => {
+							this.searchResult.push(car)                     
+						})
+						++this.paginator.current_page
+						this.moreResults = response.data.moreResults
+				  })
+				  .catch(err => {
+						toastr.error('Error occured!', err.message)
+				  })
+			this.loadingModel = false
 		},
 
 		searchRequest(){
 			axios.get('/search/general/'+ this.searchKeyword )
-              .then(response => {
-                  this.searchResult = response.data.data  
-              })
-              .catch(err => {
-                  toastr.error(err.message, 'Error occured!')
-              })
-        	this.loadingPage = false
-         this.searchTyping = false
+				  .then(response => {
+						this.searchResult = response.data.data  
+				  })
+				  .catch(err => {
+						toastr.error(err.message, 'Error occured!')
+				  })
+			this.loadingPage = false
+			this.searchTyping = false
 		}, //<<
 
 		searchKeyEnter(){
@@ -180,7 +180,7 @@ const app = new Vue({
 		},
 
 		// sendMessageToUser(){
-		// 	axios.post('/messages', this.message )
+		//    axios.post('/messages', this.message )
   //          .then(response => {
   //              this.showModal = false
   //              toastr.success(response.data.message)
@@ -202,18 +202,18 @@ const app = new Vue({
 		},
 
 		EchoNotif(){ 
-		   Echo.channel('ch-'+this.user_id)
-		    	.listen('CarPostedEvent', (notif) => { console.log(notif)
+			Echo.channel('ch-'+this.user_id)
+				.listen('CarPostedEvent', (notif) => { console.log(notif)
 					this.unreadNotifications.unshift(notif)
-		    	})
+				})
 		},
 
 		getCountriesForRegisterPage(){
 			axios.get('/get-countries').then( response => {
 				this.countries = response.data.data
 			}).catch(err => {
-	         toastr.error(err.message, 'Error occured!')
-	     })
+				toastr.error(err.message, 'Error occured!')
+		  })
 		}
 	},
 
@@ -246,12 +246,12 @@ const app = new Vue({
 
 		isActiveSearch(val){
 			if(val == true){
-				this.paginator.current_page = 1 				
+				this.paginator.current_page = 1           
 			}
 			else{
 				this.paginator.current_page = 1
 			}
-			// this.paginator.current_page = 1 				
+			// this.paginator.current_page = 1           
 			this.searchResult = []
 		},
 	},

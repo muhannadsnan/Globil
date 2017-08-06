@@ -65,7 +65,7 @@
 				<!-- Indicators -->
 				<ol class="carousel-indicators">
 
-					@if( count($car->pictures))					
+					@if( count($car->pictures))
 						@foreach($car->pictures as $key => $pic)
 							<li data-target="#myCarousel" data-slide-to="{{$key}}"  class="active"></li>
 						@endforeach

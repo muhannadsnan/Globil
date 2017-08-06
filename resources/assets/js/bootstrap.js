@@ -34,7 +34,7 @@ toastr.options.closeDuration = 1000;
 toastr.options.showMethod = 'slideDown';
 toastr.options.hideMethod = 'slideUp';
 toastr.options.closeMethod = 'slideUp';
-toastr.options.timeOut = 2500;
+toastr.options.timeOut = 6000;
 toastr.options.progressBar = false;
 
 // VUE COMPONENTS

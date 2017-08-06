@@ -54,14 +54,14 @@
 
 <div class="col-md-6 form-group {{ $errors->has('price') ? 'has-error' : '' }}">
 	@if(@$update) <div class="SubDataSelect input-group"><span class="input-group-addon">Price</span>@endif
-		<input name="price" step="5000" type="number" class="form-control" value="{{ old('price') ? old('price') : @$car->price }}" placeholder="Price" autocomplete="off" min="0" requiredX autofocus>
+		<input name="price" step="1" type="number" class="form-control" value="{{ old('price') ? old('price') : @$car->price }}" placeholder="Price" autocomplete="off" min="0" requiredX autofocus>
 	@if(@$update) </div> @endif
 </div>
 
 
 <div class="col-md-6 form-group {{ $errors->has('kilometer') ? 'has-error' : '' }}">
 	@if(@$update) <div class="SubDataSelect input-group"><span class="input-group-addon">Kilometer</span>@endif
-		<input name="kilometer" step="100" type="number" class="form-control" value="{{ old('kilometer') ? old('kilometer') : @$car->kilometer }}" placeholder="Kilometer" autocomplete="off" min="0" requiredX autofocus>
+		<input name="kilometer" step="1" type="number" class="form-control" value="{{ old('kilometer') ? old('kilometer') : @$car->kilometer }}" placeholder="Kilometer" autocomplete="off" min="0" requiredX autofocus>
 	@if(@$update) </div> @endif
 </div>
 
@@ -121,7 +121,7 @@
 
 <div class="col-md-6 form-group {{ $errors->has('co2') ? 'has-error' : '' }}">
 	@if(@$update) <div class="SubDataSelect input-group"><span class="input-group-addon">CO2</span>@endif
-		<input name="co2" step="10" type="number" class="form-control" value="{{ old('co2') ? old('co2') : @$car->co2 }}" placeholder="Co2" autocomplete="off" min="0" requiredX autofocus>
+		<input name="co2" step="1" type="number" class="form-control" value="{{ old('co2') ? old('co2') : @$car->co2 }}" placeholder="Co2" autocomplete="off" min="0" requiredX autofocus>
 	@if(@$update) </div> @endif
 </div>
 
@@ -173,7 +173,7 @@
 
 <div class="col-md-6 form-group {{ $errors->has('HP') ? 'has-error' : '' }}">
 	@if(@$update) <div class="SubDataSelect input-group"><span class="input-group-addon">HP</span>@endif
-		<input name="HP" step="10" type="number" class="form-control" value="{{ old('HP') ? old('HP') : @$car->HP }}" placeholder="HP" autocomplete="off" min="0" requiredX autofocus>
+		<input name="HP" step="1" type="number" class="form-control" value="{{ old('HP') ? old('HP') : @$car->HP }}" placeholder="HP" autocomplete="off" min="0" requiredX autofocus>
 	@if(@$update) </div> @endif
 </div>
 
@@ -196,13 +196,13 @@
 
 <div class="col-md-6 form-group {{ $errors->has('reg_fee') ? 'has-error' : '' }}">
 	@if(@$update) <div class="SubDataSelect input-group"><span class="input-group-addon">Reg fee</span>@endif
-		<input name="reg_fee" step="1000" type="number" class="form-control" value="{{ old('reg_fee') ? old('reg_fee') : @$car->reg_fee }}" placeholder="Registering fee" autocomplete="off" min="0" requiredX autofocus>
+		<input name="reg_fee" step="1" type="number" class="form-control" value="{{ old('reg_fee') ? old('reg_fee') : @$car->reg_fee }}" placeholder="Registering fee" autocomplete="off" min="0" requiredX autofocus>
 	@if(@$update) </div> @endif
 </div>
 
 <div class="col-md-6 form-group {{ $errors->has('yearly_fee') ? 'has-error' : '' }}">
 	@if(@$update) <div class="SubDataSelect input-group"><span class="input-group-addon">Yearly fee</span>@endif
-		<input name="yearly_fee" step="1000" type="number" class="form-control" value="{{ old('yearly_fee') ? old('yearly_fee') : @$car->yearly_fee }}" placeholder="Yearly fee" autocomplete="off" min="0" requiredX autofocus>
+		<input name="yearly_fee" step="1" type="number" class="form-control" value="{{ old('yearly_fee') ? old('yearly_fee') : @$car->yearly_fee }}" placeholder="Yearly fee" autocomplete="off" min="0" requiredX autofocus>
 	@if(@$update) </div> @endif
 </div>
 

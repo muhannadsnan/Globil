@@ -10,11 +10,13 @@
 		</div>
 
 		<div class="panel-body">
-			@foreach(auth()->user()->cars as $car)
+			@forelse(auth()->user()->cars as $car)
 		
 				@include('cars._card')
-			
-			@endforeach
+
+			@empty
+				You have created no cars.
+			@endforelse
 		</div>
 		
 	</div>
