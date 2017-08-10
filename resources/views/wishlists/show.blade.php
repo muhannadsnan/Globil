@@ -41,7 +41,11 @@
 						</div>
 
 						<div class="thumbnail text-right col-xs-3">
-							<img src="{{ asset('storage/images'.'/'. $wish->car->pictures[0]->id .'.'. $wish->car->pictures[0]->ext) }}" />
+						<?php 
+							$pic0_id = @count($wish->car->pictures[0]->id) ? $wish->car->pictures[0]->id : 'no-image';
+							$pic0_ext = @count($wish->car->pictures[0]->id) ? $wish->car->pictures[0]->ext : 'png';
+						?>
+							<img src="{{ asset('storage/images'.'/'. $pic0_id .'.'. $pic0_ext) }}" />
 						</div>
 					</div>
 					<hr>

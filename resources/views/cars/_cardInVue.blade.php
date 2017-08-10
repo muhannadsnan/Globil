@@ -1,4 +1,23 @@
 
+@section ("wishlist_type_1")
+
+	wishlist_type_1
+
+@endsection
+
+@section ("wishlist_type_2")
+
+	wishlist_type_2
+
+@endsection
+
+@section ("wishlist_type_3")
+
+	wishlist_type_3
+
+@endsection
+	
+
 
 <div  v-for="car in searchResult"  class="card-in-vue car-card col-xs-6 col-sm-4 col-md-3"  v-cloak>
 	<div class="panel panel-info">
@@ -18,9 +37,22 @@
 			<div class="foot">
 			
 				<a :href="'/cars/'+car.id" class="btn btn-info" target="_blank">Show</a>
-				
-				<wishlistbutton :data1="car.id" data2="{{auth()->id()}}"></wishlistbutton>			
 
+				<template v-if="car.wishlist_type">
+					<template v-if="car.wishlist_type[0] == 1">				
+						<wishlistbutton act="remove" :data1="car.id" data2="{{auth()->id()}}" :data3="car.wishlist_type[1]"></wishlistbutton>
+					</template>
+
+					<template v-if="car.wishlist_type[0] == 2">
+						<wishlistbutton act="add" :data1="car.id" data2="{{auth()->id()}}"></wishlistbutton>
+					</template>
+
+					<template v-if="car.wishlist_type[0] == 3">
+						<wishlistbutton act="add" :data1="car.id" data2="{{auth()->id()}}"></wishlistbutton>
+					</template>
+				</template>
+				
+				
 			</div>
 		</div>
 	</div>

@@ -250,8 +250,9 @@ class Car extends Model
 				'pic_file_name' => @$val->pictures[0] ?
 					asset('storage/images').'/'. @$val->pictures[0]->id . '.' . @$val->pictures[0]->ext
 					: asset('storage/images').'/no-image.png',
+				'wishlist_type' => $val->wishlist_type()
 			];
-		} 
+		} //dd($car_subdata);
 		return $car_subdata;
 	}
 
@@ -375,4 +376,29 @@ class Car extends Model
 		return User::whereIn('id', $userIDS)->get();
 
 	}
+
+
+	public function wishlist_type()
+	{
+		if( auth()->check() && auth()->id() != $this->user_id){ //dd($this->id);
+			if( auth()->user()->wishList->contains('car_id', $this->id) ){  //dd(2);
+				foreach(auth()->user()->wishList as $wish){  //dd(3);
+					if($wish->car_id == $this->id){ // the car exists in my wishlist
+						//<wishlistbutton act="remove" data1="{{car.id}}" data2="{{auth()->id()}}" data3="{{$wish->id}}"></wishlistbutton>
+						return [1, $wish->id];
+					}					
+				}
+			}
+			else { // the car does not exist in my wishlist
+				//<wishlistbutton act="add" data1="{{car.id}}" data2="{{auth()->id()}}"></wishlistbutton>			
+				return [2];
+			}
+		}
+		elseif( auth()->guest() ){
+			//<a href="/login" class="like btn btn-default wish-list"><span class="fa fa-heart"></span> Add to wish list</a>
+			return [3];
+		}
+	}
+
+
 }
