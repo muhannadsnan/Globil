@@ -108,9 +108,25 @@ const app = new Vue({
 			this.loadingPage = false
 		}, //======================================================================
 
+		loadMoreLatestPosts(){
+			this.moreResults = 0
+			axios.get('/cars/readLatestPosts?page='+this.paginator.current_page+'&per_page='+this.paginator.per_page)
+				  .then(response => {
+						response.data.data.forEach(car => {
+							this.searchResult.push(car)                     
+						})
+						++this.paginator.current_page
+						this.moreResults = response.data.moreResults
+				  })
+				  .catch(err => {
+						toastr.error('Error occured!', err.message)
+				  })
+			this.loadingModel = false
+		},
+
 		loadMoreResults(){
 			this.loadingModel = true
-
+			this.moreResults = 0 // to disable the btn while working
 			++this.paginator.current_page
 			axios.post('/search/results', {req: this.searchFilters, paginator: this.paginator})
 					.then(response => {
@@ -129,6 +145,7 @@ const app = new Vue({
 		searchResultsReady(param){ // Results From Search-Filter Component // means filters changed
 			this.searchFilters = param.filters
 			this.paginator.current_page = 1
+
 			axios.post('/search/results', {req: this.searchFilters, paginator: this.paginator})
 					.then(response => {
 						this.searchResult = response.data.data
@@ -137,23 +154,7 @@ const app = new Vue({
 					.catch(err => {
 						toastr.error(err.message, 'Error was occured!')
 					})
-		},
-
-		loadMoreLatestPosts(){
-			this.loadingModel = true
-			
-			axios.get('/cars/readLatestPosts?page='+this.paginator.current_page+'&per_page='+this.paginator.per_page)
-				  .then(response => {
-						response.data.data.forEach(car => {
-							this.searchResult.push(car)                     
-						})
-						++this.paginator.current_page
-						this.moreResults = response.data.moreResults
-				  })
-				  .catch(err => {
-						toastr.error('Error occured!', err.message)
-				  })
-			this.loadingModel = false
+			this.loadingPage = false
 		},
 
 		searchRequest(){
@@ -252,7 +253,7 @@ const app = new Vue({
 				this.paginator.current_page = 1
 			}
 			// this.paginator.current_page = 1           
-			this.searchResult = []
+			this.searchResult = ['init']
 		},
 	},
 

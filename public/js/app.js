@@ -27090,17 +27090,32 @@ var app = new Vue({
 		},
 		//======================================================================
 
-		loadMoreResults: function loadMoreResults() {
+		loadMoreLatestPosts: function loadMoreLatestPosts() {
 			var _this6 = this;
 
-			this.loadingModel = true;
-
-			++this.paginator.current_page;
-			axios.post('/search/results', { req: this.searchFilters, paginator: this.paginator }).then(function (response) {
+			this.moreResults = 0;
+			axios.get('/cars/readLatestPosts?page=' + this.paginator.current_page + '&per_page=' + this.paginator.per_page).then(function (response) {
 				response.data.data.forEach(function (car) {
 					_this6.searchResult.push(car);
 				});
+				++_this6.paginator.current_page;
 				_this6.moreResults = response.data.moreResults;
+			}).catch(function (err) {
+				toastr.error('Error occured!', err.message);
+			});
+			this.loadingModel = false;
+		},
+		loadMoreResults: function loadMoreResults() {
+			var _this7 = this;
+
+			this.loadingModel = true;
+			this.moreResults = 0; // to disable the btn while working
+			++this.paginator.current_page;
+			axios.post('/search/results', { req: this.searchFilters, paginator: this.paginator }).then(function (response) {
+				response.data.data.forEach(function (car) {
+					_this7.searchResult.push(car);
+				});
+				_this7.moreResults = response.data.moreResults;
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error was occured!');
 			});
@@ -27108,33 +27123,19 @@ var app = new Vue({
 			this.loadingModel = false;
 		},
 		searchResultsReady: function searchResultsReady(param) {
-			var _this7 = this;
+			var _this8 = this;
 
 			// Results From Search-Filter Component // means filters changed
 			this.searchFilters = param.filters;
 			this.paginator.current_page = 1;
+
 			axios.post('/search/results', { req: this.searchFilters, paginator: this.paginator }).then(function (response) {
-				_this7.searchResult = response.data.data;
-				_this7.moreResults = response.data.moreResults;
+				_this8.searchResult = response.data.data;
+				_this8.moreResults = response.data.moreResults;
 			}).catch(function (err) {
 				toastr.error(err.message, 'Error was occured!');
 			});
-		},
-		loadMoreLatestPosts: function loadMoreLatestPosts() {
-			var _this8 = this;
-
-			this.loadingModel = true;
-
-			axios.get('/cars/readLatestPosts?page=' + this.paginator.current_page + '&per_page=' + this.paginator.per_page).then(function (response) {
-				response.data.data.forEach(function (car) {
-					_this8.searchResult.push(car);
-				});
-				++_this8.paginator.current_page;
-				_this8.moreResults = response.data.moreResults;
-			}).catch(function (err) {
-				toastr.error('Error occured!', err.message);
-			});
-			this.loadingModel = false;
+			this.loadingPage = false;
 		},
 		searchRequest: function searchRequest() {
 			var _this9 = this;
@@ -27237,7 +27238,7 @@ var app = new Vue({
 				this.paginator.current_page = 1;
 			}
 			// this.paginator.current_page = 1           
-			this.searchResult = [];
+			this.searchResult = ['init'];
 		}
 	},
 
@@ -29519,18 +29520,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			this.showSaveButton = true;
 			this.$emit('results-ready', { filters: this.cleanFilters() });
+
 			//this.readCars()
 		},
-		readCars: function readCars() {
-			var _this2 = this;
 
-			axios.post('/search/results', { req: this.searchFilters, paginator: this.$root.$data.paginator }).then(function (response) {
-				_this2.cars = response.data.data;
-				_this2.$emit('results-ready', { cars: _this2.cars, moreResults: response.data.moreResults, filters: _this2.searchFilters });
-			}).catch(function (err) {
-				toastr.error(err.message, 'Error was occured!');
-			});
-		},
+
+		// readCars(){
+		// 	axios.post('/search/results', {req: this.searchFilters, paginator: this.$root.$data.paginator})
+		// 			.then(response => {
+		// 				this.cars = response.data.data
+		// 				this.$emit('results-ready', {cars: this.cars, moreResults: response.data.moreResults, filters: this.searchFilters})
+		// 			})
+		// 			.catch(err => {
+		// 				toastr.error(err.message, 'Error was occured!')
+		// 			})
+		// },
+
 		cleanFilters: function cleanFilters() {
 			if (this.searchFilters != {}) {
 				var res = this.searchFilters;
@@ -29568,7 +29573,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		this.$on('fuel-type-changed', this.FillSearchFilters);
 		this.$on('gear-changed', this.FillSearchFilters);
 		this.$on('area-changed', this.FillSearchFilters);
-		// this.$root.$on('more-search-results', this.readCars)
 	},
 
 	watch: {}

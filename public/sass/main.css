@@ -5,6 +5,9 @@ a:hover{color: #68a9e1; text-decoration: none}
 .btn{color: #fff;} strong{color: #636b6f;} label{font-weight: bold; color: #337ab7;}
 small{line-height: 20px;}
 [v-cloak] {display: none;}
+/*[v-cloak] [loading] {display: block; color: red;}
+[v-cloak] [hide] {display: none}*/
+
 /**** CUSTOM ****/
 .NO-float {float: none;}
 .margin-0 {margin:0;}
@@ -13,6 +16,7 @@ small{line-height: 20px;}
 .display-inline{ display: inline; }
 .font-22pt{font-size:22pt;}
 .fa{vertical-align: middle; padding: 0px ; font-size: 16pt;}
+.panel h1, .panel h2, .panel h3{margin: 7px;}
 /**** NAV ****/
 nav i {font-size: 22pt !important;  vertical-align: middle;}
 .nav{height: auto;}

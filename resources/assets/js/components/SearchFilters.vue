@@ -71,19 +71,20 @@
 
 				this.showSaveButton = true
 				this.$emit('results-ready', {filters: this.cleanFilters()})
+
 				//this.readCars()
 			},
 
-			readCars(){
-				axios.post('/search/results', {req: this.searchFilters, paginator: this.$root.$data.paginator})
-						.then(response => {
-							this.cars = response.data.data
-							this.$emit('results-ready', {cars: this.cars, moreResults: response.data.moreResults, filters: this.searchFilters})
-						})
-						.catch(err => {
-							toastr.error(err.message, 'Error was occured!')
-						})
-			},
+			// readCars(){
+			// 	axios.post('/search/results', {req: this.searchFilters, paginator: this.$root.$data.paginator})
+			// 			.then(response => {
+			// 				this.cars = response.data.data
+			// 				this.$emit('results-ready', {cars: this.cars, moreResults: response.data.moreResults, filters: this.searchFilters})
+			// 			})
+			// 			.catch(err => {
+			// 				toastr.error(err.message, 'Error was occured!')
+			// 			})
+			// },
 
 			cleanFilters(){
 				if(this.searchFilters != {}){
@@ -122,7 +123,6 @@
 			this.$on('fuel-type-changed', this.FillSearchFilters)
 			this.$on('gear-changed', this.FillSearchFilters)
 			this.$on('area-changed', this.FillSearchFilters)
-			// this.$root.$on('more-search-results', this.readCars)
 		},
 		watch:{
 		}

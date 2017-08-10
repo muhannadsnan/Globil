@@ -1,25 +1,5 @@
 
-@section ("wishlist_type_1")
-
-	wishlist_type_1
-
-@endsection
-
-@section ("wishlist_type_2")
-
-	wishlist_type_2
-
-@endsection
-
-@section ("wishlist_type_3")
-
-	wishlist_type_3
-
-@endsection
-	
-
-
-<div  v-for="car in searchResult"  class="card-in-vue car-card col-xs-6 col-sm-4 col-md-3"  v-cloak>
+<div  v-for="car in searchResult"  class="card-in-vue car-card col-xs-6 col-sm-4 col-md-3" >
 	<div class="panel panel-info">
 
 		<img :src="car.pic_file_name" alt="car.brand +' - '+ car.model">
@@ -29,7 +9,7 @@
 			<div class="hd">
 				<strong>@{{ car.brand }}</strong> 
 				<p>@{{ car.model }}</p>
-				<small>year: @{{ car.year }}</small> 
+				<small>year: @{{ car.year }}</small> <br>
 				<label> @{{ car.price }} ,- </label>
 				<p><small>@{{ car.area +', '+ car.city }}</small></p>
 			</div>
