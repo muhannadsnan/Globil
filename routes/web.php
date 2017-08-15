@@ -90,6 +90,6 @@ Route::get('/get-countries', function(){
 });
 
 Route::get('/payment/{plan}', 'Auth\LoginController@getpayment')->middleware('auth');
-Route::post('/pay', 'Auth\LoginController@pay')->middleware('auth');
+Route::post('/payment', 'Auth\LoginController@pay')->middleware('auth');
 
 // Route::get('/after-reg', 'Auth\LoginController@afterReg')->middleware('auth');

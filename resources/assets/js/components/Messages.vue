@@ -1,8 +1,8 @@
 <template>
- <div class="msg">
-    <h3 v-if="messages.length == 0">Select a conversation to show messages..</h3>
+ <div class="messages">
+    <strong v-if="messages.length == 0"><br>Select a conversation to show messages.. <br> To refresh messages click on the conversation.</strong>
     <div class="header" v-if="afterConvClicked">
-        <a href="#" class="col-xs-12X">
+        <a href="#" class="">
             <img src="images/default_user.png" class="col-xs-4 user_img">          
             <span>{{theOtherUser}}</span>          
         </a>
@@ -10,17 +10,19 @@
 
 <!-- MESAGES -->
    
-        <div class="msg row" v-for="msg in messages">
-            <div class="col-xs-12 message_text" :class="{'me text-right': msg.user_id == userId}">
-                <span class="">{{msg.text}}</span>
+        <div class="all-messages">
+            <div class="msg row" v-for="msg in messages">
+                <div class="col-xs-12 message_text" :class="{'me text-right': msg.user_id == userId}">
+                    <span class="">{{msg.text}}</span>
+                </div>
+                <small class="datetime" :class="{'me text-right': msg.user_id == userId}">
+                    {{msg.created_at}}
+                </small>
             </div>
-            <small class="datetime" :class="{'me text-right': msg.user_id == userId}">
-                {{msg.created_at}}
-            </small>
         </div>
 
 <!-- TEXT AREA WITH BUTTON -->
-        <div class="form-group" v-if="afterConvClicked">
+        <div class="div-txt form-group" v-if="afterConvClicked">
             <textarea @keyup.enter="sendMessage" v-model="newMessage" class="form-control"></textarea>
         </div>
 
@@ -36,7 +38,7 @@
             return {
                 messages: [],
                 theOtherUser: '',
-                convId: '0',
+                convId: 0,
                 userId: 0,
                 newMessage: '',
                 afterConvClicked: false,
@@ -88,3 +90,9 @@
         }
     }
 </script>
+
+<style lang="sass" scoped>
+.messages{margin-top: 0px !important; padding-top: 0px;}
+//.div-txt{}
+.all-messages{min-height: 40vh}
+</style>

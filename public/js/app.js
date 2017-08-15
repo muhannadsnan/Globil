@@ -28268,13 +28268,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             conversations: [],
             users: [],
-            clickedConv: {}
+            clickedConv: {},
+            loading: true,
+            anyConvs: 'init'
         };
     },
 
@@ -28286,6 +28290,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/read-convs-with-user-info').then(function (response) {
                 _this.conversations = response.data.data;
                 _this.users = response.data.users;
+                _this.loading = false;
             }).catch(function (err) {
                 toastr.error(err.message, 'Error occured!');
             });
@@ -28318,6 +28323,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         console.log('Conversations Component mounted.');
         this.readConvs();
+    },
+
+
+    watch: {
+        conversations: function conversations(val) {
+            if (val.length > 0) this.anyConvs = true;else this.anyConvs = false;
+        }
     }
 });
 
@@ -29073,13 +29085,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             messages: [],
             theOtherUser: '',
-            convId: '0',
+            convId: 0,
             userId: 0,
             newMessage: '',
             afterConvClicked: false,
@@ -56018,13 +56032,17 @@ module.exports = Component.exports
 /* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(259)
+
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(157),
   /* template */
   __webpack_require__(221),
   /* scopeId */
-  null,
+  "data-v-3a3c454a",
   /* cssModules */
   null
 )
@@ -57234,7 +57252,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "conv"
-  }, _vm._l((_vm.conversations), function(conv, i) {
+  }, [_vm._l((_vm.conversations), function(conv, i) {
     return _c('a', {
       staticClass: "col-sm-12 user_conv",
       attrs: {
@@ -57257,7 +57275,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v(_vm._s(_vm.users[i]))]), _vm._v(" "), _c('p', {
       staticClass: "latest_msg"
     }, [_vm._v("...")])])])
-  }))
+  }), _vm._v(" "), (!_vm.anyConvs) ? _c('label', {}, [_vm._v("No converstions yet.")]) : _vm._e(), _vm._v(" "), (_vm.loading) ? _c('label', [_vm._v("LOADING CONVERSATIONS..")]) : _vm._e()], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -57367,11 +57385,10 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "msg"
-  }, [(_vm.messages.length == 0) ? _c('h3', [_vm._v("Select a conversation to show messages..")]) : _vm._e(), _vm._v(" "), (_vm.afterConvClicked) ? _c('div', {
+    staticClass: "messages"
+  }, [(_vm.messages.length == 0) ? _c('strong', [_c('br'), _vm._v("Select a conversation to show messages.. "), _c('br'), _vm._v(" To refresh messages click on the conversation.")]) : _vm._e(), _vm._v(" "), (_vm.afterConvClicked) ? _c('div', {
     staticClass: "header"
   }, [_c('a', {
-    staticClass: "col-xs-12X",
     attrs: {
       "href": "#"
     }
@@ -57380,7 +57397,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "src": "images/default_user.png"
     }
-  }), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.theOtherUser))])])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.messages), function(msg) {
+  }), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.theOtherUser))])])]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "all-messages"
+  }, _vm._l((_vm.messages), function(msg) {
     return _c('div', {
       staticClass: "msg row"
     }, [_c('div', {
@@ -57393,9 +57412,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       class: {
         'me text-right': msg.user_id == _vm.userId
       }
-    }, [_vm._v("\n                " + _vm._s(msg.created_at) + "\n            ")])])
-  }), _vm._v(" "), (_vm.afterConvClicked) ? _c('div', {
-    staticClass: "form-group"
+    }, [_vm._v("\n                    " + _vm._s(msg.created_at) + "\n                ")])])
+  })), _vm._v(" "), (_vm.afterConvClicked) ? _c('div', {
+    staticClass: "div-txt form-group"
   }, [_c('textarea', {
     directives: [{
       name: "model",
@@ -57425,7 +57444,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.sendMessage
     }
-  }, [_vm._v("\n            Send\n        ")]) : _vm._e()], 2)
+  }, [_vm._v("\n            Send\n        ")]) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -70860,6 +70879,46 @@ module.exports = function() {
 __webpack_require__(130);
 module.exports = __webpack_require__(131);
 
+
+/***/ }),
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+exports.push([module.i, "\n.messages[data-v-3a3c454a] {\n  margin-top: 0px !important;\n  padding-top: 0px;\n}\n.all-messages[data-v-3a3c454a] {\n  min-height: 40vh;\n}\n", ""]);
+
+/***/ }),
+/* 259 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(258);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("3a850bbb", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3a3c454a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Messages.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3a3c454a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Messages.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

@@ -9,7 +9,7 @@
 		<div class="notifications col-md-8">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 v-cloak>Notifications ( @{{readNotifications.length + unreadNotifications.length}} )</h3>
+					<h3 v-cloak>Notifications ( @{{unreadNotifications.length}} )</h3>
 				</div>
 
 				<div class="panel-body" v-cloak>

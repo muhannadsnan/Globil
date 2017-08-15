@@ -30,7 +30,7 @@ class CarPosted extends Notification
     {
         return [
             'car' => $this->car->id,
-            'message' => "{$notifiable->name} has created a new car {$this->car->brandSubdata()} {$this->car->modelSubdata()}"
+            'message' => "{$this->car->user->name} has created a new car {$this->car->brandSubdata()} {$this->car->modelSubdata()}"
         ];
     }
 

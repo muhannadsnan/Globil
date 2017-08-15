@@ -1,5 +1,5 @@
 <template>
-    <div class="conv">   
+    <div class="conv"> 
         <a v-for="(conv, i) in conversations" href="#Spideman" class="col-sm-12 user_conv"
                 @click="readMessages(conv.id, users[i])">
 
@@ -10,6 +10,8 @@
                 <p class="latest_msg">...</p>
             </div>
         </a>
+        <label v-if="!anyConvs" v-cloak>No converstions yet.</label>
+        <label v-if="loading">LOADING CONVERSATIONS..</label>
     </div>
 </template>
 
@@ -19,7 +21,9 @@
             return {
                 conversations: [],
                 users: [],
-                clickedConv: {}
+                clickedConv: {},
+                loading: true,
+                anyConvs: 'init',
             }
         },
 
@@ -30,6 +34,7 @@
                     .then(response => {
                         this.conversations = response.data.data
                         this.users = response.data.users
+                        this.loading = false
                     })
                     .catch(err => {
                         toastr.error(err.message, 'Error occured!')
@@ -64,7 +69,16 @@
 
         mounted() {
             console.log('Conversations Component mounted.')
-            this.readConvs()            
+            this.readConvs()
+        },
+
+        watch: {
+            conversations(val){
+                if(val.length > 0)
+                    this.anyConvs = true
+                else
+                    this.anyConvs = false
+            }
         }
     }
 </script>

@@ -66,26 +66,63 @@ class Car extends Model
 				if(count($brand[1])){
 					$query->whereIn('model', $brand[1]); //echo $model;
 				}
-			}
-		}
-		//AREA
-		if(isset($request->areas) && count(@$request->areas) > 0){
-			foreach ($request->areas as $area) {
-				$query->orWhere('manicipality', $area[0]); //echo $area[0];
-				if(count($area[1])){
-					$query->whereIn('city', $area[1]); //echo $city;
+
+				if(isset($request->areas) && count(@$request->areas) > 0){
+					$query->Where(function ($query) use ($request) {
+						foreach($request->areas as $area) {
+							$query->orWhere('manicipality', $area[0]); //echo $area[0];
+							if(count($area[1])){
+								$query->whereIn('city', $area[1]); //echo $city;
+							}
+							$query = Car::mostFilters($query, $request);
+						}
+					});
+
+				}else{
+					$query = Car::mostFilters($query, $request);
 				}
 			}
+		// no brand_model, but areas yes
+		}elseif(isset($request->areas) && count(@$request->areas) > 0){ 
+			$query->Where(function ($query) use ($request) {
+				foreach($request->areas as $area) {
+					$query->orWhere('manicipality', $area[0]); //echo $area[0];
+					if(count($area[1])){
+						$query->whereIn('city', $area[1]); //echo $city;
+					}
+				}
+			});
+			$query = Car::mostFilters($query, $request);		
+		//no brand_model, no areas, only checks mostFilters
+		}else{
+			$query = Car::mostFilters($query, $request);
 		}
+
+		$query->orderBy('created_at', 'desc')->with('pictures'); //dd($res);
+		return $query;
+	}
+
+	// public function areaFilters($query, $request)
+	// {		
+	// 	foreach($request->areas as $area) {
+	// 		$query->orWhere('manicipality', $area[0]); //echo $area[0];
+	// 		if(count($area[1])){
+	// 			$query->whereIn('city', $area[1]); //echo $city;
+	// 		}
+	// 		$query = Car::mostFilters($query, $request);
+	// 	}
+	// 	return $query;
+	// }
+
+	public function mostFilters($query, $request)
+	{
 		//YEAR
 		if(isset($request->years) && count(@$request->years) > 0){
-			$query->whereIn('year', $request->years);
-			//dd($request, $request->years, $query->get());
+			$query->whereIn('year', $request->years);//dd($request, $request->years, $query->get());
 		}
 		//CAR_TYPES
 		if(isset($request->car_types) && count(@$request->car_types) > 0){
-			$query->whereIn('car_type', $request->car_types);
-			// dd($request->car_types, $query->get());
+			$query->whereIn('car_type', $request->car_types);// dd($request->car_types, $query->get());
 		}
 		//WHEEL_DRIVES
 		if(isset($request->wheel_drives) && count(@$request->wheel_drives) > 0){
@@ -123,7 +160,6 @@ class Car extends Model
 				$query->whereBetween('kilometer', @$request->kmRange);
 			}
 		}
-		$query->orderBy('created_at', 'desc')->with('pictures'); //dd($res);
 		return $query;
 	}
 
@@ -263,9 +299,9 @@ class Car extends Model
 
 			Notification::send($usersToNotify, new CarPosted($car));
 
-			foreach ($usersToNotify as $userToNotify) {
-				echo "broadcast to : {$userToNotify->name}<br>";
-				broadcast(new CarPostedEvent($userToNotify->id, $car));
+			foreach ($usersToNotify as $UserToNotify) {
+				echo "broadcast to : {$UserToNotify->name}<br>";
+				broadcast(new CarPostedEvent($UserToNotify->id, $car));
 			}
 		}
 	}
@@ -282,45 +318,57 @@ class Car extends Model
 		echo "Saved Search Rows<br>";
 		foreach ($SavedSearches as $key => $row) { 
 			echo "========== $key ========== <br>";
+			$carIsnotMine = false; 
+			if($row->user_id != auth()->id())
+				$carIsnotMine = true;
+			echo "row.user_id($row->user_id) : car.user_id($car->user_id) >> ".($carIsnotMine? 'car is not mine': 'car is mine')."<br>";
 
 			$conainsBrand = false;
-			$conainsModel = false;
+			$containsModel = false;
 			if($row->brand_model){ // ROW CONTAINS BRAND & MODEL  // [ [1,[4]], [2,[5]], [3,[7,9]] ]
 				foreach (json_decode($row->brand_model, true) as $k => $arr) { 
 
 					$conainsBrand = $conainsBrand || ($arr[0] == $car->brand); 
-					if($arr[0] == $car->brand && count($arr[1]) && in_array($car->model, $arr[1]))
-						$conainsModel = true;
+					
+					if(count($arr[1]) == 0){ // no models selected
+						$containsModel = true;
+					}
+					elseif($arr[0] == $car->brand && count($arr[1]) && in_array($car->model, $arr[1])){						
+						$containsModel = true;
+					}
 				}
 			}else{
 				$conainsBrand = true;
-				$conainsModel = true;
+				$containsModel = true;
 			}
 
 			$containsArea = false;
-			$containsCiry = false;
+			$containsCity = false;
 			if($row->areas){ // ROW CONTAINS AREAS  // [ [1,[4]], [2,[5]], [3,[7,9]] ]
 				foreach (json_decode($row->areas, true) as $k => $arr) { 
 
-					$conainsBrand = $conainsBrand || ($arr[0] == $car->manicipality); 
-					if($arr[0] == $car->manicipality && count($arr[1]) && in_array($car->city, $arr[1]))
-						$conainsModel = true;
+					$containsArea = $containsArea || ($arr[0] == $car->manicipality); 
+					
+					if(count($arr[1]) == 0){ // no city selected
+						$containsCity = true;
+					}
+					elseif($arr[0] == $car->manicipality && count($arr[1]) && in_array($car->city, $arr[1])){
+							$containsCity = true;
+					}
 				}
 			}else{
 				$containsArea = true;
-				$containsCiry = true;
+				$containsCity = true;
 			}
 
+			echo "params: $carIsnotMine + $conainsBrand + $containsModel + $containsArea + $containsCity<br>";
 			// ============  Print to debug:
-			// if(($row->min_kilometer == '' || $row->max_kilometer == '') ||
-			// 	(/*[0,900]*/(int)$row->min_kilometer == 0 && (int)$row->max_kilometer > 0 && $car->kilometer <= (int)$row->max_kilometer
-			// 	||/*[900,0]*/ (int)$row->min_kilometer > 0 && (int)$row->max_kilometer == 0 && $car->kilometer >= (int)$row->min_kilometer
-			// 	||/*[900,5000]*/$car->kilometer >= (int)$row->min_kilometer && $car->kilometer <= (int)$row->max_kilometer))
-			// {
-			// 	echo "$row->min_kilometer, $row->max_kilometer<br>";
-			// }
+			if($carIsnotMine && $containsArea && $containsCity)
+			{
+				echo "++ $carIsnotMine , $containsArea , $containsCity<br>";
+			}
 
-			if($conainsBrand && $conainsModel && $containsArea && $containsCiry &&
+			if($carIsnotMine && $conainsBrand && $containsModel && $containsArea && $containsCity &&
 				($row->country == '' || strpos($row->country, (string)$car->country) !== false) &&
 				($row->years == '' || strpos($row->years, (string)$car->year) !== false) &&
 				($row->color == '' || strpos($row->color, (string)$car->color) !== false) &&

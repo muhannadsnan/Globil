@@ -54,10 +54,10 @@ class LoginController extends Controller
 
 	  public function pay(Request $request)
 	  {
-		// dd($request->all());
-		//dd(auth()->user()->subscription('gold'));
-		auth()->user()->newSubscription('gold', 'gold')->create($request->stripeToken);
-		return redirect('/our-offers/gold');
+			// dd($request->all());
+			//dd(auth()->user()->subscription('gold'));
+			auth()->user()->newSubscription('gold', 'gold')->create($request->stripeToken);
+			return redirect('/our-offers/gold');
 	  }
 
 

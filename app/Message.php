@@ -21,7 +21,7 @@ class Message extends Model
 	public static function getConv($toUser)
 	{ 
 		// if I have a conv with that user then get me convId
-		if( $conv = Message::convExistForTwoUsers(auth()->id(), $toUser ) )
+		if( $conv = Message::convExistForTwoUsers(auth()->id(), $toUser ) != false)
 			return $conv;
 		// else create a conv for us
 		return Conversation::create([
