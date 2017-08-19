@@ -39,9 +39,25 @@ class Car extends Model
 	{
 		return SubData::where('id', $this->model)->get(['title'])[0]->title;
 	}
-	public function scopeFuelSubdata($query)
+	public function scopeFuel_typeSubdata($query)
 	{
 		return SubData::where('id', $this->fuel_type)->get(['title'])[0]->title;
+	}
+	public function scopeCar_typeSubdata($query)
+	{
+		return SubData::where('id', $this->car_type)->get(['title'])[0]->title;
+	}
+	public function scopeGearSubdata($query)
+	{
+		return SubData::where('id', $this->gear)->get(['title'])[0]->title;
+	}
+	public function scopeCylinderSubdata($query)
+	{
+		return SubData::where('id', $this->cylinder)->get(['title'])[0]->title;
+	}
+	public function scopeWheel_driveSubdata($query)
+	{
+		return SubData::where('id', $this->wheel_drive)->get(['title'])[0]->title;
 	}
 	public function scopeAreaSubdata($query)
 	{

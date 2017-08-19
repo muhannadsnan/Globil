@@ -14,25 +14,27 @@
 			
 				@foreach(auth()->user()->wishList->reverse() as $wish)
 					
-					<div class="wish-list-post  col-xs-12">
+					<div class="wish-list-post col-xs-12 border-bottom">
 						<div class="col-xs-9">
 							<a href="/cars/{{$wish->car->id}}" class="hd">
-									{{ $wish->car->brandSubdata() }}, 
-									{{ $wish->car->modelSubdata() }},
-									{{ $wish->car->year }}
+								{{ $wish->car->brandSubdata() }}, 
+								{{ $wish->car->modelSubdata() }},
+								{{ $wish->car->year }}
 							</a>
 
-							<span class="price text-left">{{ $wish->car->price . ' NOK' }}</span>
-							<span class="kilometer text-right">{{ $wish->car->kilometer . 'Kilometer' }}</span>
+							<div>
+								<span class="price text-left">{{ $wish->car->price . ' NOK' }}</span>, 
+								<span class="kilometer text-right">{{ $wish->car->kilometer . ' Kilometer' }}</span>
+							</div>
 
-							<p>
+							<small>
 								Posted By <a href="#"> <strong>{{ $wish->user->name }}</strong> </a>
 								{{ $wish->car->created_at->diffForHumans() }}
-							</p>
+							</small>
 
-							<div class="caption">
+<!-- 							<div class="caption">
 								{{ substr($wish->car->desc, 0, 50) }}.. <br/>
-							</div>
+							</div> -->
 						</div>
 
 						<div class="thumbnail text-right col-xs-3">
@@ -41,9 +43,9 @@
 							$pic0_ext = @count($wish->car->pictures[0]->id) ? $wish->car->pictures[0]->ext : 'png';
 							?>
 							<img src="{{ asset('storage/images'.'/'. $pic0_id .'.'. $pic0_ext) }}" />
-						</div>
+						</div>		
 					</div>
-					<hr>					
+					
 				@endforeach
 
 			@else

@@ -3,7 +3,7 @@ html, body {background-color: #fff;	color: #636b6f; /*font-family: 'Raleway', sa
 a, a:active, a:visited{/*color: #337ab7;*/}
 a:hover{color: #68a9e1; text-decoration: none}
 .btn{color: #fff;} strong{color: #636b6f;} label{font-weight: bold; color: #337ab7;}
-small{line-height: 20px;}
+small{line-height: 20px; color: #aaa;}
 [v-cloak] {display: none;}
 /*[v-cloak] [loading] {display: block; color: red;}
 [v-cloak] [hide] {display: none}*/
@@ -17,6 +17,7 @@ small{line-height: 20px;}
 .font-22pt{font-size:22pt;}
 .fa{vertical-align: middle; padding: 0px ; font-size: 16pt;}
 .panel h1, .panel h2, .panel h3{margin: 7px;}
+.border-bottom{border-bottom: 1px solid #ccc; margin-bottom: 10px;}
 /**** NAV ****/
 nav i {font-size: 22pt !important;  vertical-align: middle;}
 .nav{height: auto;}
@@ -67,7 +68,7 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 
 /**** WISHLIST ****/
 .wish-list-post a, .wish-list-post a:visited, .wish-list-post a:active{
-	border: 1px solid #3097D1;	text-align: left;
+	border: 0px solid #3097D1;	text-align: left; color: #3097D1;
 }
 .wish-list-post .hd{
 	font-size: 16pt; 
@@ -171,8 +172,8 @@ footer hr {border-color: #999;}
 .saved-search{}
 .saved-search li{list-style-type: none}
 
-.loadedSavedSearch{margin-bottom: 10px}
-.loadedSavedSearch p{font-weight: bold; margin-bottom: 0px}
+.loadedSavedSearch{margin-bottom: 10px; }
+.loadedSavedSearch p{font-weight: bold; margin-bottom: 0px; text-align: left;}
 
 
 

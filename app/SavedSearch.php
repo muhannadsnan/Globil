@@ -90,8 +90,66 @@ class SavedSearch extends Model
 		return $res;
 	}
 
+	//===================  SCOPES  ==================================
+
 	public function scopeIdToTitle($query, $id)
 	{
 		return SubData::where('id', $id)->get(['title'])[0]->title;
+	}
+
+	public function scopeFuel_typeSubdata($query, $getAsString = true)
+	{  //dd(json_decode($this->fuel_type, true));
+		$fuel_types = "";
+		foreach (json_decode($this->fuel_type, true) as $key => $val) {
+			if($getAsString)
+				$fuel_types .= SubData::where('id', $val)->get(['title'])[0]->title . ', ';
+			else
+				$fuel_types[$key] = SubData::where('id', $val)->get(['title'])[0]->title;
+		}
+		return $fuel_types;
+	}
+	public function scopeCar_typeSubdata($query, $getAsString = true)
+	{
+		$car_type = "";
+		foreach (json_decode($this->car_type, true) as $key => $val) {
+			if($getAsString)
+				$car_type .= SubData::where('id', $val)->get(['title'])[0]->title . ', ';
+			else
+				$car_type[$key] = SubData::where('id', $val)->get(['title'])[0]->title;
+		}
+		return $car_type;
+	}
+	public function scopeGearSubdata($query, $getAsString = true)
+	{
+		$gear = "";
+		foreach (json_decode($this->gear, true) as $key => $val) {
+			if($getAsString)
+				$gear .= SubData::where('id', $val)->get(['title'])[0]->title . ', ';
+			else
+				$gear[$key] = SubData::where('id', $val)->get(['title'])[0]->title;
+		}
+		return $gear;
+	}
+	public function scopeCylinderSubdata($query, $getAsString = true)
+	{
+		$cylinder = "";
+		foreach (json_decode($this->cylinder, true) as $key => $val) {
+			if($getAsString)
+				$cylinder .= SubData::where('id', $val)->get(['title'])[0]->title . ', ';
+			else
+				$cylinder[$key] = SubData::where('id', $val)->get(['title'])[0]->title;
+		}
+		return $cylinder;
+	}
+	public function scopeWheel_driveSubdata($query, $getAsString = true)
+	{
+		$wheel_drive = "";
+		foreach (json_decode($this->wheel_drive, true) as $key => $val) {
+			if($getAsString)
+				$wheel_drive .= SubData::where('id', $val)->get(['title'])[0]->title . ', ';
+			else
+				$wheel_drive[$key] = SubData::where('id', $val)->get(['title'])[0]->title;
+		}
+		return $wheel_drive;
 	}
 }
