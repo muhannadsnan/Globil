@@ -4,66 +4,10 @@
 	
 	@if(@$isSavedSearchLoaded)
 		<div class="loadedSavedSearch panel panel-default">
-			 <div class="panel-body">
+			<div class="panel-body">
 				<h3><strong>Saved search: </strong><label>{{$savedSearch->title}}</label></h3>
-				<p class="col-md-6">
-					<?php 
-						if($savedSearch->brand_model){
-							echo 'Brands: ';
-							foreach($savedSearch->idsToBrands() as $brand){
-			 					echo $brand.' [ ';
-			 					if(count(@$savedSearch->idsToModels()[$brand])){
-			 						foreach($savedSearch->idsToModels()[$brand] as $model){
-				 						echo $model.' ';
-				 					}
-			 					}
-			 					echo ' ] , ';
-							}
-						}
-					?>
-				</p>
-				<p class="col-md-6">
-					<?php 
-						if($savedSearch->areas){
-							echo 'Areas: ';
-							foreach($savedSearch->idsToAreas() as $manicipality){
-			 					echo $manicipality.' [ ';
-			 					if(count(@$savedSearch->idsToCities()[$manicipality])){
-			 						foreach($savedSearch->idsToCities()[$manicipality] as $city){
-				 						echo $city.' ';
-				 					}
-			 					}
-			 					echo ' ] , ';
-							}
-						}
-					?>
-				</p>
-				<p class="col-md-6">
-					{{$savedSearch->min_price ? 'Price from ' . $savedSearch->min_price . 
-							($savedSearch->max_price ? ' to ' . $savedSearch->max_price : '') . ' NOK' : '' }}</p> 						
-				<p class="col-md-6">
-					{{$savedSearch->years ? 'Years: ' . $savedSearch->years : '' }}</p>
-				<p class="col-md-6">
-					{{$savedSearch->fuel_type ? 'Fuel type: ' . $savedSearch->fuel_typeSubdata() : '' }}</p>
-				<p class="col-md-6">
-					{{$savedSearch->gear ? 'Gear: ' . $savedSearch->gearSubdata() : '' }}</p>
-				<p class="col-md-6">
-					{{$savedSearch->cylinder ? 'Cylinder: ' . $savedSearch->cylinderSubdata() : '' }}</p>
-				<p class="col-md-6">
-					{{$savedSearch->car_type ? 'Car type: ' . $savedSearch->car_typeSubdata() : '' }}</p>
-				<p class="col-md-6">
-					{{$savedSearch->wheel_drive ? 'Wheel drive: ' . $savedSearch->wheel_driveSubdata() : '' }}</p>
-				<p class="col-md-6"><?php 
-					if($savedSearch->min_kilometer){
-						if($savedSearch->min_kilometer == 0 && $savedSearch->max_kilometer > 0){
-							echo 'kilometer less than '.$savedSearch->max_kilometer;
-						}elseif($savedSearch->min_kilometer > 0){
-							echo 'Kilometer starting from '.$savedSearch->min_kilometer;
-							if($savedSearch->max_kilometer > 0)
-								echo  ' to ' . $savedSearch->max_kilometer;
-						}
-					} ?></p>
-				 </div>
+				{{ $savedSearch->getSummerize($savedSearch) }}
+			</div>
 		</div>
 		<!-- ============================ -->
 		<div class="row">

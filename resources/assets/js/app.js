@@ -8,7 +8,7 @@ const app = new Vue({
 		
 		searchResult: ['init'],
 		searchFilters: {},
-		paginator: {current_page:1, per_page: 2},
+		paginator: {current_page:1, per_page: 4},
 		moreResults: 2,
 		isActiveAll: [false,false,false,false,false,false,false,false,false,false,false,false,false], // area, city, brand, model, carType, FuelType, gear, minKm, maxKm, minPrice, maxPrice, wheelDrive, year
 		// HOME PAGE SEARCH

@@ -219,3 +219,7 @@ footer hr {border-color: #999;}
     visibility: visible;
     opacity: 0.8;
 }
+
+.my-saved-searches{}
+.my-saved-searches .btns{float: right; margin-top: -6px;}
+.my-saved-searches .panel-body{font-size: 14pt;}

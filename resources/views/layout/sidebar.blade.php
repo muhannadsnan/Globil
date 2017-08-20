@@ -1,4 +1,4 @@
-@if(isset($isHomePage) && $isHomePage)
+@if(@$isHomePage)
 
 <div class="saved-search panel panel-success">
 	<div class="panel-heading">
@@ -14,11 +14,12 @@
 					{{ ! is_null($savedS->title) ? $savedS->title : "Saved Search {$savedS->id}" }}
 				</a></li>		
 					
-			@endforeach		
-
+			@endforeach
 
 			@if(count($savedSearches) == 0)			
 				<label class="" v-cloak>No Saved Searches yet.</label>			
+			@else
+				<a href="/my-saved-searches" class="btn btn-success">Edit</a>			
 			@endif
 		
 		@endif
@@ -26,17 +27,3 @@
 </div>
 
 @endif
-
-<!-- <div class="ads panel panel-warning">
-	<div class="panel-heading">
-		Advertisements
-	</div>
-
-	<div class="panel-body">
-
-		<ads type="sidebar" items="4" refresh="20"></ads>
-
-	</div>
-</div> -->
-
-

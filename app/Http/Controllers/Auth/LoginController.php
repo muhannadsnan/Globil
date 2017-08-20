@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\SavedSearch;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -12,34 +13,40 @@ use Stripe\Stripe;
 class LoginController extends Controller
 {
 
-	 use AuthenticatesUsers;
+	use AuthenticatesUsers;
 
-	 protected $redirectTo = '/home';
+	protected $redirectTo = '/home';
 
-	 public function __construct()
-	 {
-		  $this->middleware('auth')->except(['showLoginForm', 'login']);
-	 }
+	public function __construct()
+	{
+		$this->middleware('auth')->except(['showLoginForm', 'login']);
+	}
 
-	 public function profile()
-	 {
-		  if(auth()->user()->type == "A")
-				return back();
-		  $isMarkNotifAsRead = true;
-		  return view('auth.profile', compact('isMarkNotifAsRead'));
-	 }
+	public function profile()
+	{
+		if(auth()->user()->type == "A")
+			return back();
+		$isMarkNotifAsRead = true;
+		return view('auth.profile', compact('isMarkNotifAsRead'));
+	}
 
-	 public function controlPanel()
-	 {
-		  if(auth()->user()->type == "B")
-				return back();
-		  return view('auth.controlPanel', compact(''));
-	 }
+	public function controlPanel()
+	{
+		if(auth()->user()->type == "B")
+			return back();
+		return view('auth.controlPanel', compact(''));
+	}
 
-	 public function userTimeline(User $user)
-	 {
-		  return view('auth.user-timeline', compact('user'));
-	 }
+	public function userTimeline(User $user)
+	{
+		return view('auth.user-timeline', compact('user'));
+	}
+
+	public function userSavedSearches()
+	{
+		$savedSearches = SavedSearch::latest()->get();
+		return view('auth.user-saved-searches', compact('savedSearches'));
+	}
 
 
 // ======== PAYMENT ========

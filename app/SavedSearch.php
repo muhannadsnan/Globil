@@ -152,4 +152,79 @@ class SavedSearch extends Model
 		}
 		return $wheel_drive;
 	}
+
+	//=======================================================
+	
+	public static function getSummerize($savedSearch)
+	{ 
+		if($savedSearch->brand_model){
+			echo '<p class="col-md-6">';
+			echo 'Brands: ';
+			foreach($savedSearch->idsToBrands() as $brand){
+					echo $brand.' [ ';
+					if(count(@$savedSearch->idsToModels()[$brand])){
+						foreach($savedSearch->idsToModels()[$brand] as $model){
+	 						echo $model.' ';
+	 					}
+					}
+					echo ' ] , ';
+			}
+			echo '</p>';
+		}
+		if($savedSearch->areas){
+			echo '<p class="col-md-6">';
+			echo 'Areas: ';
+			foreach($savedSearch->idsToAreas() as $manicipality){
+					echo $manicipality.' [ ';
+					if(count(@$savedSearch->idsToCities()[$manicipality])){
+						foreach($savedSearch->idsToCities()[$manicipality] as $city){
+	 						echo $city.' ';
+	 					}
+					}
+					echo ' ] , ';
+			}
+			echo '</p>';
+		}
+		echo $savedSearch->min_price ?
+				'<p class="col-md-6">'.
+					'Price from ' . $savedSearch->min_price . 
+					($savedSearch->max_price ? ' to ' . $savedSearch->max_price : '') . ' NOK' : '';
+		echo '</p>';
+		echo $savedSearch->years ?
+				'<p class="col-md-6">'.
+					'Years: ' . $savedSearch->years : ''; 
+		echo '</p>';
+		echo $savedSearch->fuel_type ?
+				'<p class="col-md-6">'.
+					'Fuel type: ' . $savedSearch->fuel_typeSubdata() : ''; 
+		echo '</p>';
+		echo $savedSearch->gear ?
+				'<p class="col-md-6">'.
+					'Gear: ' . $savedSearch->gearSubdata() : '';
+		echo '</p>';
+		echo $savedSearch->cylinder ?
+				'<p class="col-md-6">'.
+					'Cylinder: ' . $savedSearch->cylinderSubdata() : ''; 
+		echo '</p>';
+		echo $savedSearch->car_type ?
+				'<p class="col-md-6">'.
+					'Car type: ' . $savedSearch->car_typeSubdata() : ''; 
+		echo '</p>';
+		echo $savedSearch->wheel_drive ?
+				'<p class="col-md-6">'.
+					'Wheel drive: ' . $savedSearch->wheel_driveSubdata() : '';
+		echo '</p>';
+		
+		if ($savedSearch->min_kilometer){
+			echo '<p class="col-md-6">';
+			if($savedSearch->min_kilometer == 0 && $savedSearch->max_kilometer > 0){
+				echo 'kilometer less than '.$savedSearch->max_kilometer;
+			}elseif($savedSearch->min_kilometer > 0){
+				echo 'Kilometer starting from '.$savedSearch->min_kilometer;
+				if($savedSearch->max_kilometer > 0)
+					echo  ' to ' . $savedSearch->max_kilometer;
+			}
+			echo '</p>';
+		}
+	}
 }

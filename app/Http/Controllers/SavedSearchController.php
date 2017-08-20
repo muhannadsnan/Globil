@@ -40,4 +40,15 @@ class SavedSearchController extends Controller
 		return view('home', compact('savedSearch', 'sSearchRes', 
 			'isSavedSearchLoaded', 'isHomePage', 'savedSearches') );
 	}
+
+
+	public function destroy(SavedSearch $savedSearch)
+	{
+		if(!$savedSearch->delete())
+			Session::flash('error', 'Error while deleting the saved search!');
+		else
+			Session::flash('message', 'Saved search was deleted!');
+
+		return back();
+	}
 }

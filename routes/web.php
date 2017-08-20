@@ -53,6 +53,9 @@ Route::get('/search/general/{keyword}', 'SearchController@searchGeneral');
 Route::post('/search/results', 'SearchController@readResults');
 Route::post('/saved-search', 'SavedSearchController@store');
 Route::get('/saved-search/{savedSearch}', 'SavedSearchController@getSavedSearch');
+Route::delete('/saved-search/{savedSearch}', 'SavedSearchController@destroy');
+Route::get('/my-saved-searches', 'Auth\LoginController@userSavedSearches');
+
 
 // ==============  Ads
 Route::get('/read-ads', 'AdsController@getAllAds');
