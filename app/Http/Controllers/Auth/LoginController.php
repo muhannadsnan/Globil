@@ -44,7 +44,7 @@ class LoginController extends Controller
 
 	public function userSavedSearches()
 	{
-		$savedSearches = SavedSearch::latest()->get();
+		$savedSearches = auth()->user()->saved_searches()->latest()->get();
 		return view('auth.user-saved-searches', compact('savedSearches'));
 	}
 

@@ -54,4 +54,9 @@ class User extends Authenticatable/* implements BillableInterface*/
 	{
 		return $this->hasMany(Subscription::class)->orderBy('created_at', 'desc');
 	}
+
+	public function saved_searches()
+	{
+		return $this->hasMany(SavedSearch::class)->orderBy('created_at', 'desc');
+	}
 }

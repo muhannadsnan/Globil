@@ -6,9 +6,11 @@
 @section ("content")
 
 <div class="my-saved-searches">
+	<h3>My saved searches</h3>
+	<hr>
 	@if(@$savedSearches)
 	
-		@foreach($savedSearches as $sSearch)
+		@forelse($savedSearches as $sSearch)
 			
 			<form method="post" action="/saved-search/{{$sSearch->id}}">
 				{{ method_field('delete') }}
@@ -27,7 +29,10 @@
 					</div>
 				</div>
 			</form>
-		@endforeach
+
+		@empty
+			<label>You don't have any saved search.</label>
+		@endforelse
 					
 	
 	@endif

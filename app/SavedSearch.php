@@ -3,6 +3,7 @@
 namespace App;
 
 use App\SavedSearch;
+use App\User;
 
 //use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,10 @@ class SavedSearch extends Model
 {
 	protected $table = 'saved_searches';
 
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
 
 	public static function storeSearch($request)
 	{ //dd($request);
