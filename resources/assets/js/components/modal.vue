@@ -13,7 +13,7 @@
         <slot></slot>
       </section>
 
-      <footer class="modal-card-foot" style="margin-top:0">
+      <footer class="modal-card-foot width-100" style="">
         <slot name="buttons"></slot>
       </footer>
     </div>

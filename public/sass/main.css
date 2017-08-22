@@ -3,6 +3,8 @@ html, body {background-color: #fff;	color: #636b6f; /*font-family: 'Raleway', sa
 a, a:active, a:visited{/*color: #337ab7;*/}
 a:hover{color: #68a9e1; text-decoration: none}
 .btn{color: #fff;} strong{color: #636b6f;} label{font-weight: bold; color: #337ab7;}
+.fa{vertical-align: middle; padding: 0px; font-size: 16pt; margin: 0px;}
+.panel h1, .panel h2, .panel h3{margin: 7px;}
 small{line-height: 20px; color: #aaa;}
 [v-cloak] {display: none;}
 /*[v-cloak] [loading] {display: block; color: red;}
@@ -12,12 +14,15 @@ small{line-height: 20px; color: #aaa;}
 .NO-float {float: none;}
 .margin-0 {margin:0;}
 .padding-0 {padding:0;}
+.marg-pad-0{margin: 0px; padding: 0px;}
 .alert {font-size: 14pt}
 .display-inline{ display: inline; }
 .font-22pt{font-size:22pt;}
-.fa{vertical-align: middle; padding: 0px ; font-size: 16pt;}
-.panel h1, .panel h2, .panel h3{margin: 7px;}
 .border-bottom{border-bottom: 1px solid #ccc; margin-bottom: 10px;}
+.disp-blk{ display: block !important;}
+.width-100{width: 100%;}
+.btn1{ float: left;}
+.btn2{ float: right;}
 /**** NAV ****/
 nav i {font-size: 22pt !important;  vertical-align: middle;}
 .nav{height: auto;}
@@ -42,12 +47,13 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 .car-card small{font-size: 9pt; color: #ccc;}
 .car-card .caption{ height:; font-size: 12pt !important;  overflow: ; padding: 7px 0px;}
 .car-card .desc{ overflow: hidden; min-height: 50px; border: 0px solid #000;}
-.car-card .fa {margin:0px 5px 0px 0px; font-size: 24pt; line-height: 30px; vertical-align: middle;}
+.car-card .fa, .car-card .glyphicon{ font-size: 24pt; line-height: 30px; vertical-align: middle;}
 .car-card .fa:hover {cursor: pointer}
-.car-card .edit-btn {color: #007d05;}
-.car-card .foot{margin-top: 5px; height: 35px;}
-.car-card .foot .btn{ float:left;}
-
+.car-card .tool-btns {position: absolute; top: 0px; left: 20px; margin: 5px; opacity: 0;}
+.car-card .tool-btns .btn{display: block; margin-top: 7px; }
+.car-card:hover .tool-btns{opacity: 0.8}
+.car-card .foot{margin-top: 5px; display: block; height: 35px;}
+.myCars .car-card .foot{height: 45px;}
 .card-in-vue{}
 .card-in-vue .panel{padding:10px 10px 0px 10px;}
 .card-in-vue label{padding: 0px; margin: 0px; height: 25px; line-height: 25px;}
@@ -222,4 +228,7 @@ footer hr {border-color: #999;}
 
 .my-saved-searches{}
 .my-saved-searches .btns{float: right; margin-top: -6px;}
-.my-saved-searches .panel-body{font-size: 14pt;}
+.my-saved-searches .panel-body{font-size: 14pt; text-align: left;}
+
+
+.modal-card-foot{margin-top:0; padding: 10px 20px 10px 20px; width: 100%;}

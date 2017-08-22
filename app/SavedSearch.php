@@ -192,7 +192,7 @@ class SavedSearch extends Model
 		}
 		echo $savedSearch->min_price ?
 				'<p class="col-md-6">'.
-					'Price from ' . $savedSearch->min_price . 
+					'Price: from ' . $savedSearch->min_price . 
 					($savedSearch->max_price ? ' to ' . $savedSearch->max_price : '') . ' NOK' : '';
 		echo '</p>';
 		echo $savedSearch->years ?

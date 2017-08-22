@@ -85,8 +85,18 @@ class CarsController extends Controller
 
 	public function myCars()
 	{
-		$update = true;
-		return view('cars.myCars', compact('update'));
+		$myCarsPage = true;
+		return view('cars.myCars', compact('myCarsPage'));
+	}
+
+	public function destroy(Car $car)
+	{ 
+		if(!$car->delete())
+			Session::flash('error', 'Error while deleting the car!');
+		else
+			Session::flash('message', 'Car was deleted!');
+
+		return back();
 	}
 
 }

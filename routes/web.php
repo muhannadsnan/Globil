@@ -33,6 +33,7 @@ Route::resource('cars', 'CarsController');
 Route::get('/cars/create', 'CarsController@create')->middleware('check_create_car');
 Route::post('/cars', 'CarsController@store')->middleware('check_create_car');
 Route::get('/my-cars', 'CarsController@myCars');
+Route::delete('/cars/{car}', 'CarsController@destroy');
 
 // ============== SubData
 Route::get('/readSubData/{data1}/{data2}', 'SubDataController@readSubData'); // readSubData/model/Mercedes

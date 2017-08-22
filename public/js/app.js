@@ -58169,10 +58169,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })]), _vm._v(" "), _c('section', {
     staticClass: "modal-card-body"
   }, [_vm._t("default")], 2), _vm._v(" "), _c('footer', {
-    staticClass: "modal-card-foot",
-    staticStyle: {
-      "margin-top": "0"
-    }
+    staticClass: "modal-card-foot width-100"
   }, [_vm._t("buttons")], 2)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
