@@ -75,7 +75,7 @@ class CarsController extends Controller
 
  		Session::flash('message', 'Car was updated successfully!');
 
- 		return redirect("/cars/{$car->id}/edit");
+ 		return redirect("/my-cars");
 	}
 
 	public function show(Car $car)

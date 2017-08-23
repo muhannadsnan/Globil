@@ -4,7 +4,7 @@
 
         <select :class="css" class=" form-control" v-model="selectedOPT" 
                 @change="selectedChanged" v-if="!loading || showanyway" :data-old="old"
-                :name="name == '' ? data1 : name" autofocus requiredX> 
+                :name="name != ''? name : data1" autofocus requiredX> 
 
             <option selected disabled> --- Select {{ placeholder }} --- </option>
             <option v-for="sub in subData" :value="sub.id" >{{sub.title}}</option> 
@@ -29,7 +29,7 @@
         props: {
             placeholder: {},
             css: {default: 'nocss'},
-            name: { default: ''},
+            name: { default: ''}, // the same as data1 mostly but varies for some DB columns
             data1: {},
             data2: {},
             loadedmodels: '',
@@ -43,11 +43,10 @@
         methods: {
 
             selectedChanged(par){ 
-                
+                // console.log('selectedChanged '+this.data1)
                 var t = this;
                 var selectedOBJ = this.subData.filter(function(sub){
-                    if(sub.id == t.selectedOPT)
-                        return sub
+                    return sub.id == t.selectedOPT
                 })
                 var selectedOBJECT ;
                 try {
@@ -57,11 +56,13 @@
                     selectedOBJECT = this.old;
                 }
                 
-                if(this.data1 == 'brand'){
-                    this.$emit('brand-changed', selectedOBJECT);
-                }else if(this.data1 == 'area'){
-                    this.$emit('area-changed', selectedOBJECT);
-                }
+                // if(this.loadedmodels == '' && this.loadedcities == ''){ alert('sss')
+                    if(this.data1 == 'brand'){ //console.log('brand-changed')
+                        this.$emit('brand-changed', selectedOBJECT); //alert('brand-changed')
+                    }else if(this.data1 == 'area'){ //console.log('area-changed')
+                        this.$emit('area-changed', selectedOBJECT); //alert('area-changed')
+                    }
+                // }
                 
             },
 
@@ -84,15 +85,25 @@
         },
 
         mounted() {
-            console.log('SubDataSelect Component mounted: ' + this.data1);
+            console.log('SubDataSelect Component mounted: ' + (this.data1? this.data1 : this.name));
 
-            if(this.old != 0){
-                this.selectedOPT = this.old; //console.log('selectedOPT init: '+this.selectedOPT );
-                this.$emit('brand-loaded', this.old);
+            
+
+            if( ! ['model', 'city'].includes(this.data1) /*&& this.old*/){
+                this.getRequest()
             }
 
-            if(this.data1)
-                this.getRequest();
+            if(this.old != 0){
+                this.selectedOPT = this.old; // console.log('selectedOPT init: '+this.selectedOPT );
+                
+                if(this.data1 == 'brand'){ //alert('brand-loaded')
+                    this.$emit('brand-loaded', this.old)
+                }
+                else if(this.data1 == 'area'){ //alert('area-loaded')
+                    this.$emit('area-loaded', this.old)
+                }
+            }
+
         },
 
         watch: {
@@ -102,11 +113,11 @@
                 this.selectedOPT = this.old;
             },
 
-            // loadedcities(){
-            //     this.subData = this.loadedcities;
-            //     this.loading = false;
-            //     this.selectedOPT = this.old;
-            // }
+            loadedcities(){
+                this.subData = this.loadedcities;
+                this.loading = false;
+                this.selectedOPT = this.old;
+            }
         }
     }
 </script>

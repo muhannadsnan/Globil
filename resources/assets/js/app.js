@@ -37,7 +37,7 @@ const app = new Vue({
 
 	methods: {
 
-		loadModelsByBrand(selectedBrand){
+		loadModelsByBrand(selectedBrand){ 
 			this.loadingModel = true;
 
 			axios.get('/readSubData/model/'+ selectedBrand )
@@ -53,7 +53,7 @@ const app = new Vue({
 		loadModelsBySubID(subID){ 
 			this.loadingModel = true;
 
-			axios.get('/readSubData/'+ subID )
+			axios.get('/readSubdataBySubID/model/'+ subID )
 				  .then(response => {
 						this.models = response.data.data;  
 				  })
@@ -67,8 +67,8 @@ const app = new Vue({
 			this.loadingModel = true;
 
 			axios.get('/readSubData/city/'+ selectedArea )
-				  .then(response => {
-						this.cities = response.data.data;  //console.log(response.data.data);
+				  .then(response => { console.log('/readSubData/city/'+ selectedArea)
+						this.cities = response.data.data;  console.log(response.data.data)
 				  })
 				  .catch(err => {
 						toastr.error('Error occured!', err.message);
@@ -79,8 +79,8 @@ const app = new Vue({
 		loadCitiesBySubID(subID){ 
 			this.loadingModel = true;
 
-			axios.get('/readSubData/'+ subID )
-				  .then(response => {
+			axios.get('/readSubdataBySubID/city/'+ subID )
+				  .then(response => { 
 						this.cities = response.data.data;  
 				  })
 				  .catch(err => {
@@ -94,7 +94,7 @@ const app = new Vue({
 			this.loadingPage = true
 
 			axios.get('/cars/readLatestPosts?page='+this.paginator.current_page+'&per_page='+this.paginator.per_page)
-				  .then(response => {  console.log(response.data.data)
+				  .then(response => {  //console.log(response.data.data)
 						// this.user_id = response.data.user_id
 						this.wishList = response.data.wish_list
 						this.searchResult = response.data.data

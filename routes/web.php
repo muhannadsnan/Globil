@@ -37,7 +37,7 @@ Route::delete('/cars/{car}', 'CarsController@destroy');
 
 // ============== SubData
 Route::get('/readSubData/{data1}/{data2}', 'SubDataController@readSubData'); // readSubData/model/Mercedes
-Route::get('/readSubData/{subID}', 'SubDataController@readModelsBySubID'); // readSubData/5
+Route::get('/readSubdataBySubID/{ntype2}/{subID}', 'SubDataController@readSubdataBySubID'); // readSubData/5
 Route::get('/read-data-with-subdata/{data}/{subdata}', 'SubDataController@readDataWithSubdata');
 Route::get('/read-subdata-types', 'SubDataController@readSubDataTypes');
 Route::post('/subdata', 'SubDataController@store');

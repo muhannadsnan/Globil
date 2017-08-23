@@ -144,7 +144,7 @@
 				<div class="col-sm-4 text-left">
 					<span>Current price: </span> <label>{{$car->price}} ,- </label> <br>
 					<span>Kilometer: </span> <label>{{$car->kilometer}}</label> <br>
-					<span>Fuel:</span> <label>{{$car->fuelSubdata()}}</label> <br>
+					<span>Fuel:</span> <label>{{$car->fuel_typeSubdata()}}</label> <br>
 					<span>Registration nr: </span> <label>{{$car->reg_nr}}</label> <br>
 					
 					<span>Location: </span> <label>{{$car->areaSubdata()?$car->areaSubdata():'No area'}}, {{$car->citySubdata()?$car->citySubdata():'No city'}}</label> <br>

@@ -19,7 +19,7 @@
 		placeholder="Model" 
 		showanyway="true" 
 		loadingMSG="Select a brand to show models..." 
-		name="model" old="{{ old('model') ? old('model') : @$car->model }}"></subdata-select>
+		data1="model" old="{{ old('model') ? old('model') : @$car->model }}"></subdata-select>
 	
 </div>
 
@@ -153,11 +153,12 @@
 <div class="col-md-6 form-group {{ $errors->has('city') ? 'has-error' : '' }}">
 	
 	<subdata-select 
-		:loadedmodels="cities" 
+		:loadedcities="cities" 
 		placeholder="City" 
 		showanyway="true" 
 		loadingMSG="Select a municipality to show cities..." 
-		name="city" old="{{ old('city') ? old('city') : @$car->city }}"></subdata-select>
+		name="city"
+		data1="city" old="{{ old('city') ? old('city') : @$car->city }}"></subdata-select>
 
 </div>
 
@@ -172,8 +173,10 @@
 </div>
 
 <div class="col-md-6 form-group {{ $errors->has('HP') ? 'has-error' : '' }}">
-	@if(@$update) <div class="SubDataSelect input-group"><span class="input-group-addon">HP</span>@endif
-		<input name="HP" step="1" type="number" class="form-control" value="{{ old('HP') ? old('HP') : @$car->HP }}" placeholder="HP" autocomplete="off" min="0" requiredX autofocus>
+	@if(@$update) <div class="SubDataSelect input-group">
+		<span class="input-group-addon">HP</span>@endif
+		<input name="HP" step="1" type="number" class="form-control" value="{{ old('HP') ? old('HP') : @$car->HP }}" 
+				placeholder="HP" autocomplete="off" min="0" requiredX autofocus>
 	@if(@$update) </div> @endif
 </div>
 
@@ -190,19 +193,22 @@
 
 <div class="col-md-6 form-group {{ $errors->has('reg_nr') ? 'has-error' : '' }}">
 	@if(@$update) <div class="SubDataSelect input-group"><span class="input-group-addon">Reg nr</span>@endif
-		<input name="reg_nr" type="text" class="form-control" value="{{ old('reg_nr') ? old('reg_nr') : @$car->reg_nr }}" placeholder="Registering number" autocomplete="off" min="0" requiredX autofocus>
+		<input name="reg_nr" type="text" class="form-control" value="{{ old('reg_nr') ? old('reg_nr') : @$car->reg_nr }}"
+				placeholder="Registering number" autocomplete="off" min="0" requiredX autofocus>
 	@if(@$update) </div> @endif
 </div>
 
 <div class="col-md-6 form-group {{ $errors->has('reg_fee') ? 'has-error' : '' }}">
 	@if(@$update) <div class="SubDataSelect input-group"><span class="input-group-addon">Reg fee</span>@endif
-		<input name="reg_fee" step="1" type="number" class="form-control" value="{{ old('reg_fee') ? old('reg_fee') : @$car->reg_fee }}" placeholder="Registering fee" autocomplete="off" min="0" requiredX autofocus>
+		<input name="reg_fee" step="1" type="number" class="form-control" 
+				value="{{ old('reg_fee') ? old('reg_fee') : @$car->reg_fee }}" placeholder="Registering fee" autocomplete="off" min="0" requiredX autofocus>
 	@if(@$update) </div> @endif
 </div>
 
 <div class="col-md-6 form-group {{ $errors->has('yearly_fee') ? 'has-error' : '' }}">
 	@if(@$update) <div class="SubDataSelect input-group"><span class="input-group-addon">Yearly fee</span>@endif
-		<input name="yearly_fee" step="1" type="number" class="form-control" value="{{ old('yearly_fee') ? old('yearly_fee') : @$car->yearly_fee }}" placeholder="Yearly fee" autocomplete="off" min="0" requiredX autofocus>
+		<input name="yearly_fee" step="1" type="number" class="form-control" 
+				value="{{ old('yearly_fee') ? old('yearly_fee') : @$car->yearly_fee }}" placeholder="Yearly fee" autocomplete="off" min="0" requiredX autofocus>
 	@if(@$update) </div> @endif
 </div>
 

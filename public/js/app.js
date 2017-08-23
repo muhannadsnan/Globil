@@ -27031,7 +27031,7 @@ var app = new Vue({
 
 			this.loadingModel = true;
 
-			axios.get('/readSubData/' + subID).then(function (response) {
+			axios.get('/readSubdataBySubID/model/' + subID).then(function (response) {
 				_this2.models = response.data.data;
 			}).catch(function (err) {
 				toastr.error('Error occured!', err.message);
@@ -27046,7 +27046,8 @@ var app = new Vue({
 			this.loadingModel = true;
 
 			axios.get('/readSubData/city/' + selectedArea).then(function (response) {
-				_this3.cities = response.data.data; //console.log(response.data.data);
+				console.log('/readSubData/city/' + selectedArea);
+				_this3.cities = response.data.data;console.log(response.data.data);
 			}).catch(function (err) {
 				toastr.error('Error occured!', err.message);
 			});
@@ -27059,7 +27060,7 @@ var app = new Vue({
 
 			this.loadingModel = true;
 
-			axios.get('/readSubData/' + subID).then(function (response) {
+			axios.get('/readSubdataBySubID/city/' + subID).then(function (response) {
 				_this4.cities = response.data.data;
 			}).catch(function (err) {
 				toastr.error('Error occured!', err.message);
@@ -27076,7 +27077,7 @@ var app = new Vue({
 			this.loadingPage = true;
 
 			axios.get('/cars/readLatestPosts?page=' + this.paginator.current_page + '&per_page=' + this.paginator.per_page).then(function (response) {
-				console.log(response.data.data);
+				//console.log(response.data.data)
 				// this.user_id = response.data.user_id
 				_this5.wishList = response.data.wish_list;
 				_this5.searchResult = response.data.data;
@@ -30081,7 +30082,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: {
         placeholder: {},
         css: { default: 'nocss' },
-        name: { default: '' },
+        name: { default: '' }, // the same as data1 mostly but varies for some DB columns
         data1: {},
         data2: {},
         loadedmodels: '',
@@ -30093,10 +30094,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         selectedChanged: function selectedChanged(par) {
-
+            // console.log('selectedChanged '+this.data1)
             var t = this;
             var selectedOBJ = this.subData.filter(function (sub) {
-                if (sub.id == t.selectedOPT) return sub;
+                return sub.id == t.selectedOPT;
             });
             var selectedOBJECT;
             try {
@@ -30105,11 +30106,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 selectedOBJECT = this.old;
             }
 
+            // if(this.loadedmodels == '' && this.loadedcities == ''){ alert('sss')
             if (this.data1 == 'brand') {
-                this.$emit('brand-changed', selectedOBJECT);
+                //console.log('brand-changed')
+                this.$emit('brand-changed', selectedOBJECT); //alert('brand-changed')
             } else if (this.data1 == 'area') {
-                this.$emit('area-changed', selectedOBJECT);
+                //console.log('area-changed')
+                this.$emit('area-changed', selectedOBJECT); //alert('area-changed')
             }
+            // }
         },
         getRequest: function getRequest() {
             var _this = this;
@@ -30129,20 +30134,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     mounted: function mounted() {
-        console.log('SubDataSelect Component mounted: ' + this.data1);
+        console.log('SubDataSelect Component mounted: ' + (this.data1 ? this.data1 : this.name));
+
+        if (!['model', 'city'].includes(this.data1) /*&& this.old*/) {
+                this.getRequest();
+            }
 
         if (this.old != 0) {
-            this.selectedOPT = this.old; //console.log('selectedOPT init: '+this.selectedOPT );
-            this.$emit('brand-loaded', this.old);
-        }
+            this.selectedOPT = this.old; // console.log('selectedOPT init: '+this.selectedOPT );
 
-        if (this.data1) this.getRequest();
+            if (this.data1 == 'brand') {
+                //alert('brand-loaded')
+                this.$emit('brand-loaded', this.old);
+            } else if (this.data1 == 'area') {
+                //alert('area-loaded')
+                this.$emit('area-loaded', this.old);
+            }
+        }
     },
 
 
     watch: {
         loadedmodels: function loadedmodels() {
             this.subData = this.loadedmodels;
+            this.loading = false;
+            this.selectedOPT = this.old;
+        },
+        loadedcities: function loadedcities() {
+            this.subData = this.loadedcities;
             this.loading = false;
             this.selectedOPT = this.old;
         }
@@ -56698,7 +56717,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: _vm.css,
     attrs: {
       "data-old": _vm.old,
-      "name": _vm.name == '' ? _vm.data1 : _vm.name,
+      "name": _vm.name != '' ? _vm.name : _vm.data1,
       "autofocus": "",
       "requiredX": ""
     },
