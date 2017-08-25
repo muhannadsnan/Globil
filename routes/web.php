@@ -31,9 +31,10 @@ Route::get('/read-messages-by-conv-id/{convId}', 'MessagesController@getMessages
 Route::get('/cars/readLatestPosts', 'SearchController@getLatestCars');
 Route::resource('cars', 'CarsController');
 Route::get('/cars/create', 'CarsController@create')->middleware('check_create_car');
+Route::get('/cars/{car}/edit', 'CarsController@edit')->middleware('car_owner');
 Route::post('/cars', 'CarsController@store')->middleware('check_create_car');
 Route::get('/my-cars', 'CarsController@myCars');
-Route::delete('/cars/{car}', 'CarsController@destroy');
+Route::delete('/cars/{car}', 'CarsController@destroy')->middleware('car_owner');
 
 // ============== SubData
 Route::get('/readSubData/{data1}/{data2}', 'SubDataController@readSubData'); // readSubData/model/Mercedes

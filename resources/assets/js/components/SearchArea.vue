@@ -9,7 +9,8 @@
 			<div v-for="city in cities" v-show="areaCheckboxes[i]" class="cities">
 				<template  v-if="city.ntype2 == area.title">
 					<input type="checkbox" name="city" :value="city.id" 
-						@change="cityChanged($event.target.checked, city.id, city.title, area.id)">
+						@change="cityChanged($event.target.checked, city.id, city.title, area.id)"
+						v-model="citiesChecked">
 					<label for="city">{{city.title}}</label> 
 				</template>
 			</div>
@@ -27,8 +28,8 @@
 				areas: [],
 				cities: [],
 				areaCheckboxes: [],
-				// CheckedModels: [], 
 				allChecked: [],
+				citiesChecked: [],
 			}
 		},
 
@@ -52,9 +53,16 @@
 					Vue.set(this.$root.$data.isActiveAll, 0, true)
 				}
 				else{ // remove area and it's cities
-					this.allChecked = this.allChecked.filter(city => { 
-						if(city[0] != areaId)
-							return city
+					this.allChecked = this.allChecked.filter(area => { 
+						return area[0] != areaId
+					})
+					this.citiesChecked = this.allChecked.forEach(area => {
+						if(area[0] == areaId)
+							area[1] = []
+						else
+							area[1].forEach(rCity => {
+								return rCity
+							})
 					})
 					if(this.allChecked.length == 0)
 						Vue.set(this.$root.$data.isActiveAll, 0, false)

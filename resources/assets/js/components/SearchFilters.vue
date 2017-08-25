@@ -85,6 +85,9 @@
 			// 				toastr.error(err.message, 'Error was occured!')
 			// 			})
 			// },
+			removeBrand_modelFromSearchFilters(){
+				this.searchFilters.brand_model = {}
+			},
 
 			cleanFilters(){
 				if(this.searchFilters != {}){
@@ -123,6 +126,7 @@
 			this.$on('fuel-type-changed', this.FillSearchFilters)
 			this.$on('gear-changed', this.FillSearchFilters)
 			this.$on('area-changed', this.FillSearchFilters)
+			this.$root.$on('typing', this.removeBrand_modelFromSearchFilters)
 		},
 		watch:{
 		}

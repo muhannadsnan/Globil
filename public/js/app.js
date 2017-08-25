@@ -27228,6 +27228,7 @@ var app = new Vue({
 				this.searchTyping = false;
 			} else {
 				this.searchTyping = true;
+				this.$emit('typing'); // so that 'SearchFilters' component removes brand_model from searchFilters
 			}
 		},
 		//<<
@@ -29168,6 +29169,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -29176,8 +29178,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			areas: [],
 			cities: [],
 			areaCheckboxes: [],
-			// CheckedModels: [], 
-			allChecked: []
+			allChecked: [],
+			citiesChecked: []
 		};
 	},
 
@@ -29201,8 +29203,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				Vue.set(this.$root.$data.isActiveAll, 0, true);
 			} else {
 				// remove area and it's cities
-				this.allChecked = this.allChecked.filter(function (city) {
-					if (city[0] != areaId) return city;
+				this.allChecked = this.allChecked.filter(function (area) {
+					return area[0] != areaId;
+				});
+				this.citiesChecked = this.allChecked.forEach(function (area) {
+					if (area[0] == areaId) area[1] = [];else area[1].forEach(function (rCity) {
+						return rCity;
+					});
 				});
 				if (this.allChecked.length == 0) Vue.set(this.$root.$data.isActiveAll, 0, false);
 			}
@@ -29287,6 +29294,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -29295,7 +29305,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			brands: [],
 			models: [],
 			brandCheckboxes: [],
-			allChecked: []
+			allChecked: [],
+			modelsChecked: []
 		};
 	},
 
@@ -29312,27 +29323,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 		},
 		brandChanged: function brandChanged(val, brandId, brandTitle) {
+			var _this2 = this;
+
 			if (val == 1) {
 				// add brand to all-data
 				this.allChecked.push([brandId, []]);
 				Vue.set(this.$root.$data.isActiveAll, 2, true);
 			} else {
-				// remove brand and it's models
+				// remove brand and it's models starting with models
 				this.allChecked = this.allChecked.filter(function (car) {
-					if (car[0] != brandId) return car;
+					// remove brand array 
+					return car[0] != brandId;
+				});
+				this.modelsChecked = [];
+				this.allChecked.forEach(function (car) {
+					// give me all models of cars, bcz they belong to checked brands
+					car[1].forEach(function (rModel) {
+						console.log(rModel);
+						_this2.modelsChecked.push(rModel);
+					});
 				});
 				if (this.allChecked.length == 0) Vue.set(this.$root.$data.isActiveAll, 2, false);
 			}
 			this.sendAllFiltersToParent();
 		},
 		modelChanged: function modelChanged(val, modelId, modelTitle, brandId) {
+			var _this3 = this;
+
 			if (val == 1) {
 				// add model to array in brand item in all-data
-				this.allChecked = this.allChecked.filter(function (car) {
+				this.allChecked.forEach(function (car) {
 					if (car[0] == brandId) {
 						car[1].push(modelId);
 					}
-					return car;
 				});
 				Vue.set(this.$root.$data.isActiveAll, 3, true);
 			} else {
@@ -29341,7 +29364,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					console.log(car[1]);
 					if (car[1].includes(modelId)) {
 						car[1] = car[1].filter(function (model) {
-							if (model != modelId) return model;
+							return model != modelId;
+						});
+						_this3.modelsChecked.filter(function (model) {
+							return model != modelId;
 						});
 					}
 					return car;
@@ -29367,10 +29393,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	watch: {
 		brands: function brands(val) {
-			var _this2 = this;
+			var _this4 = this;
 
 			this.brands.filter(function (b) {
-				_this2.brandCheckboxes.push(false);
+				_this4.brandCheckboxes.push(false);
 			});
 		}
 	}
@@ -29550,7 +29576,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		// 				toastr.error(err.message, 'Error was occured!')
 		// 			})
 		// },
-
+		removeBrand_modelFromSearchFilters: function removeBrand_modelFromSearchFilters() {
+			this.searchFilters.brand_model = {};
+		},
 		cleanFilters: function cleanFilters() {
 			if (this.searchFilters != {}) {
 				var res = this.searchFilters;
@@ -29588,6 +29616,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		this.$on('fuel-type-changed', this.FillSearchFilters);
 		this.$on('gear-changed', this.FillSearchFilters);
 		this.$on('area-changed', this.FillSearchFilters);
+		this.$root.$on('typing', this.removeBrand_modelFromSearchFilters);
 	},
 
 	watch: {}
@@ -56622,7 +56651,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }],
       attrs: {
         "type": "checkbox",
-        "name": "brand"
+        "name": "brand",
+        "disabled": _vm.$root.$data.searchKeyword != ''
       },
       domProps: {
         "value": brand.id,
@@ -56669,16 +56699,40 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }],
         staticClass: "models"
       }, [(model.ntype2 == brand.title) ? [_c('input', {
+        directives: [{
+          name: "model",
+          rawName: "v-model",
+          value: (_vm.modelsChecked),
+          expression: "modelsChecked"
+        }],
         attrs: {
           "type": "checkbox",
-          "name": "model"
+          "name": "model",
+          "disabled": _vm.$root.$data.searchKeyword != ''
         },
         domProps: {
-          "value": model.id
+          "value": model.id,
+          "checked": Array.isArray(_vm.modelsChecked) ? _vm._i(_vm.modelsChecked, model.id) > -1 : (_vm.modelsChecked)
         },
         on: {
           "change": function($event) {
             _vm.modelChanged($event.target.checked, model.id, model.title, brand.id)
+          },
+          "__c": function($event) {
+            var $$a = _vm.modelsChecked,
+              $$el = $event.target,
+              $$c = $$el.checked ? (true) : (false);
+            if (Array.isArray($$a)) {
+              var $$v = model.id,
+                $$i = _vm._i($$a, $$v);
+              if ($$c) {
+                $$i < 0 && (_vm.modelsChecked = $$a.concat($$v))
+              } else {
+                $$i > -1 && (_vm.modelsChecked = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+              }
+            } else {
+              _vm.modelsChecked = $$c
+            }
           }
         }
       }), _vm._v(" "), _c('label', {
@@ -57377,16 +57431,39 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }],
         staticClass: "cities"
       }, [(city.ntype2 == area.title) ? [_c('input', {
+        directives: [{
+          name: "model",
+          rawName: "v-model",
+          value: (_vm.citiesChecked),
+          expression: "citiesChecked"
+        }],
         attrs: {
           "type": "checkbox",
           "name": "city"
         },
         domProps: {
-          "value": city.id
+          "value": city.id,
+          "checked": Array.isArray(_vm.citiesChecked) ? _vm._i(_vm.citiesChecked, city.id) > -1 : (_vm.citiesChecked)
         },
         on: {
           "change": function($event) {
             _vm.cityChanged($event.target.checked, city.id, city.title, area.id)
+          },
+          "__c": function($event) {
+            var $$a = _vm.citiesChecked,
+              $$el = $event.target,
+              $$c = $$el.checked ? (true) : (false);
+            if (Array.isArray($$a)) {
+              var $$v = city.id,
+                $$i = _vm._i($$a, $$v);
+              if ($$c) {
+                $$i < 0 && (_vm.citiesChecked = $$a.concat($$v))
+              } else {
+                $$i > -1 && (_vm.citiesChecked = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+              }
+            } else {
+              _vm.citiesChecked = $$c
+            }
           }
         }
       }), _vm._v(" "), _c('label', {

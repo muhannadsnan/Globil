@@ -3,13 +3,16 @@
 
 		<div v-for="(brand, i) in brands" class="brands">
 			<input type="checkbox" name="brand" :value="brand.id" v-model="brandCheckboxes[i]"
-					 @change="brandChanged($event.target.checked, brand.id, brand.title)"> 
+					 @change="brandChanged($event.target.checked, brand.id, brand.title)"
+					 :disabled="$root.$data.searchKeyword != '' "> 
 			<label for="brand">{{brand.title}}</label> 
 
 			<div v-for="model in models" v-show="brandCheckboxes[i]" class="models">
 				<template  v-if="model.ntype2 == brand.title">
 					<input type="checkbox" name="model" :value="model.id" 
-						@change="modelChanged($event.target.checked, model.id, model.title, brand.id)">
+						@change="modelChanged($event.target.checked, model.id, model.title, brand.id)"
+						:disabled="$root.$data.searchKeyword != '' "
+						v-model="modelsChecked">
 					<label for="model">{{model.title}}</label> 
 				</template>
 			</div>
@@ -28,6 +31,7 @@
 				models: [],
 				brandCheckboxes: [],
 				allChecked: [],
+				modelsChecked: [],
 			}
 		},
 		methods: {
@@ -48,10 +52,16 @@
 					this.allChecked.push([brandId, []])
 					Vue.set(this.$root.$data.isActiveAll, 2, true)
 				}
-				else{ // remove brand and it's models
-					this.allChecked = this.allChecked.filter(car => { 
-						if(car[0] != brandId)
-							return car
+				else{ // remove brand and it's models starting with models
+					this.allChecked = this.allChecked.filter(car => { // remove brand array 
+						return car[0] != brandId
+					})
+					this.modelsChecked = []
+					this.allChecked.forEach(car => {
+						// give me all models of cars, bcz they belong to checked brands
+						car[1].forEach(rModel => { console.log(rModel)
+							this.modelsChecked.push(rModel)
+						}) 
 					})
 					if(this.allChecked.length == 0)
 						Vue.set(this.$root.$data.isActiveAll, 2, false)
@@ -61,11 +71,10 @@
 
 			modelChanged(val, modelId, modelTitle, brandId){ 
 				if(val == 1){ // add model to array in brand item in all-data
-					this.allChecked = this.allChecked.filter(car => { 
+					this.allChecked.forEach(car => { 
 						if(car[0] == brandId){ 
 							car[1].push(modelId)
 						}
-						return car
 					})
 					Vue.set(this.$root.$data.isActiveAll, 3, true)
 				}
@@ -74,8 +83,10 @@
 						console.log(car[1])
 						if(car[1].includes(modelId)){
 							car[1] = car[1].filter(model => {
-								if(model != modelId)
-									return model
+								return model != modelId
+							})
+							this.modelsChecked.filter(model=> {
+								return model != modelId
 							})
 						}
 						return car

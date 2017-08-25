@@ -242,6 +242,7 @@ const app = new Vue({
 			}
 			else{
 				this.searchTyping = true;
+				this.$emit('typing') // so that 'SearchFilters' component removes brand_model from searchFilters
 			}
 		}, //<<
 
