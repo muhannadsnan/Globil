@@ -111,7 +111,7 @@
 
 			<!-- END SLIDER << -->
 
-			<div class="details col-sm-12">
+			<div class="details col-sm-12 padding-0">
 				<h3> 
 					<div class="action">
 						@if( auth()->check() && auth()->id() != $car->user_id)
@@ -136,18 +136,23 @@
 						@endif
 					</div>
 
-					{{$car->brandSubdata()}} - {{$car->modelSubdata()}} ({{$car->year}})
+					<h3>
+						<label>{{$car->brandSubdata()}} - {{$car->modelSubdata()}}</label>
+						<small>({{$car->year}})</small>
+					</h3>
 				</h3>
 				<small class="pull-right">{{$car->created_at->diffForHumans()}}</small> 
 				<br>
 				<!-- ATTRIBS -->
-				<div class="col-sm-4 text-left">
-					<span>Current price: </span> <label>{{$car->price}} ,- </label> <br>
-					<span>Kilometer: </span> <label>{{$car->kilometer}}</label> <br>
-					<span>Fuel:</span> <label>{{$car->fuel_typeSubdata()}}</label> <br>
-					<span>Registration nr: </span> <label>{{$car->reg_nr}}</label> <br>
-					
-					<span>Location: </span> <label>{{$car->areaSubdata()?$car->areaSubdata():'No area'}}, {{$car->citySubdata()?$car->citySubdata():'No city'}}</label> <br>
+				<div class="col-sm-4 padding-0 text-left">
+					<h4>
+						<span>Current price: </span> <label>{{$car->price}} ,- </label> <br>
+						<span>Kilometer: </span> <label>{{$car->kilometer}}</label> <br>
+						<span>Fuel:</span> <label>{{$car->fuel_typeSubdata()}}</label> <br>
+						<span>Registration nr: </span> <label>{{$car->reg_nr}}</label> <br>
+						
+						<span>Location: </span> <label>{{$car->areaSubdata()}}, {{$car->citySubdata()}}</label> <br>
+					</h4>
 				</div>
 
 
@@ -161,26 +166,27 @@
 					</div>
 
 					@if(auth()->check()) 
-						<button @click="showModal=true; " class="btn btn-success">Message</button>
+						<button @click="showModal=true; " class="btn btn-success col-sm-12">Message</button>
 					@else 
-						<a href="/login" class="btn btn-success">Message</a>
+						<a href="/login" class="btn btn-success col-sm-12">Message</a>
 					@endif
 				</div> <!-- END USER PROFILE -->
 
 				<!-- MAP -->
-				<div class="map col-sm-5 pull-right" id='mapDiv' ></div>
+				<div class="map col-sm-6 pull-right" id='mapDiv' ></div>
 
-			</div> <!-- END details -->
-
-			<!-- DESCRIPTION -->
-				<div class="panel panel-primary col-sm-12">
-					<div class="container-fluid">
-						<h4>DESCRIPTION</h4>
-						<div class="text-left">
-							{{$car->desc}}       
-						</div>
+				<br>
+				<!-- DESCRIPTION -->
+				<div class="panel panel-primary col-sm-12 marg-pad-0 margin-top-10">
+					<div class="panel-heading">DESCRIPTION</div>
+						
+					<div class="panel-body text-left">
+						<p>{{$car->desc}}</p> 
+						<small>Created at: {{$car->created_at->format('Y-m-d')}}</small> 
 					</div>
 				</div>
+
+			</div> <!-- END details -->
 		</div> <!-- END containerX -->
 	</div> <!-- END rowX -->
 
@@ -193,7 +199,7 @@
 		<input type="hidden" name="toUser" value="{{$car->user->id}}">
 
 		<div class="form-group">
-			<textarea v-model="message" name="msg" rows="5" placeholder="Message text.." class="form-control"></textarea>
+			<textarea v-model="message" name="msg" rows="5" placeholder="Message text.." class="form-control" v-cloak></textarea>
 		</div>
 
 		<template slot="buttons">

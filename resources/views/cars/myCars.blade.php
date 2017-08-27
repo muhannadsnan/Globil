@@ -3,12 +3,14 @@
 
 @section ("content")
 
-	<div class="myCars">
+	<div class="myCars panel panel-primary">
 		
-		<h4><label>Manage my cars</label></h4>
-		<hr>
+		<div class="panel-heading">
+			Manage my cars
+		</div>
+		<!-- <hr> -->
 
-		<div class="body">
+		<div class="panel-body">
 			@forelse(auth()->user()->cars as $car)
 		
 				@include('cars._card')

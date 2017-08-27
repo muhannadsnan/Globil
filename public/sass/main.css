@@ -1,8 +1,8 @@
 html, body {background-color: #fff;	color: #636b6f; /*font-family: 'Raleway', sans-serif;*/ font-weight: 500; font-size: 11pt; margin: 0; padding: 0;}
 /**** INITIALS ****/
-a, a:active, a:visited{/*color: #337ab7;*/}
+a, a:active, a:visited{color: #337ab7;}
 a:hover{color: #68a9e1; text-decoration: none}
-.btn{color: #fff;} strong{color: #636b6f;} label{font-weight: bold; color: #337ab7;}
+.btn{color: #fff !important;} strong{color: #636b6f;} label{font-weight: bold; color: #337ab7;}
 .fa{vertical-align: middle; padding: 0px; font-size: 16pt; margin: 0px;}
 .panel h1, .panel h2, .panel h3{margin: 7px;}
 small{line-height: 20px; color: #aaa;}
@@ -10,11 +10,13 @@ small{line-height: 20px; color: #aaa;}
 /*[v-cloak] [loading] {display: block; color: red;}
 [v-cloak] [hide] {display: none}*/
 
-/**** CUSTOM ****/
+/************** CUSTOM ***************/
 .NO-float {float: none;}
 .margin-0 {margin:0;}
 .padding-0 {padding:0;}
 .marg-pad-0{margin: 0px; padding: 0px;}
+.margin-top-10{margin-top: 10px}
+.padding-left-0{padding-left: 0px;}
 .alert {font-size: 14pt}
 .display-inline{ display: inline; }
 .font-22pt{font-size:22pt;}
@@ -23,15 +25,34 @@ small{line-height: 20px; color: #aaa;}
 .width-100{width: 100%;}
 .btn1{ float: left;}
 .btn2{ float: right;}
+
+.hd-default { color: #fff; background-color: #ccc; font-size: ; margin: 0; margin-bottom: 10px; padding: 10px 20px; text-align: center;}
+.hd-primary { color: #fff; background-color: #5bc0de; font-size: 16pt; margin: 0; margin-bottom: 10px; padding: 10px 20px; border: 1px solid #1c8cad; border-radius: 5px; text-align: center;}
+
+.panel-success{border-color: #4d984e !important;}
+.panel-success .panel-heading, .panel-heading .panel-tabs .panel-block{
+    background-color: #4d984e; color: #fff; border-color: #4d984e !important;}
+.panel-success .panel-body{border-color: #4d984e !important;}
+
+.input-group-addon{background-color: #d9edf7; color: #31708f;}
 /**** NAV ****/
+.my-theme{border-bottom: 1px solid #337ab7; background-color: #337ab7;}
 nav i {font-size: 22pt !important;  vertical-align: middle;}
-.nav{height: auto;}
-.navbar-brand {padding: 14px 15px;}
-.navbar-brand h2{margin:0px ; padding: 0px;}
-.dropdown-toggle{line-height: 29px; vertical-align: middle;}
+.my-theme .nav{height: auto; background-color: #337ab7; }
+.my-theme .nav a{color: #ccc;}
+.my-theme .nav a:hover{color: #fff; background-color: #3e91d8 !important}
+.my-theme .navbar-brand {padding: 14px 15px; color: #ddd;}
+.my-theme .navbar-brand h2{margin:0px ; padding: 0px;}
+.my-theme .badge{color: #fff; background-color: #ff3860;}
+.my-theme .dropdown{background-color: #337ab7;}
+.my-theme .dropdown-toggle{background-color: #337ab7; line-height: 29px; vertical-align: middle;}
+.my-theme .dropdown-toggle:focus{background-color: #337ab7;}
+.my-theme .dropdown-toggle strong{color: #fff;}
+.my-theme .dropdown-menu a{color: #337ab7 !important;}
 
 #content{min-height: 350px;}
-.container-fluid .col-sm-4{padding-right: 0px; padding-left: 0px}
+/*.container-fluid .col-sm-4{padding-right: 0px; padding-left: 0px}*/
+
 /**** LATEST CARS ****/
 .latest-posts {}
 .latest-posts .panel {margin-right:10px; margin-left:10px; }
@@ -56,6 +77,8 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 .car-card:hover .tool-btns{opacity: 0.8}
 .car-card .foot{margin-top: 5px; display: block; height: 35px;}
 .myCars .car-card .foot{height: 45px;}
+
+/*************  CARD IN VUE  ******************/
 .card-in-vue{}
 .card-in-vue .panel{padding:10px 10px 0px 10px;}
 .card-in-vue label{padding: 0px; margin: 0px; height: 25px; line-height: 25px;}
@@ -75,18 +98,20 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
 .card .map{position: relative; width: ; height: 30vh;}
 
 /**** WISHLIST ****/
-.wish-list-post a, .wish-list-post a:visited, .wish-list-post a:active{
-	border: 0px solid #3097D1;	text-align: left; color: #3097D1;
-}
-.wish-list-post .hd{
-	font-size: 16pt; 
-}
-
 .WishListButton{width: 35px; margin: 0; float: right;}
 .WishListButton .fa-heart{color: red;}
 .WishListButton .fa-heart:hover{opacity: 0.5}
 .WishListButton .fa-heart-o{color: #555;}
 .WishListButton .fa-heart-o:hover{opacity: 0.5}
+
+.my-wish-list{}
+.my-wish-list .panel{}
+.my-wish-list .thumbnail{float: right;}
+.my-wish-list img{max-height: 120px; max-width: 185px; }
+.my-wish-list .blk{border: 1px solid #ccc; padding: 10px 20px; height: 150px}
+.my-wish-list .blk a, .my-wish-list .blk a:visited, .my-wish-list .blk a:active{
+    border: 0px solid #3097D1;text-align: left; color: #3097D1;}
+.my-wish-list .blk .hd{font-size: 16pt; }
 
 footer { padding:5px 40px; background-color: #1c8cad; border-top: 1px solid #555; margin: 20px 0px 0px 0px;
 	color: #2d3092; line-height: 17px; font-weight: 600;}
@@ -98,14 +123,6 @@ footer h2 {border-bottom: 1px solid #999; width: 150px; padding:5px; margin: 0px
 footer .logo-div {height: 105px; }
 footer .logo-div img{height: 90px;,margin: auto; width: ; vertical-align: middle; line-height: 90px}
 footer hr {border-color: #999;}
-
-.hd-default {
-	color: #fff; background-color: #ccc; font-size: ; margin: 0; margin-bottom: 10px;
-	padding: 10px 20px; text-align: center;}
-
-.hd-primary {
-	color: #fff; background-color: #5bc0de; font-size: 16pt; margin: 0; margin-bottom: 10px;
-	padding: 10px 20px; border: 1px solid #1c8cad; border-radius: 5px; text-align: center;}
 
 /**** EditImagesComponent ****/
 .EditImagesComponent{}

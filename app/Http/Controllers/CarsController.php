@@ -17,7 +17,18 @@ class CarsController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('auth')->except(['show', 'getLatestPosts']);	  View::addExtension('html', 'php');
+		$this->middleware('auth')->except(['show', 'getLatestPosts']);	  
+		// View::addExtension('html', 'php');
+	}
+
+// ==================  CREATE CAR  ====================
+
+	public function create()
+	{ 
+		if(auth()->user()->plan() == 'standard')
+			Session::flash('info', "Dear user, you are subscribed to standard plan, and this is the only car you can publish. Your membership expires in (".auth()->user()->daysRemaining().") days.");
+		
+		return view('cars.create', compact(''));
 	}
 
 	public function store(Request $request) //==============================
@@ -40,16 +51,10 @@ class CarsController extends Controller
  		Car::notify_users_for_savedSearch($car);
 
  		return redirect('/my-cars');
-	} //=====================================================================
-
-	public function create()
-	{ 
-		if(auth()->user()->plan() == 'standard')
-			Session::flash('info', "Dear user, you are subscribed to standard plan, and this is the only car you can publish. Your membership expires in (".auth()->user()->daysRemaining().") days.");
-		
-		return view('cars.create', compact(''));
 	}
 
+// ==================  EDIT CAR  ====================
+	
 	public function edit(Car $car)
 	{
 		$update = true;
@@ -57,9 +62,7 @@ class CarsController extends Controller
 		return view('cars.edit', compact('car', 'update'));
 	}
 
-	//  === === UPDATE CAR
-
-	public function update(Request $request, Car $car)
+	public function update(Request $request, Car $car) //===============
 	{
 		$this->validate($request, Car::rules());
  		

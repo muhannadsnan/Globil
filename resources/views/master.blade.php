@@ -28,7 +28,7 @@
 				@if(@$isHomePage)
 				
 				
-					<div id="searchbar" class="{{$searchbar_col_width}} panel panel-info">
+					<div id="searchbar" class="{{$searchbar_col_width}} panel panel-primary">
 
 						@include('layout.searchbar')
 

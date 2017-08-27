@@ -20,7 +20,9 @@
   <!-- TOASTR -->
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
   
-<style type="text/css">   @yield('styles') </style>
+  <style type="text/css">
+    @yield('styles')
+  </style>
 
   <!-- App CSS -->
   <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
@@ -31,8 +33,8 @@
     window.Laravel = <?php echo json_encode([ 'csrfToken' => csrf_token(), ]) ?>
   </script>
 
-<!-- TOASTR -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  <!-- TOASTR -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 
 </head>

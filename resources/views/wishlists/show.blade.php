@@ -3,7 +3,7 @@
 
 @section ("content")
 
-	<div class="panel panel-default">
+	<div class="my-wish-list panel panel-primary">
 		<div class="panel-heading">
 			My Wish List
 		</div>
@@ -14,8 +14,8 @@
 			
 				@foreach(auth()->user()->wishList->reverse() as $wish)
 					
-					<div class="wish-list-post col-xs-12 border-bottom">
-						<div class="col-xs-9">
+					<div class="blk panel col-xs-12 ">
+						<div class="col-xs-8">
 							<a href="/cars/{{$wish->car->id}}" class="hd">
 								{{ $wish->car->brandSubdata() }}, 
 								{{ $wish->car->modelSubdata() }},
@@ -23,12 +23,12 @@
 							</a>
 
 							<div>
-								<span class="price text-left">{{ $wish->car->price . ' NOK' }}</span>, 
+								<p class="price">{{ $wish->car->price . ' NOK' }}</p> 
 								<span class="kilometer text-right">{{ $wish->car->kilometer . ' Kilometer' }}</span>
 							</div>
 
 							<small>
-								Posted By <a href="#"> <strong>{{ $wish->user->name }}</strong> </a>
+								Posted By <a href="#"> <strong>{{ $wish->car->user->name }}</strong> </a>
 								{{ $wish->car->created_at->diffForHumans() }}
 							</small>
 
@@ -37,12 +37,12 @@
 							</div> -->
 						</div>
 
-						<div class="thumbnail text-right col-xs-3">
+						<div class="thumbnailZ text-rightz col-xs-3Z">
 							<?php
 							$pic0_id = @count($wish->car->pictures[0]->id) ? $wish->car->pictures[0]->id : 'no-image';
 							$pic0_ext = @count($wish->car->pictures[0]->id) ? $wish->car->pictures[0]->ext : 'png';
 							?>
-							<img src="{{ asset('storage/images'.'/'. $pic0_id .'.'. $pic0_ext) }}" />
+							<img class="thumbnail" src="{{ asset('storage/images'.'/'. $pic0_id .'.'. $pic0_ext) }}" />
 						</div>		
 					</div>
 					
