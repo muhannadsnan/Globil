@@ -150,8 +150,8 @@
 						<span>Kilometer: </span> <label>{{$car->kilometer}}</label> <br>
 						<span>Fuel:</span> <label>{{$car->fuel_typeSubdata()}}</label> <br>
 						<span>Registration nr: </span> <label>{{$car->reg_nr}}</label> <br>
-						
 						<span>Location: </span> <label>{{$car->areaSubdata()}}, {{$car->citySubdata()}}</label> <br>
+						<span>Address: </span> <strong>{{$car->address}}</strong> <br>
 					</h4>
 				</div>
 
@@ -178,14 +178,16 @@
 				<br>
 				<!-- DESCRIPTION -->
 				<div class="panel panel-primary col-sm-12 marg-pad-0 margin-top-10">
-					<div class="panel-heading">DESCRIPTION</div>
+					<div class="panel-heading">Description</div>
 						
 					<div class="panel-body text-left">
-						<p>{{$car->desc}}</p> 
-						<small>Created at: {{$car->created_at->format('Y-m-d')}}</small> 
+						<pre>{{$car->desc}}</pre> 
 					</div>
 				</div>
 
+				<div class="col-sm-12">
+					<small>Created at: {{$car->created_at->format('Y-m-d')}}</small> 
+				</div>
 			</div> <!-- END details -->
 		</div> <!-- END containerX -->
 	</div> <!-- END rowX -->

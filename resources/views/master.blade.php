@@ -14,7 +14,7 @@
 			
 			<div class="container-fluid">
 				<?php 
-				if(@$isHomePage || @$isPostShow){
+				if(@$isHomePage){
 					$searchbar_col_width = "col-md-2 col-sm-3";
 					$content_col_width = "col-md-8 col-sm-7";
 					$sidebar_col_width = "col-md-2 col-sm-2";
@@ -55,12 +55,12 @@
 					@endif
 
 				</div><!-- .sidebar -->
-			</div><!-- .row -->
-		</div><!-- .container -->
+			</div><!-- .container-fluid -->
+		</div><!-- .rowX -->
 
-	</div>
+	</div><!-- #app -->
 	
-		@include('layout.footer')
+	@include('layout.footer')
 
 </body>
 </html>

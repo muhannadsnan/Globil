@@ -22,21 +22,24 @@ class User extends Authenticatable/* implements BillableInterface*/
 	protected $dates = ['trial_ends_at', 'subscription_ends_at'];
 
 	public static function expiringDate()
-	{
-		$timestamp = auth()->user()->asStripeCustomer()["subscriptions"] -> data[0]["current_period_end"];
-		return \Carbon\Carbon::createFromTimeStamp($timestamp)->toFormattedDateString();
+	{  
+		$timestamp = @auth()->user()->asStripeCustomer()["subscriptions"]->data[0]["current_period_end"]; 
+		return @\Carbon\Carbon::createFromTimeStamp($timestamp)->toFormattedDateString();	
 	}
 
 	public static function daysRemaining()
 	{
-		$created = new Carbon(User::expiringDate());
+		$created = new Carbon(@User::expiringDate());  
 		$now = Carbon::now();
-		return ($created->diff($now)->days < 1)  ? 'today'  : $created->diffInDays($now);
+		// $now = new Carbon("2017-09-26 00:00:00.000000");
+		
+		return @$created->diff($now)->days < 1 ? 'today' : $created->diffInDays($now);
+		// dd($created->diff($now)->days < 1 ? 'today' : $created->diffInDays($now));
 	}
 
 	public function plan()
 	{
-		return auth()->user()->subscriptions[0]->name;
+		return @auth()->user()->subscriptions[0]->name;
 	}
 
 //=================== RELATIONSHIPS ====================

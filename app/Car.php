@@ -218,6 +218,7 @@ class Car extends Model
 			"reg_nr" => $request['reg_nr'],
 			"reg_fee" => $request['reg_fee'],
 			"yearly_fee" => $request['yearly_fee'],
+			"address" => $request['address'],
 			"user_id" => Auth::id(),
 		]);
 	}
@@ -247,6 +248,7 @@ class Car extends Model
 			"reg_nr" => 'required|max:255',
 			"reg_fee" => 'required|numeric',
 			"yearly_fee" => 'required|numeric',
+			"address" => 'required|max:255|min:4',
 			//"images" => 'max:2000000|mimes:jpeg,jpg,bmp,png',
 			"images" => 'max:2000000',
 		];
@@ -277,6 +279,7 @@ class Car extends Model
 			"reg_nr" => $request['reg_nr'],
 			"reg_fee" => $request['reg_fee'],
 			"yearly_fee" => $request['yearly_fee'],
+			"address" => $request['address'],
 			"user_id" => Auth::id(),
 		]);
 	}
