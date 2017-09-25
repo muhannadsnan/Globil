@@ -24,6 +24,7 @@ class HomeController extends Controller
 
 	public function ourOffers($id = "")
 	{
+		return redirect()->home();
 		$loadVue = false;
 		return view('our-offers', compact('loadVue', 'id'));
 	}

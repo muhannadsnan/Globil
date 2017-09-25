@@ -26,7 +26,7 @@ class CarsController extends Controller
 	public function create()
 	{ 
 		if(@auth()->user()->plan() == 'standard')
-			Session::flash('info', "Dear user, you are subscribed to standard plan, and this is the only car you can publish. Your membership expires in (".@auth()->user()->daysRemaining().") days.");
+		Session::flash('info', "Dear user, you are subscribed to standard plan, and this is the only car you can publish. Your membership expires in (".@auth()->user()->daysRemaining().") days.");
 		
 		return view('cars.create', compact(''));
 	}

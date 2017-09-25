@@ -14,7 +14,7 @@
 
 			<manage-subdata></manage-subdata>
 
-			<manage-ads></manage-ads>
+			<!-- <manage-ads></manage-ads> -->
 
 <!-- 
 		</div>

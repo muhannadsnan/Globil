@@ -114,8 +114,8 @@ nav i {font-size: 22pt !important;  vertical-align: middle;}
     border: 0px solid #3097D1;text-align: left; color: #3097D1;}
 .my-wish-list .blk .hd{font-size: 16pt; }
 
-footer { padding:5px 40px; background-color: #1c8cad; border-top: 1px solid #555; margin: 20px 0px 0px 0px;
-	color: #2d3092; line-height: 17px; font-weight: 600;}
+footer { padding:20px 40px; background-color: #1c8cad; border-top: 1px solid #555; margin: 20px 0px 0px 0px;
+	color: #fff; line-height: 17px; font-weight: 600;}
 footer a, footer a:active, footer a:visited {color:#2d3092;}
 footer a:hover {text-decoration: none; color: #ddd;}
 footer ul {text-align: center}
@@ -124,6 +124,7 @@ footer h2 {border-bottom: 1px solid #999; width: 150px; padding:5px; margin: 0px
 footer .logo-div {height: 105px; }
 footer .logo-div img{height: 90px;,margin: auto; width: ; vertical-align: middle; line-height: 90px}
 footer hr {border-color: #999;}
+footer strong{color: #fff;}
 
 /**** EditImagesComponent ****/
 .EditImagesComponent{}

@@ -19,7 +19,7 @@
 			@if(count($savedSearches) == 0)			
 				<label class="" v-cloak>No Saved Searches yet.</label>			
 			@else
-				<a href="/my-saved-searches" class="btn btn-success">Edit</a>			
+				<a href="/my-saved-searches" class="btn btn-success">See all</a>			
 			@endif
 		
 		@endif

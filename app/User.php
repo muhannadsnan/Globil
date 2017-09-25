@@ -23,6 +23,7 @@ class User extends Authenticatable/* implements BillableInterface*/
 
 	public static function expiringDate()
 	{  
+		return '';
 		$timestamp = @auth()->user()->asStripeCustomer()["subscriptions"]->data[0]["current_period_end"]; 
 		return @\Carbon\Carbon::createFromTimeStamp($timestamp)->toFormattedDateString();	
 	}
@@ -39,6 +40,7 @@ class User extends Authenticatable/* implements BillableInterface*/
 
 	public function plan()
 	{
+		return '';
 		return @auth()->user()->subscriptions[0]->name;
 	}
 
@@ -55,6 +57,7 @@ class User extends Authenticatable/* implements BillableInterface*/
 
 	public function subscriptions()
 	{
+		return '';
 		return $this->hasMany(Subscription::class)->orderBy('created_at', 'desc');
 	}
 
